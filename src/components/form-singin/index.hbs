@@ -1,0 +1,20 @@
+<form class="form-signin container-form-modal">
+    <div class="container-form-modal__content">    
+        <div class="form-signin__title">
+        <h2>Регистрация</h2>
+        </div>
+        <div class="form-signin__inputs">
+        {{> InputForm label="Почта" type="email"}}
+        {{> InputForm label="Логин" type="login"}}
+        {{> InputForm label="Имя" type="text"}}
+        {{> InputForm label="Фамилия" type="text"}}
+        {{> InputForm label="Телефон" type="tel"}}
+        {{> InputForm label="Пароль" type="password"}}
+        {{> InputForm label="Пароль (ещё раз)" type="password"}}
+        </div>
+    </div>
+    <footer class="form-signin__footer">
+      <button class="primary-button">Зарегистрироваться</button>
+      <a class="primary-link">Войти</a>
+    </footer>
+  </form>
