@@ -6,10 +6,15 @@ const pages = {
   nav: [Pages.NavPage],
   login: [Pages.LoginPage],
   signin: [Pages.PageSign],
+  listChat: [Pages.ListChat],
 };
 
 Object.entries(Components).forEach(([name, component]) => {
   Handlebars.registerPartial(name, component);
+});
+
+Handlebars.registerHelper("isEqual", function (value1, value2) {
+  return value1 == value2;
 });
 
 const navigate = (page: string) => {
@@ -19,7 +24,7 @@ const navigate = (page: string) => {
   container.innerHTML = Handlebars.compile(source)(context);
 };
 
-document.addEventListener("DOMContentLoaded", () => navigate("nav"));
+document.addEventListener("DOMContentLoaded", () => navigate("listChat"));
 
 document.addEventListener("click", (e) => {
   //@ts-ignore

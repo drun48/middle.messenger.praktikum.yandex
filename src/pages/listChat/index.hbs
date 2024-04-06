@@ -1,0 +1,36 @@
+<div class="wrapper-chat">
+    <div class="wrapper-choice">
+        <div class="container-search">
+            <div class="container-search__nav">
+                <a class="container-search__nav__element">
+                    <p>Профиль</p>
+                    <img src="src/assets/arrow.svg"/>
+                </a>
+            </div>
+            <div class="container-search__element">
+                <input/>
+            </div>
+        </div>
+        <div class="container-chats">
+            <ul class="list-chat">
+                {{#each (listChat)}}
+                <li class="list-chat__element">
+                    {{> CardUser }}
+                </li>
+                <div class="list-chat__delimiter"></div>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <div class="container-chat">
+        <div class="container-chat__profile">
+            {{> CardUser name="Вадим" photo="/src/assets/photoUser.png"}}
+        </div>
+        <div class="container-chat__element">
+            {{> Chat chats=(listMessage)}}
+        </div>
+        <div class="container-chat__input">
+
+        </div>
+    </div>
+</div>

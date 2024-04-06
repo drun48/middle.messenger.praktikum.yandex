@@ -18,6 +18,7 @@ body,
     --pirmary-color: #3369F3;
     --color-secondery-text: #999999;
     --color-error: #FF2F2F;
+    --color-message:#1E1E1E;
 }
 
 .container-form-modal {

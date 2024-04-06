@@ -1,0 +1,25 @@
+<div class="card-user">
+  <div class="card-user__profile">
+    <div class="card-user__profile__photo">
+      <img src="{{photo}}" />
+    </div>
+    <div class="card-user__profile__text">
+      <h3>{{name}}</h3>
+      {{#if meMessage}}
+        <span>Вы: </span>
+        <p>{{meMessage}}</p>
+      {{/if}}
+      {{#if message}}
+        <p>{{message}}</p>
+      {{/if}}
+    </div>
+  </div>
+  <div class="card_user__info">
+    {{#if time}}
+      <p class="card_user__info__time">{{time}}</p>
+    {{/if}}
+    {{#if count}}
+      <div class="card_user__info__count">{{count}}</div>
+    {{/if}}
+  </div>
+</div>
