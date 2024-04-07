@@ -9,9 +9,6 @@
 }
 
 .input__element {
-    border: none;
-    outline: none;
-
     border-bottom: 1px solid var(--primary-border);
     font-size: 13px;
     padding-bottom: 7px;

@@ -1,0 +1,35 @@
+.input-profile {
+    display: flex;
+    width: 100%;
+}
+
+.input-profile__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 100%;
+    color: var(--color-message);
+}
+
+.input-profile__element {
+    flex: 1 0;
+    text-align: end;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 100%;
+    color: var(--color-secondery-text);
+    margin-left: 20px;
+}
+
+.input-profile__element:not([readonly]):focus {
+    text-align: left;
+}
+
+.input-profile__element[readonly] {
+    cursor: auto;
+}
