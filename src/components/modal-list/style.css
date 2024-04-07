@@ -1,0 +1,18 @@
+.modal-list {
+    display: flex;
+
+    width: fit-content;
+    height: fit-content;
+    padding: 15px;
+}
+
+.modal-list__element {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal-list__element__item {
+    display: flex;
+    gap: 15px;
+}
