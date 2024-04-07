@@ -10,6 +10,7 @@ const pages = {
   profile: [Pages.PageProfile],
   profileChanged: [Pages.PageProfileChanged],
   profileChangedPassword: [Pages.PageProfileChangedPassword],
+  modals: [Pages.PageModals],
 };
 
 Object.entries(Components).forEach(([name, component]) => {
@@ -28,7 +29,7 @@ const navigate = (page: string) => {
   container.innerHTML = Handlebars.compile(source)(context);
 };
 
-document.addEventListener("DOMContentLoaded", () => navigate("nav"));
+document.addEventListener("DOMContentLoaded", () => navigate("modals"));
 
 document.addEventListener("click", (e) => {
   //@ts-ignore
