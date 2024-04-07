@@ -6,4 +6,6 @@ export { Chat } from "./chat";
 export { Message } from "./message";
 export { InputProfile } from "./input-profile";
 export { ProfileTitle } from "./profile-title";
+export { BaseModal } from "./base-modal";
 export { ModalUploadFile } from "./modal-upload-file";
+export { ModalUser } from "./modal-user";

@@ -1,21 +1,16 @@
-<div class="uploadFile container-form-modal">
-  <h2 class="uploadFile__title {{#if errorUpload}}error{{/if}}">{{title}}</h2>
+<div class="uploadFile">
+  {{#>BaseModal title=title labelButton='Поменять' errorFooterText=errorFooterText errorTitle=errorTitle}}
   <div class="uploadFile__content">
     {{#if content}}
-      <p>{{content}}</p>
-    {{else}}
-      <label class="primary-link uploadFile__upload">
-        Выбрать файл на
-        <br />
-        компьютере
-        <input type="file" style="display: none;" />
-      </label>
-    {{/if}}
+        <p class="uploadFile__content__element">{{content}}</p>
+      {{else}}
+        <label class="primary-link uploadFile__upload">
+          Выбрать файл на
+          <br />
+          компьютере
+          <input type="file" style="display: none;" />
+        </label>
+      {{/if}}
   </div>
-  <footer>
-    <button class="primary-button">Поменять</button>
-    {{#if errorSelected}}
-      <p class="error">Нужно выбрать файл</p>
-    {{/if}}
-  </footer>
+  {{/BaseModal}}
 </div>

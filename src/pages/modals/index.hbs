@@ -1,6 +1,8 @@
 <div class="container-modals">
     {{> ModalUploadFile title='Загрузите файл'}}
     {{> ModalUploadFile title='Файл загружен' content='pic.jpg'}}
-    {{> ModalUploadFile title='Загрузите файл' errorSelected='Нужно выбрать файл'}}
-    {{> ModalUploadFile title='Ошибка, попробуйте ещё раз' errorUpload=true}}
+    {{> ModalUploadFile title='Загрузите файл' errorFooterText='Нужно выбрать файл'}}
+    {{> ModalUploadFile title='Ошибка, попробуйте ещё раз' errorTitle=true}}
+    {{> ModalUser title='Добавить пользователя' labelButton='Добавить'}}
+    {{> ModalUser title='Удалить пользователя' labelButton='Удалить'}}
 </div>
