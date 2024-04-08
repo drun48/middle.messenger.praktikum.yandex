@@ -10,6 +10,12 @@ TypeScript, Handlebars, Vite
 
 ---
 
+### Ссылка на ресурс
+
+https://roaring-pasca-82642f.netlify.app/
+
+---
+
 ## Команды для запуска
 
 ### Локальный запуск
@@ -20,4 +26,5 @@ npm run dev
 ### Разворачивание
 ```
 npm run build
+npm run start
 ```
