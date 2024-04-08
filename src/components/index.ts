@@ -15,3 +15,4 @@ export { ModalList } from "./modal-list";
 export { ModalDeleteChat } from "./modal-delete-chat";
 export { InputSearch } from "./input-search";
 export { InputMessage } from "./input-message";
+export { Error } from "./error";
