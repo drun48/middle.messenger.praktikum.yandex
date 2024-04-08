@@ -1,6 +1,6 @@
 .container-modals {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 350px);
+    grid-template-columns: repeat(auto-fill, 340px);
     grid-template-rows: repeat(auto-fill, 257px);
     gap: 16px;
 

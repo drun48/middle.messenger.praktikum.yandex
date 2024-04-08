@@ -1,5 +1,6 @@
 <div class="uploadFile">
   {{#>BaseModal title=title labelButton='Поменять' errorFooterText=errorFooterText errorTitle=errorTitle}}
+  {{#*inline "BaseModalContent"}}
   <div class="uploadFile__content">
     {{#if content}}
         <p class="uploadFile__content__element">{{content}}</p>
@@ -12,5 +13,6 @@
         </label>
       {{/if}}
   </div>
+  {{/inline }}
   {{/BaseModal}}
 </div>

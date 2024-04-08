@@ -1,0 +1,28 @@
+.deleteChat {
+    min-width: 340px;
+    min-height: 257px;
+}
+
+.deleteChat__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 0;
+}
+
+.deleteChat__content p {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 100%;
+    color: var(--color-message);
+}
+
+.deleteChat__footer {
+    display: flex;
+    width: 100%;
+    gap: 16px;
+}
+
+.error-btn {
+    background: var(--color-error);
+}

@@ -18,16 +18,16 @@ Handlebars.registerHelper("listAttach", () => [
 ]);
 
 Handlebars.registerHelper("listControllerChat", () => [
-    {
-      value: "Добавить пользователя",
-      photo: "/src/assets/AddUser.svg",
-    },
-    {
-      value: "Удалить пользователя",
-      photo: "/src/assets/DeleteUser.svg",
-    },
-    {
-      value: "Удаления чата",
-      photo: "/src/assets/LocalAttach.svg",
-    },
-  ]);
+  {
+    value: "Добавить пользователя",
+    photo: "/src/assets/AddUser.svg",
+  },
+  {
+    value: "Удалить пользователя",
+    photo: "/src/assets/DeleteUser.svg",
+  },
+  {
+    value: "Удалить чат",
+    photo: "/src/assets/delete_chat.svg",
+  },
+]);

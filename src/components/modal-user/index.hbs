@@ -1,7 +1,9 @@
 <div class="modal-user">
  {{#>BaseModal title=title labelButton=labelButton errorFooterText=errorFooterText errorTitle=errorTitle}}
+ {{#*inline "BaseModalContent"}}
     <div class="modal-user__content">
        {{> InputForm label="Логин" type="login"}}
     </div>
+   {{/inline}}
   {{/BaseModal}}
 </div>
