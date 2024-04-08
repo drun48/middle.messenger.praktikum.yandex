@@ -203,7 +203,7 @@ Expecting `+w.join(", ")+", got '"+(this.terminals_[b]||b)+"'":q="Parse error on
   <label class="search__label">
     <input type="text" placeholder=""/>
     <div class="search__label__element">
-      <img class="search__label__element__icon" src="./src/assets/search.svg" />
+      <img class="search__label__element__icon" src="/src/assets/search.svg" />
       <p class="search__label__element__text">Поиск</p>
     </div>
   </label>
@@ -263,9 +263,9 @@ Expecting `+w.join(", ")+", got '"+(this.terminals_[b]||b)+"'":q="Parse error on
 </div>`;N.registerPartial("PageListChat",kt);N.registerHelper("listChat",()=>[{name:"Андрей",message:"Изображение",photo:M,time:"10:49",count:"2"},{name:"Киноклуб",meMessage:"стикер",photo:M,time:"12:00",count:""},{name:"Илья",message:"Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей!",photo:M,time:"15:12",count:"4"},{name:"Вадим",message:"Круто!",photo:M,time:"15:12"},{name:"тет-а-теты",message:"И Human Interface Guidelines и Material Design рекомендуют И Human Interface Guidelines и Material Design рекомендуют",photo:M,time:"Пт"},{name:"Design Destroyer",message:"Миллионы россиян ежедневно проводят десятки часов свое Миллионы россиян ежедневно проводят десятки часов свое",photo:M,time:"Ср"},{name:"Стас Рогозин",message:"В 2008 году художник Jon Rafman  начал собирать В 2008 году художник Jon Rafman  начал собирать",photo:M,time:"Пн"},{name:"Петров",message:"Так увлёкся работой по курсу, что совсем забыл его анонсир Так увлёкся работой по курсу, что совсем забыл его анонсир",photo:M,time:"Пн"},{name:"Настя",message:"Можно или сегодня или завтра вечером.",photo:M,time:"1 Мая 2020"},{name:"Design Destroyer",message:"Миллионы россиян ежедневно проводят десятки часов свое Миллионы россиян ежедневно проводят десятки часов свое",photo:M,time:"Ср"},{name:"Стас Рогозин",message:"В 2008 году художник Jon Rafman  начал собирать В 2008 году художник Jon Rafman  начал собирать",photo:M,time:"Пн"},{name:"Петров",message:"Так увлёкся работой по курсу, что совсем забыл его анонсир Так увлёкся работой по курсу, что совсем забыл его анонсир",photo:M,time:"Пн"},{name:"Настя",message:"Можно или сегодня или завтра вечером.",photo:M,time:"1 Мая 2020"}]);N.registerHelper("listMessage",()=>[{day:"19 июня",messages:[{type:"text",value:"Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.",myMessage:!1,time:"10:30"},{type:"text",value:"asd",myMessage:!0,time:"10:30"},{type:"photo",value:Qn,myMessage:!1,time:"10:30"},{type:"photo",value:zn,myMessage:!0,time:"10:31"}]}]);const Yn=`{{#> PageListChat}}
 <div class="container-chat">
         <div class="container-chat__profile">
-            {{> CardUser name="Вадим" photo="./src/assets/photoUser.png"}}
+            {{> CardUser name="Вадим" photo="/src/assets/photoUser.png"}}
             <div class="container-chat__profile__menu">
-                <img src="./src/assets/menu.svg"/>
+                <img src="/src/assets/menu.svg"/>
             </div>
         </div>
         <div class="container-chat__element">
@@ -273,13 +273,13 @@ Expecting `+w.join(", ")+", got '"+(this.terminals_[b]||b)+"'":q="Parse error on
         </div>
         <div class="container-chat__input">
             <div class="container-chat__input__attacher">
-                <img src="./src/assets/attacher.svg"/>
+                <img src="/src/assets/attacher.svg"/>
             </div>
             <div class="container-chat__input__element">
                 {{> InputMessage placeholder="Сообщение"}}
             </div>
             <div class="container-chat__input__button">
-                    <img src="./src/assets/arrow-circle.svg">
+                    <img src="/src/assets/arrow-circle.svg">
             </div>
         </div>
     </div>
@@ -287,7 +287,7 @@ Expecting `+w.join(", ")+", got '"+(this.terminals_[b]||b)+"'":q="Parse error on
 `,Zn=`<div class="profile">
     <div class="profile__form">
         <div class="profile__form__title">
-            {{> ProfileTitle title="Иван" photo="./src/assets/profile_photo.svg" chagePhoto=true }}
+            {{> ProfileTitle title="Иван" photo="/src/assets/profile_photo.svg" chagePhoto=true }}
         </div>
         <div class="profile__form__info with-delimetr">
             {{#each (profileForm)}}
@@ -302,13 +302,13 @@ Expecting `+w.join(", ")+", got '"+(this.terminals_[b]||b)+"'":q="Parse error on
     </div>
     <div class="profile__back">
         <a class="profile__back__button">
-            <img src="./src/assets/arrow-circle.svg">
+            <img src="/src/assets/arrow-circle.svg">
         </a>
     </div>
 </div>`;N.registerHelper("profileForm",()=>[{label:"Почта",value:"pochta@yandex.ru",type:"email",readonly:!0},{label:"Логин",value:"ivanivanov",type:"text",readonly:!0},{label:"Имя",value:"Иван",type:"text",readonly:!0},{label:"Фамилия",value:"Иванов",type:"text",readonly:!0},{label:"Имя в чате",value:"Иван",type:"text",readonly:!0},{label:"Телефон",value:"+7 (909) 967 30 30F",type:"text",readonly:!0}]);const Xn=`<div class="profile">
     <div class="profile__form">
         <div class="profile__form__title">
-           {{> ProfileTitle photo="./src/assets/profile_photo.svg"}}
+           {{> ProfileTitle photo="/src/assets/profile_photo.svg"}}
         </div>
          <form class="profile__form__info with-delimetr">
             {{#each (profileFormChanged)}}
@@ -323,13 +323,13 @@ Expecting `+w.join(", ")+", got '"+(this.terminals_[b]||b)+"'":q="Parse error on
     </div>
     <div class="profile__back">
         <a class="profile__back__button">
-            <img src="./src/assets/arrow-circle.svg">
+            <img src="/src/assets/arrow-circle.svg">
         </a>
     </div>
 <div>`;N.registerHelper("profileFormChanged",()=>[{label:"Почта",value:"pochta@yandex.ru",type:"email",readonly:!1},{label:"Логин",value:"ivanivanov",type:"login",readonly:!1},{label:"Имя",value:"Иван",type:"text",readonly:!1},{label:"Фамилия",value:"Иванов",type:"text",readonly:!1},{label:"Имя в чате",value:"Иван",type:"text",readonly:!1},{label:"Телефон",value:"+7 (909) 967 30 30F",type:"tel",readonly:!1}]);const jn=`<div class="profile">
     <div class="profile__form">
         <div class="profile__form__title">
-            {{> ProfileTitle photo="./src/assets/profile_photo.svg" }}
+            {{> ProfileTitle photo="/src/assets/profile_photo.svg" }}
         </div>
          <form class="profile__form__info with-delimetr">
             {{#each (profileFormChangedPassword)}}
@@ -344,7 +344,7 @@ Expecting `+w.join(", ")+", got '"+(this.terminals_[b]||b)+"'":q="Parse error on
     </div>
     <div class="profile__back">
         <a class="profile__back__button">
-            <img src="./src/assets/arrow-circle.svg">
+            <img src="/src/assets/arrow-circle.svg">
         </a>
     </div>
 <div>`;N.registerHelper("profileFormChangedPassword",()=>[{label:"Старый пароль",value:"password",type:"password",readonly:!1},{label:"Новый пароль",value:"new_password",type:"password",readonly:!1},{label:"Повторите новый пароль",value:"new_password",type:"password",readonly:!1}]);const $n=`<div class="container-modals">
@@ -357,7 +357,7 @@ Expecting `+w.join(", ")+", got '"+(this.terminals_[b]||b)+"'":q="Parse error on
     {{> ModalList list=(listAttach)}}
     {{> ModalList list=(listControllerChat)}}
     {{> ModalDeleteChat}}
-</div>`;N.registerHelper("listAttach",()=>[{value:"Фото или Видео",photo:"./src/assets/PhotoAttach.svg"},{value:"Файл",photo:"./src/assets/FileAttach.svg"},{value:"Локация",photo:"./src/assets/LocalAttach.svg"}]);N.registerHelper("listControllerChat",()=>[{value:"Добавить пользователя",photo:"./src/assets/AddUser.svg"},{value:"Удалить пользователя",photo:"./src/assets/DeleteUser.svg"},{value:"Удалить чат",photo:"./src/assets/delete_chat.svg"}]);const ei=`<div class="container-error">
+</div>`;N.registerHelper("listAttach",()=>[{value:"Фото или Видео",photo:"/src/assets/PhotoAttach.svg"},{value:"Файл",photo:"/src/assets/FileAttach.svg"},{value:"Локация",photo:"/src/assets/LocalAttach.svg"}]);N.registerHelper("listControllerChat",()=>[{value:"Добавить пользователя",photo:"/src/assets/AddUser.svg"},{value:"Удалить пользователя",photo:"/src/assets/DeleteUser.svg"},{value:"Удалить чат",photo:"/src/assets/delete_chat.svg"}]);const ei=`<div class="container-error">
     {{> Error code="404" title="Не туда попали" text_link="Назад к чатам"}}
 </div>`,ti=`<div class="container-error">
     {{> Error code="500" title="Мы уже фиксим" text_link="Назад к чатам"}}
