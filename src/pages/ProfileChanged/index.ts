@@ -1,5 +1,4 @@
 import Handlebars from "handlebars";
-import "./style.css";
 export { default as PageProfileChanged } from "./index.hbs?raw";
 
 Handlebars.registerHelper("profileFormChanged", () => [
