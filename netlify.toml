@@ -5,6 +5,5 @@
 # “command” is your build command.
 # “publish” is the directory to publish (relative to the root of your repo).
 
-RUN npm run build
 [build]
   publish = "dist" 
