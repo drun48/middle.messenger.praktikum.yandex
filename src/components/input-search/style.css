@@ -1,6 +1,6 @@
 .search {
     position: relative;
-    background: #EFEFEF;
+    background: var(--background-input);
     padding: 6px 10px;
     border-radius: 5px;
 }
@@ -29,7 +29,10 @@
 
 .search input {
     width: 0;
-    background: #EFEFEF;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    background: var(--background-input);
     transition: all .3s;
 }
 
