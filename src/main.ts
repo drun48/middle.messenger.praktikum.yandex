@@ -13,7 +13,7 @@ const pages = {
   nav: [Pages.NavPage],
   login: [Pages.LoginPage],
   signin: [Pages.PageSign],
-  listChat: [Pages.PageListChat, {arrow:arrow, attacher:attacher, menu:menu}],
+  listChat: [Pages.PageSelectedChats, {arrow:arrow, attacher:attacher, menu:menu}],
   // chat: [Pages.PageChat, {arrow_circle:arrow_circle, photo_user:photo_user}],
   profile: [Pages.PageProfile, {arrow_circle:arrow_circle, profil_photo:profil_photo}],
   profileChanged: [Pages.PageProfileChanged, {arrow_circle:arrow_circle, profil_photo:profil_photo}],
