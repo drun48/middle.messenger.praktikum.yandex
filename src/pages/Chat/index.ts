@@ -1,7 +1,7 @@
 import Handlebars from "handlebars";
 import "./style.css";
-import photo1 from "../../../assets/test_photo.jpg";
-import photo2 from "../../../assets/test_photo2.png";
+import photo1 from "../../assets/test_photo.jpg";
+import photo2 from "../../assets/test_photo2.png";
 export { default as PageChat } from "./index.hbs?raw";
 
 Handlebars.registerHelper("listMessage", () => [
