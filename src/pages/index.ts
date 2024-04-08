@@ -1,8 +1,8 @@
 export { NavPage } from "./Nav";
 export { LoginPage } from "./Login";
 export { PageSign } from "./Signin";
-export { PageListChat } from "./ListChat";
-export { PageChat } from "./Chat";
+// export { PageListChat } from "./ListChat";
+// export { PageChat } from "./Chat";
 export { PageProfile } from "./Profile";
 export { PageProfileChanged } from "./ProfileChanged";
 export { PageProfileChangedPassword } from "./ProfileChangedPassword";
