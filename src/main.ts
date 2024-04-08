@@ -24,6 +24,12 @@ Handlebars.registerHelper("isEqual", function (value1, value2) {
   return value1 == value2;
 });
 
+Handlebars.registerHelper("getImage", function (src) {
+  console.log('vvvvv', import.meta.url, window.location.origin)
+  console.log(new URL(src, import.meta.url).href, '54544')
+  return new URL(src, import.meta.url).href;
+});
+
 const navigate = (page: string) => {
   //@ts-ignore
   const [source, context] = pages[page];
