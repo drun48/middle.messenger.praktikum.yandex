@@ -34,8 +34,7 @@
     color: var(--color-secondery-text);
 }
 
-.container-search__element input {
-    height: 32px;
+.container-search__element {
     width: 100%;
 }
 

@@ -13,3 +13,4 @@ export { ModalUploadFile } from "./modal-upload-file";
 export { ModalUser } from "./modal-user";
 export { ModalList } from "./modal-list";
 export { ModalDeleteChat } from "./modal-delete-chat";
+export { InputSearch } from "./input-search";
