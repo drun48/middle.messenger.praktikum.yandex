@@ -1,7 +1,7 @@
 <div class="profile">
     <div class="profile__form">
         <div class="profile__form__title">
-           {{> ProfileTitle photo="/src/assets/profile_photo.svg"}}
+           {{> ProfileTitle photo=profil_photo}}
         </div>
          <form class="profile__form__info with-delimetr">
             {{#each (profileFormChanged)}}
@@ -16,7 +16,7 @@
     </div>
     <div class="profile__back">
         <a class="profile__back__button">
-            <img src="/src/assets/arrow-circle.svg">
+            <img src="{{arrow_circle}}">
         </a>
     </div>
 <div>

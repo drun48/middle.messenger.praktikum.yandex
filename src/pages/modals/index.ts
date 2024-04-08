@@ -2,32 +2,40 @@ import Handlebars from "handlebars";
 import "./style.css";
 export { default as PageModals } from "./index.hbs?raw";
 
+import photo_attach from '../../assets/PhotoAttach.svg'
+import file_attach from '../../assets/FileAttach.svg'
+import local_attach from '../../assets/LocalAttach.svg'
+
+import addUser from "../../assets/AddUser.svg";
+import delete_user from "../../assets/DeleteUser.svg";
+import delete_chat from "../../assets/delete_chat.svg";
+
 Handlebars.registerHelper("listAttach", () => [
   {
     value: "Фото или Видео",
-    photo: "/src/assets/PhotoAttach.svg",
+    photo: photo_attach,
   },
   {
     value: "Файл",
-    photo: "/src/assets/FileAttach.svg",
+    photo: file_attach,
   },
   {
     value: "Локация",
-    photo: "/src/assets/LocalAttach.svg",
+    photo: local_attach,
   },
 ]);
 
 Handlebars.registerHelper("listControllerChat", () => [
   {
     value: "Добавить пользователя",
-    photo: "/src/assets/AddUser.svg",
+    photo: addUser,
   },
   {
     value: "Удалить пользователя",
-    photo: "/src/assets/DeleteUser.svg",
+    photo: delete_user,
   },
   {
     value: "Удалить чат",
-    photo: "/src/assets/delete_chat.svg",
+    photo: delete_chat,
   },
 ]);
