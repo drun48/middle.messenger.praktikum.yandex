@@ -31,7 +31,7 @@ Expecting `+M.join(", ")+", got '"+(this.terminals_[S]||S)+"'":T="Parse error on
         <h2>Вход</h2>
         </div>
         <div class="form-login__inputs">
-        {{> InputForm label="Логин" type="login"}}
+        {{> InputForm label="Логин" type="login" error="Неверный логин"}}
         {{> InputForm label="Пароль" type="password" }}
         </div>
     </div>
