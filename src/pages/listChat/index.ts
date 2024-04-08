@@ -1,11 +1,11 @@
 import Handlebars from "handlebars";
 import "./style.css";
 import avatar from "../../assets/photoUser.png";
-import PageListChat from "./index.hbs?raw";
+// import PageListChat from "./index.hbs?raw";
 
-export { PageListChat }
+export { default as PageListChat } from "./index.hbs?raw";
 
-Handlebars.registerPartial("PageListChat", PageListChat);
+// Handlebars.registerPartial("PageListChat", PageListChat);
 
 Handlebars.registerHelper("listChat", () => [
   {
