@@ -3,8 +3,11 @@ import "./style.css";
 import avatar from "../../assets/photoUser.png";
 import photo1 from "../../assets/test_photo.jpg";
 import photo2 from "../../assets/test_photo2.png";
+import PageListChat from "./index.hbs?raw";
 
-export { default as ListChat } from "./index.hbs?raw";
+export { default as PageListChat } from "./index.hbs?raw";
+
+Handlebars.registerPartial("PageListChat", PageListChat);
 
 Handlebars.registerHelper("listChat", () => [
   {

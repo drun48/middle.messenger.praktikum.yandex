@@ -1,0 +1,24 @@
+{{#> PageListChat}}
+<div class="container-chat">
+        <div class="container-chat__profile">
+            {{> CardUser name="Вадим" photo="/src/assets/photoUser.png"}}
+            <div class="container-chat__profile__menu">
+                <img src="/src/assets/menu.svg"/>
+            </div>
+        </div>
+        <div class="container-chat__element">
+            {{> Chat chats=(listMessage)}}
+        </div>
+        <div class="container-chat__input">
+            <div class="container-chat__input__attacher">
+                <img src="/src/assets/attacher.svg"/>
+            </div>
+            <div class="container-chat__input__element">
+                {{> InputMessage placeholder="Сообщение"}}
+            </div>
+            <div class="container-chat__input__button">
+                    <img src="/src/assets/arrow-circle.svg">
+            </div>
+        </div>
+    </div>
+{{/PageListChat}}
