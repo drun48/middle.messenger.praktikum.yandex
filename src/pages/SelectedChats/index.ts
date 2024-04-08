@@ -1,9 +1,10 @@
 import Handlebars from "handlebars";
 import "./style.css";
 import avatar from "../../assets/photoUser.png";
-// import PageListChat from "./index.hbs?raw";
+import PageSelectedChats from "./index.hbs?raw";
 
-export { default as PageSelectedChats } from "./index.hbs?raw";
+// export { default as PageSelectedChats } from "./index.hbs?raw";
+export { PageSelectedChats };
 
 // Handlebars.registerPartial("PageListChat", PageListChat);
 
