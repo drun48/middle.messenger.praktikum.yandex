@@ -3,7 +3,7 @@ import "./style.css";
 import avatar from "../../assets/photoUser.png";
 import PageListChat from "./index.hbs?raw";
 
-export { default as PageListChat } from "./index.hbs?raw";
+export { PageListChat }
 
 Handlebars.registerPartial("PageListChat", PageListChat);
 
