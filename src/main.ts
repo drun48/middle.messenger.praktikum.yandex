@@ -3,9 +3,9 @@ import * as Components from "./components";
 import * as Pages from "./pages";
 
 import arrow_circle from './assets/arrow-circle.svg'
-// import arrow from './assets/arrow.svg'
-// import attacher from './assets/attacher.svg'
-// import menu from './assets/menu.svg'
+import arrow from './assets/arrow.svg'
+import attacher from './assets/attacher.svg'
+import menu from './assets/menu.svg'
 // import photo_user from './assets/photoUser.png'
 import profil_photo from './assets/profile_photo.svg'
 
@@ -13,7 +13,7 @@ const pages = {
   nav: [Pages.NavPage],
   login: [Pages.LoginPage],
   signin: [Pages.PageSign],
-  // listChat: [Pages.PageListChat, {arrow:arrow, attacher:attacher, menu:menu}],
+  listChat: [Pages.PageListChat, {arrow:arrow, attacher:attacher, menu:menu}],
   // chat: [Pages.PageChat, {arrow_circle:arrow_circle, photo_user:photo_user}],
   profile: [Pages.PageProfile, {arrow_circle:arrow_circle, profil_photo:profil_photo}],
   profileChanged: [Pages.PageProfileChanged, {arrow_circle:arrow_circle, profil_photo:profil_photo}],
