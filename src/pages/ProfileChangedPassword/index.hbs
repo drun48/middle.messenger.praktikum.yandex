@@ -3,11 +3,7 @@
         <div class="profile__form__title">
             {{> ProfileTitle photo=profil_photo }}
         </div>
-         <form class="profile__form__info with-delimetr">
-            {{#each (profileFormChangedPassword)}}
-             {{> InputProfile }}
-            {{/each}}
-        </form>
+         {{> FormPasswordProfile}}
         <div class="profile__form__btn">
             <button class="primary-button">
                 Сохранить

@@ -4,12 +4,12 @@
         <h2>Регистрация</h2>
         </div>
         <div class="form-signin__inputs">
-        {{> InputForm label="Почта" type="email"}}
-        {{> InputForm label="Логин" type="login"}}
-        {{> InputForm label="Имя" type="text"}}
-        {{> InputForm label="Фамилия" type="text"}}
-        {{> InputForm label="Телефон" type="tel"}}
-        {{> InputForm label="Пароль" type="password"}}
+        {{> InputForm label="Почта" name="email" type="email"}}
+        {{> InputForm label="Логин" name="login" type="login"}}
+        {{> InputForm label="Имя" name="first_name" type="text"}}
+        {{> InputForm label="Фамилия" name="second_name" type="text"}}
+        {{> InputForm label="Телефон" name="phone" type="tel"}}
+        {{> InputForm label="Пароль" name="password" type="password"}}
         {{> InputForm label="Пароль (ещё раз)" type="password"}}
         </div>
     </div>

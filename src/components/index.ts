@@ -16,3 +16,5 @@ export { ModalDeleteChat } from "./modal-delete-chat";
 export { InputSearch } from "./input-search";
 export { InputMessage } from "./input-message";
 export { Error } from "./error";
+export { FormProfile } from "./form-profile";
+export { FormPasswordProfile } from "./form-password-profile";
