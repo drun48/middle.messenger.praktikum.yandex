@@ -14,7 +14,7 @@ const pages = {
   login: [Pages.LoginPage],
   signin: [Pages.PageSign],
   listChat: [Pages.PageSelectedChats, {arrow:arrow, menu:menu}],
-  chat: [Pages.PageChat, {arrow:arrow, attacher:attacher, arrow_circle:arrow_circle, photo_user:photo_user}],
+  chat: [Pages.PageChat, {arrow:arrow, attacher:attacher, arrow_circle:arrow_circle, photo_user:photo_user, menu:menu}],
   profile: [Pages.PageProfile, {arrow_circle:arrow_circle, profil_photo:profil_photo}],
   profileChanged: [Pages.PageProfileChanged, {arrow_circle:arrow_circle, profil_photo:profil_photo}],
   profileChangedPassword: [Pages.PageProfileChangedPassword, {arrow_circle:arrow_circle, profil_photo:profil_photo}],
