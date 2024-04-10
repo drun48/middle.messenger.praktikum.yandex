@@ -1,0 +1,25 @@
+.form-login {
+    width: 340px;
+    height: 450px;
+
+    padding-top: 50px;
+    padding-bottom: 41px;
+}
+
+.form-login__title h2{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.form-login__inputs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+
+    margin: 40px 0;
+}
+
+.form-login__footer {
+    gap: 16px;
+}

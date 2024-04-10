@@ -1,0 +1,21 @@
+<div class="chat">
+  <div></div>
+  {{#each chats }}
+    <div class="message-day">{{this.day}}</div>
+    {{#each this.messages}}
+    <div class="chat__container-message 
+        {{#if this.myMessage}} myMessage 
+        {{else}}
+        notMyMessage
+        {{/if}}">
+        <div class="
+        chat__container-message__element
+        {{#if (isEqual type "photo")}}photo{{/if}}
+        end_message
+        ">
+            {{> Message}}
+        </div>
+    </div>
+    {{/each}}
+  {{/each}}
+</div>

@@ -1,0 +1,18 @@
+.input-message {
+    display: flex;
+    background: var(--background-input);
+    padding: 10px 20px;
+    border-radius: 30px;
+}
+
+.input-message__element {
+    width: 100%;
+    background: var(--background-input);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+}
+
+.input-message__element::placeholder {
+    color: var(--color-secondery-text);
+}

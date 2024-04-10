@@ -1,0 +1,18 @@
+<div class="profile">
+    <div class="profile__form">
+        <div class="profile__form__title">
+            {{> ProfileTitle title="Иван" photo=profil_photo chagePhoto=true }}
+        </div>
+            {{> FormProfile readonly=true}}
+        <div class="profile__form__changed with-delimetr">
+            <a class="profile__form__changed__element">Изменить данные</a>
+            <a class="profile__form__changed__element">Изменить пароль</a>
+            <a class="profile__form__changed__element">Выйти</a>
+        </div>
+    </div>
+    <div class="profile__back">
+        <a class="profile__back__button">
+            <img src={{arrow_circle}} alt="Иконка">
+        </a>
+    </div>
+</div>

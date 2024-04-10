@@ -1,0 +1,18 @@
+<div class="uploadFile">
+  {{#>BaseModal title=title labelButton='Поменять' errorFooterText=errorFooterText errorTitle=errorTitle}}
+  {{#*inline "BaseModalContent"}}
+  <div class="uploadFile__content">
+    {{#if content}}
+        <p class="uploadFile__content__element">{{content}}</p>
+      {{else}}
+        <label class="primary-link uploadFile__upload">
+          Выбрать файл на
+          <br />
+          компьютере
+          <input type="file" style="display: none;" name="{{input_name}}" />
+        </label>
+      {{/if}}
+  </div>
+  {{/inline }}
+  {{/BaseModal}}
+</div>

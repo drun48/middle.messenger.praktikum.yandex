@@ -1,0 +1,33 @@
+<div class="wrapper-chat">
+    <div class="wrapper-choice">
+        <div class="container-search">
+            <div class="container-search__nav">
+                <a class="container-search__nav__element">
+                    <p>Профиль</p>
+                    <img src="{{arrow}}" alt="Иконка"/>
+                </a>
+            </div>
+            <div class="container-search__element">
+                {{> InputSearch}}
+            </div>
+        </div>
+        <div class="container-chats">
+            <ul class="list-chat">
+                <div class="list-chat__delimiter"></div>
+                {{#each (listChat)}}
+                <li class="list-chat__element">
+                    {{> CardUser }}
+                </li>
+                <div class="list-chat__delimiter"></div>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    {{#if @partial-block}}
+        {{>@partial-block}}
+    {{else}}
+        <div class="empty-chat">
+            <h3>Выберите чат чтобы отправить сообщение</h3>
+        </div>
+    {{/if}}
+</div>

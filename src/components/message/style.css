@@ -1,0 +1,36 @@
+.message {
+    --padding: 11px;
+
+    position: relative;
+
+    width: 100%;
+}
+
+p.message__element {
+    padding: var(--padding);
+    color: var(--color-message);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 125%;
+}
+
+.message__time {
+    position: absolute;
+    bottom: var(--padding);
+    right: var(--padding);
+    font-size: 9px;
+}
+
+.message img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+}
+
+.message img+.message__time {
+    background: rgba(82, 82, 82, 0.5);
+    border-radius: 30px;
+    color: #FFF;
+    padding: 2px 4px;
+}

@@ -1,0 +1,16 @@
+<div class="deleteChat">
+    {{#>BaseModal title='Удалить чат' }}
+    {{#*inline "BaseModalContent"}}
+        <div  class="deleteChat__content">
+            <p>Вы действительно хотие удалить чат?</p>
+        </div>
+    {{/inline}}
+        
+        {{#*inline "BaseModalFooter"}}
+         <div class="deleteChat__footer">
+                <button class="primary-button ">Отменить</button>
+                <button class="primary-button error-btn">Удалить</button>
+            </div>
+        {{/inline}}
+    {{/BaseModal}}
+</div>
