@@ -18,3 +18,4 @@ export { InputMessage } from "./input-message";
 export { Error } from "./error";
 export { FormProfile } from "./form-profile";
 export { FormPasswordProfile } from "./form-password-profile";
+export { Input } from "./input";
