@@ -25,7 +25,7 @@ export class FormLogin extends Block {
         </div>
     </div>
     <footer class="form-login__footer">
-      <button class="primary-button">Авторизоваться</button>
+      {{{Button class="primary-button" label="Авторизоваться"}}}
       <a class="primary-link">Нет аккаунта?</a>
     </footer>
   </form>
