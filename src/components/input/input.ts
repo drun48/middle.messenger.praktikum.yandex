@@ -12,7 +12,7 @@ export class Input extends Block {
   }
   protected render(): string {
     return `
-      <input class={{class}} type="{{type}}" name="{{name}}" placeholder="" autocomplete="on"/>
+      <input class="{{class}}" type="{{type}}" style="{{style}}" name="{{name}}" placeholder="" autocomplete="on"/>
     `;
   }
 }

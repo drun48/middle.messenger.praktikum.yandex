@@ -6,6 +6,6 @@ export { PageChat } from "./Chat";
 export { PageProfile } from "./Profile";
 export { PageProfileChanged } from "./ProfileChanged";
 export { PageProfileChangedPassword } from "./ProfileChangedPassword";
-export { PageModals } from "./modals";
+export { PageModals, Modals } from "./modals";
 export { PageError404 } from "./error404";
 export { PageError500 } from "./error500";

@@ -38,7 +38,7 @@ const pages = {
     Pages.PageProfileChangedPassword,
     { arrow_circle: arrow_circle, profil_photo: profil_photo },
   ],
-  modals: [Pages.PageModals],
+  modals: [Pages.Modals],
   error404: [Pages.PageError404],
   error500: [Pages.PageError500],
 };
@@ -69,7 +69,7 @@ const navigate = (page: string) => {
   container.innerHTML = Handlebars.compile(source)(context);
 };
 
-document.addEventListener("DOMContentLoaded", () => navigate("login"));
+document.addEventListener("DOMContentLoaded", () => navigate("nav"));
 
 document.addEventListener("click", (e) => {
   //@ts-ignore
