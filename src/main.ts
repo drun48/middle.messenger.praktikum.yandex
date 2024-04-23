@@ -30,14 +30,6 @@ const pages = {
     Pages.PageProfile,
     { arrow_circle: arrow_circle, profil_photo: profil_photo },
   ],
-  profileChanged: [
-    Pages.PageProfileChanged,
-    { arrow_circle: arrow_circle, profil_photo: profil_photo },
-  ],
-  profileChangedPassword: [
-    Pages.PageProfileChangedPassword,
-    { arrow_circle: arrow_circle, profil_photo: profil_photo },
-  ],
   modals: [Pages.Modals],
   error404: [Pages.PageError404],
   error500: [Pages.PageError500],
@@ -69,7 +61,7 @@ const navigate = (page: string) => {
   container.innerHTML = Handlebars.compile(source)(context);
 };
 
-document.addEventListener("DOMContentLoaded", () => navigate("nav"));
+document.addEventListener("DOMContentLoaded", () => navigate("profile"));
 
 document.addEventListener("click", (e) => {
   //@ts-ignore

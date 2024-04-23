@@ -150,14 +150,6 @@ export class Block {
     return true;
   }
 
-  protected setProps = (nextProps: Props) => {
-    if (!nextProps) {
-      return;
-    }
-
-    Object.assign(this.props, nextProps);
-  };
-
   protected render(): string {
     return "";
   }
@@ -174,6 +166,13 @@ export class Block {
     }
     return this.element;
   }
+
+  setProps = (nextProps: Props) => {
+    if (!nextProps) {
+      return;
+    }
+    Object.assign(this.props, nextProps);
+  };
 
   show() {
     if (this.element instanceof HTMLElement)
