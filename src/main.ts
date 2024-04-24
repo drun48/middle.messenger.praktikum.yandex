@@ -3,9 +3,7 @@ import * as Components from "./components";
 import * as Pages from "./pages";
 
 import arrow_circle from "./assets/arrow-circle.svg";
-import arrow from "./assets/arrow.svg";
 import attacher from "./assets/attacher.svg";
-import menu from "./assets/menu.svg";
 import photo_user from "./assets/photoUser.png";
 import profil_photo from "./assets/profile_photo.svg";
 import { Block } from "./core/Block";
@@ -15,15 +13,13 @@ const pages = {
   nav: [Pages.NavPage],
   login: [Pages.LoginPageBlock],
   signin: [Pages.PageSign],
-  listChat: [Pages.PageSelectedChats, { arrow: arrow, menu: menu }],
+  listChat: [Pages.PageSelectedChats],
   chat: [
     Pages.PageChat,
     {
-      arrow: arrow,
       attacher: attacher,
       arrow_circle: arrow_circle,
       photo_user: photo_user,
-      menu: menu,
     },
   ],
   profile: [
@@ -61,7 +57,7 @@ const navigate = (page: string) => {
   container.innerHTML = Handlebars.compile(source)(context);
 };
 
-document.addEventListener("DOMContentLoaded", () => navigate("profile"));
+document.addEventListener("DOMContentLoaded", () => navigate("nav"));
 
 document.addEventListener("click", (e) => {
   //@ts-ignore
