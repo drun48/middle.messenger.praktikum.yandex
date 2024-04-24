@@ -1,6 +1,6 @@
 import { Block, Props } from "../../core/Block";
 
-export class LoginPageBlock extends Block {
+export class LoginPage extends Block {
   constructor(props: Props) {
     super({
       ...props,

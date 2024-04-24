@@ -1,8 +1,8 @@
 export { NavPage } from "./Nav";
-export { LoginPage, LoginPageBlock } from "./Login";
+export { LoginPage } from "./Login";
 export { PageSign } from "./Signin";
 export { PageSelectedChats } from "./SelectedChats";
 export { PageChat } from "./Chat";
 export { PageProfile } from "./Profile";
-export { PageModals, Modals } from "./modals";
+export { PageModals } from "./modals";
 export { PageError } from "./error";

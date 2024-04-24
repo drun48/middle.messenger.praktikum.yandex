@@ -11,7 +11,7 @@ import { registerComponent } from "./core/registerComponent";
 
 const pages = {
   nav: [Pages.NavPage],
-  login: [Pages.LoginPageBlock],
+  login: [Pages.LoginPage],
   signin: [Pages.PageSign],
   listChat: [Pages.PageSelectedChats],
   chat: [
@@ -26,7 +26,7 @@ const pages = {
     Pages.PageProfile,
     { arrow_circle: arrow_circle, profil_photo: profil_photo },
   ],
-  modals: [Pages.Modals],
+  modals: [Pages.PageModals],
   error404: [Pages.PageError, { code: "404", title: "Не туда попали" }],
   error500: [Pages.PageError, { code: "500", title: "Мы уже фиксим" }],
 };

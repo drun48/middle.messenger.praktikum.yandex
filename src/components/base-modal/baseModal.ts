@@ -6,7 +6,7 @@ export class BaseModal extends Block {
   }
 
   protected render(): string {
-    return `<div class="baseModal container-form-modal">
+    return `<div class="baseModal container-form-modal {{class}}">
       <div class="baseModal__title">
           <h2 class="{{#if errorTitle}}error{{/if}}">{{title}}</h2>
       </div>

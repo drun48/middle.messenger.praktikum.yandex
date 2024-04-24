@@ -1,6 +1,6 @@
 import { Block, Props } from "../../core/Block";
 
-export class Modals extends Block {
+export class PageModals extends Block {
   constructor(props: Props) {
     super({
       ...props,
@@ -15,8 +15,8 @@ export class Modals extends Block {
     {{{ ModalUploadFile title='Ошибка, попробуйте ещё раз' errorTitle=true input_name="avatar" }}}
     {{{ ModalUser title="Добавить пользователя" labelButton="Добавить" }}}
     {{{ ModalUser title='Удалить пользователя' labelButton='Удалить' }}}
-    {{> ModalList list=(listAttach)}}
-    {{> ModalList list=(listControllerChat)}}
+    {{{ ModalList list=(listAttach) }}}
+    {{{ ModalList list=(listControllerChat) }}}
     {{{ ModalDeleteChat }}}
 </div>
         `;
