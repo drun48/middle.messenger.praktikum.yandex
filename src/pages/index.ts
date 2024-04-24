@@ -5,5 +5,4 @@ export { PageSelectedChats } from "./SelectedChats";
 export { PageChat } from "./Chat";
 export { PageProfile } from "./Profile";
 export { PageModals, Modals } from "./modals";
-export { PageError404 } from "./error404";
-export { PageError500 } from "./error500";
+export { PageError } from "./error";

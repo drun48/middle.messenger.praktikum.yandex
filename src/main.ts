@@ -27,8 +27,8 @@ const pages = {
     { arrow_circle: arrow_circle, profil_photo: profil_photo },
   ],
   modals: [Pages.Modals],
-  error404: [Pages.PageError404],
-  error500: [Pages.PageError500],
+  error404: [Pages.PageError, { code: "404", title: "Не туда попали" }],
+  error500: [Pages.PageError, { code: "500", title: "Мы уже фиксим" }],
 };
 
 Object.entries(Components).forEach(([name, component]) => {
