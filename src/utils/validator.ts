@@ -4,11 +4,15 @@ export type Valid = {
 };
 
 export function valid_name(value: string): Valid {
+  if (!value) {
+    return { value: true };
+  }
+
   if (!/^[A-Za-zА-Яа-я\-]*$/.test(value)) {
     return { value: false, errorText: "Используйте латиницу или кириллицу" };
   }
 
-  if (!/^[A-Za-zА-Яа-я]/.test(value)) {
+  if (value !== value.toUpperCase()) {
     return { value: false, errorText: "Первая буква должна быть заглавной" };
   }
 
@@ -16,6 +20,10 @@ export function valid_name(value: string): Valid {
 }
 
 export function valid_login(value: string): Valid {
+  if (!value) {
+    return { value: true };
+  }
+
   if (!/^[A-Za-z0-9_-]+$/.test(value)) {
     return { value: false, errorText: "Используйте латиницу" };
   }
@@ -29,7 +37,7 @@ export function valid_login(value: string): Valid {
 
 export function valid_email(value: string): Valid {
   if (!value) {
-    return { value: false, errorText: "Почта не должена быть пустой" };
+    return { value: true };
   }
 
   if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(value)) {
@@ -40,10 +48,14 @@ export function valid_email(value: string): Valid {
 }
 
 export function valid_password(value: string): Valid {
+  if (!value) {
+    return { value: true };
+  }
+
   if (value.length < 8 || value.length > 40) {
     return {
       value: false,
-      errorText: "Пароль должен быть от 3 до 40 символов",
+      errorText: "Пароль должен быть от 8 до 40 символов",
     };
   }
 
@@ -65,6 +77,10 @@ export function valid_password(value: string): Valid {
 }
 
 export function valid_phone(value: string): Valid {
+  if (!value) {
+    return { value: true };
+  }
+
   if (!/^\+?\d{10,15}$/.test(value)) {
     return { value: false, errorText: "Неправильный формат телефона" };
   }

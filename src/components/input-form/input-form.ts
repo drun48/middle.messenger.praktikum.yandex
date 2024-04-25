@@ -35,9 +35,7 @@ export class InputForm extends Block {
     if (this.props.validate instanceof Function) {
       const valid: Valid = this.props.validate?.(value);
       this.setError(valid.errorText);
-      if (valid.value) {
-        return false;
-      }
+      return valid.value;
     }else{
       this.setError('')
     }
