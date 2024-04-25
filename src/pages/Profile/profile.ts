@@ -1,5 +1,6 @@
 import { Block, Props } from "../../core/Block";
 import { FormProfile } from "../../components/form-profile";
+import { FormPasswordProfile } from "../../components/form-password-profile";
 
 export class PageProfile extends Block {
   profile = {
@@ -28,7 +29,6 @@ export class PageProfile extends Block {
         phone: "79099673030",
       },
     });
-    // this.refs.formProfile.setProps({ form: {email:'tete'} });
   }
 
   changeForm = () => {
@@ -43,14 +43,19 @@ export class PageProfile extends Block {
     const formComponent = this.refs.formProfile as FormProfile;
     const form = formComponent.getForm();
     if (form) {
-      console.log(form)
+      console.log(form);
       this.setProps({ profile: form });
       this.props.readonlyForm = true;
     }
   };
 
   savePassword = () => {
-    this.props.changePassword = false;
+    const formComponent = this.refs.formPasswordProfile as FormPasswordProfile;
+    const form = formComponent.getForm();
+    if (form) {
+      console.log(form);
+      this.props.changePassword = false;
+    }
   };
 
   protected render() {
@@ -62,7 +67,7 @@ export class PageProfile extends Block {
 
         {{#if changePassword}}
 
-          {{{ FormPasswordProfile }}}
+          {{{ FormPasswordProfile ref="formPasswordProfile" }}}
           <div class="profile__form__btn">
             {{{ Button class="primary-button" form=profile label="Сохранить" onClick=savePassword}}}
           </div>

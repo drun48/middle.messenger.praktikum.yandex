@@ -39,7 +39,7 @@ export class FormSignin extends Block {
     if (passwordValue !== null && passwordValue == value) {
       return { value: true };
     }
-    return { value: true, errorText: "Пароли должны совпадать" };
+    return { value: false, errorText: "Пароли должны совпадать" };
   }
 
   Signin(event: Event) {
