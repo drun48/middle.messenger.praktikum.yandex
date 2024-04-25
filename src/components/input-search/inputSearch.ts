@@ -10,15 +10,12 @@ export class InputSearch extends Block {
   protected render() {
     return `<div class="search">
     <label class="search__label">
-      {{{ Input type="text" name=name placeholder="" }}}
+      {{{ Input onBlur=onBlur type="text" name=name placeholder="" value=value}}}
       <div class="search__label__element">
         <img class="search__label__element__icon" src="{{search_img}}" alt=""/>
         <p class="search__label__element__text">Поиск</p>
       </div>
     </label>
-  </div>
-  
-  
-  `;
+  </div>`;
   }
 }
