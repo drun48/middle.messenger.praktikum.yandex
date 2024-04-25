@@ -5,10 +5,11 @@ export class Input extends Block {
     super({
       ...props,
       events: {
-        focus: props.onFocus,
         blur: props.onBlur,
+        input: props.onInput,
       },
     });
+    this.element?.dispatchEvent(new Event("input"));
   }
   protected render(): string {
     return `

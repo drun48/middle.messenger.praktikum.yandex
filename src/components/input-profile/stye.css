@@ -32,4 +32,8 @@
 
 .input-profile__element[readonly] {
     cursor: auto;
+} 
+
+.input-profile.error .input-profile__element{
+    color: red;
 }

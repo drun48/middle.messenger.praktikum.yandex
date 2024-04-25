@@ -5,9 +5,6 @@ export class InputForm extends Block {
   constructor(props: Props) {
     super({
       ...props,
-      events: {
-        valid: props.valid,
-      },
       onBlur: () => this.validate(),
     });
   }

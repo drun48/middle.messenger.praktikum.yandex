@@ -1,6 +1,15 @@
 import { Block, Props } from "../../core/Block";
+import { FormProfile } from "../../components/form-profile";
 
 export class PageProfile extends Block {
+  profile = {
+    email: "pochta@yandex.ru",
+    login: "ivanivanov",
+    first_name: "Иван",
+    second_name: "Иванов",
+    display_name: "Иван",
+    phone: "79099673030",
+  };
   constructor(props: Props) {
     super({
       ...props,
@@ -10,7 +19,16 @@ export class PageProfile extends Block {
       savePassword: () => this.savePassword(),
       readonlyForm: true,
       changePassword: false,
+      profile: {
+        email: "pochta@yandex.ru",
+        login: "ivanivanov",
+        first_name: "Иван",
+        second_name: "Иванов",
+        display_name: "Иван",
+        phone: "79099673030",
+      },
     });
+    // this.refs.formProfile.setProps({ form: {email:'tete'} });
   }
 
   changeForm = () => {
@@ -22,7 +40,13 @@ export class PageProfile extends Block {
   };
 
   saveProfile = () => {
-    this.props.readonlyForm = true;
+    const formComponent = this.refs.formProfile as FormProfile;
+    const form = formComponent.getForm();
+    if (form) {
+      console.log(form)
+      this.setProps({ profile: form });
+      this.props.readonlyForm = true;
+    }
   };
 
   savePassword = () => {
@@ -40,11 +64,11 @@ export class PageProfile extends Block {
 
           {{{ FormPasswordProfile }}}
           <div class="profile__form__btn">
-            {{{ Button class="primary-button" label="Сохранить" onClick=savePassword}}}
+            {{{ Button class="primary-button" form=profile label="Сохранить" onClick=savePassword}}}
           </div>
 
         {{else}}
-          {{{ FormProfile readonly=readonlyForm }}}
+          {{{ FormProfile ref="formProfile" readonly=readonlyForm form=profile}}}
 
           {{#if (isEqual readonlyForm false)}}
           <div class="profile__form__btn">

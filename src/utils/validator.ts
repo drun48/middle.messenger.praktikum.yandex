@@ -12,7 +12,7 @@ export function valid_name(value: string): Valid {
     return { value: false, errorText: "Используйте латиницу или кириллицу" };
   }
 
-  if (value !== value.toUpperCase()) {
+  if (value[0] !== value[0].toUpperCase()) {
     return { value: false, errorText: "Первая буква должна быть заглавной" };
   }
 
