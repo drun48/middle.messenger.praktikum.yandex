@@ -57,7 +57,7 @@ const navigate = (page: string) => {
   container.innerHTML = Handlebars.compile(source)(context);
 };
 
-document.addEventListener("DOMContentLoaded", () => navigate("profile"));
+document.addEventListener("DOMContentLoaded", () => navigate("chat"));
 
 document.addEventListener("click", (e) => {
   //@ts-ignore

@@ -2,12 +2,14 @@ import { Block, Props } from "../../core/Block";
 import menu from "../../assets/menu.svg";
 import photo1 from "../../assets/test_photo.jpg";
 import photo2 from "../../assets/test_photo2.png";
+import { InputMessage } from "../../components/input-message";
 
 export class PageChat extends Block {
   constructor(props: Props) {
     super({
       ...props,
       menu,
+      sendMessage: () => this.sendMessage(),
       listMessage: [
         {
           day: "19 июня",
@@ -42,6 +44,14 @@ export class PageChat extends Block {
       ],
     });
   }
+
+  sendMessage() {
+    const component = this.refs.inputMessage as InputMessage;
+    const message = component.getValue();
+    if (!message) return;
+    console.log(message);
+  }
+
   protected render() {
     return `
         {{# PageSelectedChats component=true}}
@@ -60,10 +70,12 @@ export class PageChat extends Block {
                             <img src="{{attacher}}" alt="Иконка"/>
                         </div>
                         <div class="container-chat__input__element">
-                            {{{ InputMessage placeholder="Сообщение" }}}
+                            {{{ InputMessage ref="inputMessage" placeholder="Сообщение" }}}
                         </div>
+                        {{#Button class="container-chat__input__button" onClick=sendMessage}}
+                          <img src="{{arrow_circle}}" alt="Иконка">
+                        {{/Button}}
                         <div class="container-chat__input__button">
-                                <img src="{{arrow_circle}}" alt="Иконка">
                         </div>
                 </div>
             </div>

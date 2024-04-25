@@ -7,10 +7,16 @@ export class InputMessage extends Block {
     });
   }
 
+  public getValue() {
+    if (!(this.refs.input instanceof Block)) return null;
+    const input = this.refs.input.element as HTMLInputElement;
+    return input.value;
+  }
+
   protected render(): string {
     return `
     <div class="input-message">
-        {{{Input class="input-message__element" name="message" placeholder=placeholder }}}
+        {{{Input ref="input" class="input-message__element" name="message" placeholder=placeholder }}}
     </div>`;
   }
 }

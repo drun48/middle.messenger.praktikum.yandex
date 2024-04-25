@@ -13,7 +13,7 @@
     padding-bottom: 10px;
 }
 
-.container-chat__profile__menu{
+.container-chat__profile__menu {
     cursor: pointer;
 }
 
@@ -28,7 +28,7 @@
     padding-bottom: 30px;
 }
 
-.container-chat__input{
+.container-chat__input {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -37,9 +37,17 @@
     margin-top: 20px;
 }
 
-.container-chat__input__element{
+.container-chat__input__element {
     flex: 1 0;
 }
-.container-chat__input__element input{
+
+.container-chat__input__element input {
     width: 100%;
+}
+
+
+.container-chat__input__button {
+    border: none;
+    background: var(--primary-background);
+    cursor: pointer;
 }
