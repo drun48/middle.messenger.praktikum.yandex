@@ -78,8 +78,9 @@ export class Block {
       if (prop[0] == "_") {
         throw new Error("нет доступа");
       }
+      const oldTarget = { ...target };
       target[prop] = value;
-      this.eventBus.emit(Block.EVENTS.FLOW_CDU);
+      this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
       return true;
     };
     const get = (target: Props, prop: string) => {
@@ -115,6 +116,7 @@ export class Block {
 
   private compile(template: string, context: any) {
     const contextAndStubs = { ...context, __refs: this.refs };
+
     const html = Handlebars.compile(template)(contextAndStubs);
 
     const temp = document.createElement("template");

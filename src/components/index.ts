@@ -21,3 +21,4 @@ export { FormPasswordProfile } from "./form-password-profile";
 export { Input } from "./input";
 export { Button } from "./button";
 export { PageSelectedChats } from "../pages/SelectedChats";
+export { ErrorInputText } from "./error-input-text";
