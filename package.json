@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "start": "tsc && vite build && node server.js",
     "eslint": "node_modules/.bin/eslint '**/*.ts'",
-    "stylelint": "npx stylelint '**/*.css'"
+    "stylelint": "npx stylelint '**/*.css'",
+    "format": "node_modules/.bin/eslint '**/*.ts' --fix"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.6.0",

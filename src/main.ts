@@ -6,13 +6,16 @@ import arrowCircle from './assets/arrow-circle.svg';
 import attacher from './assets/attacher.svg';
 import photoUser from './assets/photoUser.png';
 import profilPhoto from './assets/profile_photo.svg';
-import { Block } from './core/Block';
+import { Block, Props } from './core/Block';
 import { registerComponent } from './core/registerComponent';
 
-const pages = {
-  nav: [Pages.NavPage],
-  login: [Pages.LoginPage],
-  signin: [Pages.PageSign],
+const pages: Record<
+  string,
+  [string | (new (...args: Props[]) => Block), Props]
+> = {
+  nav: [Pages.NavPage, {}],
+  login: [Pages.LoginPage, {}],
+  signin: [Pages.PageSign, {}],
   chats: [
     Pages.PageChats,
     {
@@ -21,10 +24,7 @@ const pages = {
       photoUser,
     },
   ],
-  profile: [
-    Pages.PageProfile,
-    { arrowCircle, profilPhoto },
-  ],
+  profile: [Pages.PageProfile, { arrowCircle, profilPhoto }],
   error404: [Pages.PageError, { code: '404', title: 'Не туда попали' }],
   error500: [Pages.PageError, { code: '500', title: 'Мы уже фиксим' }],
 };
@@ -39,7 +39,6 @@ Object.entries(Components).forEach(([name, component]) => {
 Handlebars.registerHelper('isEqual', (value1, value2) => value1 === value2);
 
 const navigate = (page: string) => {
-  // @ts-ignore
   const [Source, context] = pages[page];
   const container = document.getElementById('app')!;
 
@@ -56,8 +55,8 @@ const navigate = (page: string) => {
 document.addEventListener('DOMContentLoaded', () => navigate('nav'));
 
 document.addEventListener('click', (e) => {
-  // @ts-ignore
-  const page = e.target.getAttribute('page');
+  const element = e.target as HTMLElement;
+  const page = element.getAttribute('page');
   if (page) {
     navigate(page);
 
