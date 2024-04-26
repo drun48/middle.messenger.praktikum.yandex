@@ -1,20 +1,22 @@
-import Handlebars from "handlebars";
-import { EventBus } from "./EventBus";
+import Handlebars from 'handlebars';
+import uuid from 'uuid-random';
+import { EventBus } from './EventBus';
 
 export type Props = {
   [key: string]: unknown;
 };
 
 export type Refs = {
+  // eslint-disable-next-line no-use-before-define
   [key: string]: Element | Block;
 };
 
 export class Block {
   static EVENTS = {
-    INIT: "init",
-    FLOW_CDM: "flow:component-did-mount",
-    FLOW_CDU: "flow:component-did-update",
-    FLOW_RENDER: "flow:render",
+    INIT: 'init',
+    FLOW_CDM: 'flow:component-did-mount',
+    FLOW_CDU: 'flow:component-did-update',
+    FLOW_RENDER: 'flow:render',
   };
 
   private _element: HTMLElement | null = null;
@@ -25,7 +27,7 @@ export class Block {
 
   protected props: Props;
 
-  id: string = self.crypto.randomUUID();
+  id: string = uuid();
 
   get element() {
     return this._element;
@@ -60,7 +62,7 @@ export class Block {
     this.eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     this.eventBus.on(
       Block.EVENTS.FLOW_CDU,
-      this._componentDidUpdate.bind(this)
+      this._componentDidUpdate.bind(this),
     );
   }
 
@@ -76,9 +78,10 @@ export class Block {
   }
 
   private makePropsProxy(props: Props) {
-    const set = (target: Props, prop: string, value: unknown) => {
-      if (prop[0] == "_") {
-        throw new Error("нет доступа");
+    const set = (context: Props, prop: string, value: unknown) => {
+      const target = context;
+      if (prop[0] === '_') {
+        throw new Error('нет доступа');
       }
       const oldTarget = { ...target };
       target[prop] = value;
@@ -86,14 +89,14 @@ export class Block {
       return true;
     };
     const get = (target: Props, prop: string) => {
-      if (prop[0] == "_") {
-        throw new Error("нет доступа");
+      if (prop[0] === '_') {
+        throw new Error('нет доступа');
       }
       const value = target[prop];
-      return typeof value === "function" ? value.bind(target) : value;
+      return typeof value === 'function' ? value.bind(target) : value;
     };
     const deleteProperty = () => {
-      throw new Error("нет доступа");
+      throw new Error('нет доступа');
     };
     return new Proxy(props, {
       get,
@@ -145,20 +148,23 @@ export class Block {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   protected init() {}
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   protected componentDidMount(oldProps?: Props) {}
 
   protected dispatchComponentDidMount() {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   protected componentDidUpdate(oldProps: Props, newProps: Props) {
     return true;
   }
 
   protected render(): string {
-    return "";
+    return '';
   }
 
   getContent() {
@@ -182,12 +188,10 @@ export class Block {
   };
 
   show() {
-    if (this.element instanceof HTMLElement)
-      this.element.style.display = "block";
+    if (this.element instanceof HTMLElement) this.element.style.display = 'block';
   }
 
   hide() {
-    if (this.element instanceof HTMLElement)
-      this.element.style.display = "none";
+    if (this.element instanceof HTMLElement) this.element.style.display = 'none';
   }
 }

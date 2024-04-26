@@ -1,9 +1,10 @@
-import Handlebars from "handlebars";
-import { Block } from "./Block";
-import { HelperOptions } from "handlebars";
+/* eslint-disable no-param-reassign */
+import Handlebars, { HelperOptions } from 'handlebars';
+import { Block } from './Block';
 
 export function registerComponent(name: string, Component: typeof Block) {
   if (name in Handlebars.helpers) {
+    // eslint-disable-next-line no-throw-literal
     throw `The ${name} component is already registered!`;
   }
   Handlebars.registerHelper(
@@ -12,7 +13,7 @@ export function registerComponent(name: string, Component: typeof Block) {
       const component = new Component(hash);
 
       const dataAttribute = `data-id="${component.id}"`;
-      if ("ref" in hash) {
+      if ('ref' in hash) {
         (data.root.__refs = data.root.__refs || {})[hash.ref] = component;
       }
 
@@ -31,9 +32,9 @@ export function registerComponent(name: string, Component: typeof Block) {
         },
       });
 
-      const contents = fn ? fn(this) : "";
+      const contents = fn ? fn(this) : '';
 
       return `<div ${dataAttribute}>${contents}</div>`;
-    }
+    },
   );
 }

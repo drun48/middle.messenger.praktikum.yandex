@@ -72,7 +72,7 @@ export class PageProfile extends Block {
     {{{ ModalUploadFile ref="modalUpload" input_name="avatar" labelButton="Поменять" accept=".jpg, .png" global=true}}}
     <div class="profile__form">
         <div class="profile__form__title">
-            {{{ ProfileTitle title="Иван" photo=profil_photo chagePhoto=true onClick=openUploadFile}}}
+            {{{ ProfileTitle title="Иван" photo=profilPhoto chagePhoto=true onClick=openUploadFile}}}
         </div>
 
         {{#if changePassword}}
@@ -100,7 +100,7 @@ export class PageProfile extends Block {
     </div>
     <div class="profile__back">
         <a class="profile__back__button">
-            <img src={{arrow_circle}} alt="Иконка">
+            <img src={{arrowCircle}} alt="Иконка">
         </a>
     </div>
 </div>

@@ -313,7 +313,7 @@ export class PageChats extends Block {
     {{else}}
       <div class="container-chat">
         <div class="container-chat__profile">
-              {{{ CardUser name="Вадим" photo=photo_user }}}
+              {{{ CardUser name="Вадим" photo=photoUser }}}
               <div class="container-chat__profile__menu">
                 {{#Button onClick=openModalControllerChat}}
                   <img src="{{menu}}" alt="Иконка"/>
@@ -335,7 +335,7 @@ export class PageChats extends Block {
                   {{{ InputMessage ref="inputMessage" placeholder="Сообщение" }}}
               </div>
               {{#Button class="container-chat__input__button" onClick=sendMessage}}
-                <img src="{{arrow_circle}}" alt="Иконка">
+                <img src="{{arrowCircle}}" alt="Иконка">
               {{/Button}}
               <div class="container-chat__input__button">
               </div>

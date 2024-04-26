@@ -2,10 +2,10 @@ import Handlebars from 'handlebars';
 import * as Components from './components';
 import * as Pages from './pages';
 
-import arrow_circle from './assets/arrow-circle.svg';
+import arrowCircle from './assets/arrow-circle.svg';
 import attacher from './assets/attacher.svg';
-import photo_user from './assets/photoUser.png';
-import profil_photo from './assets/profile_photo.svg';
+import photoUser from './assets/photoUser.png';
+import profilPhoto from './assets/profile_photo.svg';
 import { Block } from './core/Block';
 import { registerComponent } from './core/registerComponent';
 
@@ -17,13 +17,13 @@ const pages = {
     Pages.PageChats,
     {
       attacher,
-      arrow_circle,
-      photo_user,
+      arrowCircle,
+      photoUser,
     },
   ],
   profile: [
     Pages.PageProfile,
-    { arrow_circle, profil_photo },
+    { arrowCircle, profilPhoto },
   ],
   error404: [Pages.PageError, { code: '404', title: 'Не туда попали' }],
   error500: [Pages.PageError, { code: '500', title: 'Мы уже фиксим' }],
@@ -36,21 +36,21 @@ Object.entries(Components).forEach(([name, component]) => {
   }
 });
 
-Handlebars.registerHelper('isEqual', (value1, value2) => value1 == value2);
+Handlebars.registerHelper('isEqual', (value1, value2) => value1 === value2);
 
 const navigate = (page: string) => {
   // @ts-ignore
-  const [source, context] = pages[page];
+  const [Source, context] = pages[page];
   const container = document.getElementById('app')!;
 
-  if (source instanceof Object) {
-    const page = new source(context) as Block;
+  if (Source instanceof Object) {
+    const element = new Source(context) as Block;
     container.innerHTML = '';
-    container.append(page.getContent() as Node);
+    container.append(element.getContent() as Node);
     return;
   }
 
-  container.innerHTML = Handlebars.compile(source)(context);
+  container.innerHTML = Handlebars.compile(Source)(context);
 };
 
 document.addEventListener('DOMContentLoaded', () => navigate('nav'));

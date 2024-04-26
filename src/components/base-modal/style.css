@@ -42,7 +42,6 @@
 .baseModal footer .error {
     position: absolute;
     top: calc(100% + 10px);
-
     font-weight: 500;
     font-size: 11px;
     line-height: 100%;

@@ -2,7 +2,6 @@
     --padding: 11px;
 
     position: relative;
-
     width: 100%;
 }
 
@@ -29,7 +28,7 @@ p.message__element {
 }
 
 .message img+.message__time {
-    background: rgba(82, 82, 82, 0.5);
+    background: rgb(82 82 82 / 50%);
     border-radius: 30px;
     color: #FFF;
     padding: 2px 4px;

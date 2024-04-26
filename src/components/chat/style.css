@@ -54,9 +54,9 @@
 }
 
 .notMyMessage .end_message {
-    border-radius: 0 12px 12px 12px;
+    border-radius: 0 12px 12px;
 }
 
 .myMessage .end_message {
-    border-radius: 12px 12px 0 12px;
+    border-radius: 12px 12px 0;
 }

@@ -1,5 +1,5 @@
 import './style.css';
 
-export { PageChats } from './selectedChats';
+export { PageChats } from './chats';
 
 // Handlebars.registerPartial("PageListChat", PageSelectedChats);
