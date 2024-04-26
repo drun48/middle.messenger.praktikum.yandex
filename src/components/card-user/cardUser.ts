@@ -4,11 +4,17 @@ export class CardUser extends Block {
   constructor(props: Props) {
     super({
       ...props,
+      events: {
+        click: (event: Event) => {
+          const fn = props.onClick;
+          if (fn instanceof Function) fn(event, this.props.id);
+        },
+      },
     });
   }
 
   protected render() {
-    return `<div class="card-user">
+    return `<div class="card-user {{class}}">
     <div class="card-user__profile">
       <div class="card-user__profile__photo">
         <img src="{{photo}}" alt="Фото"/>

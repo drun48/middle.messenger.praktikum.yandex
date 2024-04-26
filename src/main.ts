@@ -13,9 +13,8 @@ const pages = {
   nav: [Pages.NavPage],
   login: [Pages.LoginPage],
   signin: [Pages.PageSign],
-  listChat: [Pages.PageSelectedChats],
-  chat: [
-    Pages.PageChat,
+  chats: [
+    Pages.PageChats,
     {
       attacher: attacher,
       arrow_circle: arrow_circle,
@@ -57,7 +56,7 @@ const navigate = (page: string) => {
   container.innerHTML = Handlebars.compile(source)(context);
 };
 
-document.addEventListener("DOMContentLoaded", () => navigate("profile"));
+document.addEventListener("DOMContentLoaded", () => navigate("nav"));
 
 document.addEventListener("click", (e) => {
   //@ts-ignore
