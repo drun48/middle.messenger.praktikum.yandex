@@ -1,2 +1,2 @@
 import "./style.css";
-export { InputForm } from "./input-form";
+export { InputForm } from "./inputForm";

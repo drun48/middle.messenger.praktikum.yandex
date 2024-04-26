@@ -3,5 +3,4 @@ export { LoginPage } from "./Login";
 export { PageSign } from "./Signin";
 export { PageChats } from "./Chats";
 export { PageProfile } from "./Profile";
-export { PageModals } from "./modals";
-export { PageError } from "./error";
+export { PageError } from "./Error";
