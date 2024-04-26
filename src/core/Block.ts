@@ -152,14 +152,14 @@ export class Block {
   protected init() {}
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  protected componentDidMount(oldProps?: Props) {}
+  protected componentDidMount(_oldProps?: Props) {}
 
   protected dispatchComponentDidMount() {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  protected componentDidUpdate(oldProps: Props, newProps: Props) {
+  protected componentDidUpdate(_oldProps: Props, _newProps: Props) {
     return true;
   }
 

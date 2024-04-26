@@ -28,7 +28,7 @@ export class PageChats extends Block {
       activeChatId: null,
       searchChat: (event: Event) => this.searchChat(event),
       sendMessage: () => this.sendMessage(),
-      clickCard: (event: Event, id: string) => {
+      clickCard: (id: string) => {
         this.props.activeChat = true;
         this.props.activeChatId = id;
       },

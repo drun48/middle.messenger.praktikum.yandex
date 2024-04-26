@@ -5,9 +5,9 @@ export class CardUser extends Block {
     super({
       ...props,
       events: {
-        click: (event: Event) => {
+        click: () => {
           const fn = props.onClick;
-          if (fn instanceof Function) fn(event, this.props.id);
+          if (fn instanceof Function) fn(this.props.id);
         },
       },
     });
