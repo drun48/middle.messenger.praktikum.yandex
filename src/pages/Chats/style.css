@@ -104,7 +104,7 @@
     position: relative;
 }
 
-.container-chat__profile__menu button {
+.container-chat__profile__menu>button {
     border: none;
     background: var(--primary-background);
     cursor: pointer;
@@ -155,7 +155,7 @@
     position: relative;
 }
 
-.container-chat__input__attacher button {
+.container-chat__input__attacher>button {
     cursor: pointer;
     border: none;
     background: var(--primary-background);

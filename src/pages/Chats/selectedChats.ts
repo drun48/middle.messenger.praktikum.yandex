@@ -7,6 +7,7 @@ import photo2 from "../../assets/test_photo2.png";
 import { InputMessage } from "../../components/input-message";
 import { ModalUser } from "../../components/modal-user";
 import { ModalList } from "../../components/modal-list";
+import { ModalDeleteChat } from "../../components/modal-delete-chat";
 
 export class PageChats extends Block {
   constructor(props: Props) {
@@ -15,17 +16,20 @@ export class PageChats extends Block {
       arrow,
       search: "",
       menu,
-      activeChath: true,
+      activeChat: true,
       activeChatId: null,
       searchChat: (event: Event) => this.searchChat(event),
       sendMessage: () => this.sendMessage(),
       clickCard: (event: Event, id: string) => {
-        this.props.activeChath = true;
+        this.props.activeChat = true;
         this.props.activeChatId = id;
       },
       openModalAttach: () => this.openModalAttach(),
-      openModalControllerChat: (event: Event) =>
-        this.openModalControllerChat(event),
+      controllerChat: (str: string) => this.controllerChat(str),
+      openModalControllerChat: (event: Event) => this.openModalControllerChat(event),
+      addUser:(value:string)=>this.addUser(value),
+      deleteUser:(value:string)=>this.deleteUser(value),
+      deleteChat:()=>this.deleteChat(),
       filterListChat: [],
       listMessage: [
         {
@@ -185,7 +189,6 @@ export class PageChats extends Block {
   }
 
   openModalControllerChat(event: Event) {
-    console.log(event);
     event.stopPropagation();
     event.stopImmediatePropagation();
     const modal = this.refs.modalControllerChat as ModalList;
@@ -205,10 +208,37 @@ export class PageChats extends Block {
     }
   }
 
+  controllerChat(str: string) {
+    switch (str) {
+      case "Добавить пользователя":
+        (this.refs.modalAdd as ModalUser).open();
+        break;
+      case "Удалить пользователя":
+        (this.refs.modalDelete as ModalUser).open();
+        break;
+      case "Удалить чат":
+        (this.refs.modalDeleteChat as ModalDeleteChat).open();
+        break;
+    }
+  }
+
+  addUser(value:string){
+    console.log(value)
+  }
+
+  deleteUser(value:string){
+    console.log(value)
+  }
+
+  deleteChat(){
+    console.log('Удалить чат', this.props.activeChatId)
+  }
+
   protected render() {
     return `<div class="wrapper-chat">
-    {{{ ModalUser ref="modalAdd" title="Добавить пользователя" labelButton="Добавить" global=true}}}
-    {{{ ModalUser ref="modalDelete" title="Удалить пользователя" labelButton='Удалить' global=true}}}
+    {{{ ModalUser ref="modalAdd" title="Добавить пользователя" labelButton="Добавить" global=true getLogin=addUser}}}
+    {{{ ModalUser ref="modalDelete" title="Удалить пользователя" labelButton='Удалить' global=true getLogin=deleteUser}}}
+    {{{ ModalDeleteChat delete=deleteChat ref="modalDeleteChat" global=true}}}
     <div class="wrapper-choice">
         <div class="container-search">
             <div class="container-search__nav">
@@ -234,7 +264,7 @@ export class PageChats extends Block {
             </ul>
         </div>
     </div>
-    {{#if (isEqual activeChath false)}}
+    {{#if (isEqual activeChat false)}}
         <div class="empty-chat">
             <h3>Выберите чат чтобы отправить сообщение</h3>
         </div>
@@ -246,7 +276,7 @@ export class PageChats extends Block {
                 {{#Button onClick=openModalControllerChat}}
                   <img src="{{menu}}" alt="Иконка"/>
                 {{/Button}}
-                {{{ ModalList class="modal-controller-chat" list=(listControllerChat) ref="modalControllerChat"}}}
+                {{{ ModalList class="modal-controller-chat" controller=controllerChat list=(listControllerChat) ref="modalControllerChat"}}}
               </div>
         </div>
           <div class="container-chat__element">

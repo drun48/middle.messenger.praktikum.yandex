@@ -8,6 +8,15 @@ export class ModalList extends Block {
       onClose: () => {
         this.props.open = false;
       },
+      click: (event: Event) => {
+        const element = event.currentTarget as HTMLElement;
+        const valueElement = element.getElementsByTagName("p")[0];
+        const value = valueElement.textContent;
+        if (value && this.props.controller instanceof Function) {
+          this.props.controller(value);
+          this.props.open = false;
+        }
+      },
     });
   }
 
@@ -29,8 +38,10 @@ export class ModalList extends Block {
             <ul class="modal-list__element">
                 {{#each list}}
                     <li class="modal-list__element__item">
-                        <img src="{{photo}}" alt="Иконка"/>
-                        <p>{{value}}</p>
+                        {{#Button class="modal-list__element__item" onClick=../this.click }}
+                          <img src="{{photo}}" alt="Иконка"/>
+                          <p>{{value}}</p>
+                        {{/Button}}
                     </li>
                 {{/each}}
             </ul>
