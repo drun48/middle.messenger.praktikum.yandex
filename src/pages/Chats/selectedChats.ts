@@ -5,6 +5,8 @@ import menu from "../../assets/menu.svg";
 import photo1 from "../../assets/test_photo.jpg";
 import photo2 from "../../assets/test_photo2.png";
 import { InputMessage } from "../../components/input-message";
+import { ModalUser } from "../../components/modal-user";
+import { ModalList } from "../../components/modal-list";
 
 export class PageChats extends Block {
   constructor(props: Props) {
@@ -13,17 +15,17 @@ export class PageChats extends Block {
       arrow,
       search: "",
       menu,
-      activeChath: false,
+      activeChath: true,
       activeChatId: null,
-      test: () => {
-        console.log("vvvv");
-      },
       searchChat: (event: Event) => this.searchChat(event),
       sendMessage: () => this.sendMessage(),
       clickCard: (event: Event, id: string) => {
         this.props.activeChath = true;
         this.props.activeChatId = id;
       },
+      openModalAttach: () => this.openModalAttach(),
+      openModalControllerChat: (event: Event) =>
+        this.openModalControllerChat(event),
       filterListChat: [],
       listMessage: [
         {
@@ -182,8 +184,31 @@ export class PageChats extends Block {
     console.log(message);
   }
 
+  openModalControllerChat(event: Event) {
+    console.log(event);
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    const modal = this.refs.modalControllerChat as ModalList;
+    if (!modal.getState()) {
+      modal.open();
+    } else {
+      modal.close();
+    }
+  }
+
+  openModalAttach() {
+    const modal = this.refs.modalAttach as ModalList;
+    if (!modal.getState()) {
+      modal.open();
+    } else {
+      modal.close();
+    }
+  }
+
   protected render() {
     return `<div class="wrapper-chat">
+    {{{ ModalUser ref="modalAdd" title="Добавить пользователя" labelButton="Добавить" global=true}}}
+    {{{ ModalUser ref="modalDelete" title="Удалить пользователя" labelButton='Удалить' global=true}}}
     <div class="wrapper-choice">
         <div class="container-search">
             <div class="container-search__nav">
@@ -218,7 +243,10 @@ export class PageChats extends Block {
         <div class="container-chat__profile">
               {{{ CardUser name="Вадим" photo=photo_user }}}
               <div class="container-chat__profile__menu">
+                {{#Button onClick=openModalControllerChat}}
                   <img src="{{menu}}" alt="Иконка"/>
+                {{/Button}}
+                {{{ ModalList class="modal-controller-chat" list=(listControllerChat) ref="modalControllerChat"}}}
               </div>
         </div>
           <div class="container-chat__element">
@@ -226,7 +254,10 @@ export class PageChats extends Block {
           </div>
           <div class="container-chat__input">
               <div class="container-chat__input__attacher">
+                {{#Button onClick=openModalAttach}}
                   <img src="{{attacher}}" alt="Иконка"/>
+                {{/Button}}
+                {{{ ModalList class="modal-attach" list=(listAttach) ref="modalAttach" }}}
               </div>
               <div class="container-chat__input__element">
                   {{{ InputMessage ref="inputMessage" placeholder="Сообщение" }}}

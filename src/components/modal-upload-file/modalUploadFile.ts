@@ -1,5 +1,4 @@
 import { Block, Props } from "../../core/Block";
-import { BaseModal } from "../base-modal";
 
 export class ModalUploadFile extends Block {
   file: File | undefined;
@@ -59,7 +58,7 @@ export class ModalUploadFile extends Block {
   }
 
   protected render(): string {
-    return `{{#BaseModal ref="modal" class="uploadFile" open=open global=global title=title errorTitle=errorTitle close=onClose}}
+    return `{{#BaseModal class="uploadFile" open=open global=global title=title errorTitle=errorTitle close=onClose}}
     {{#BaseModalContent }}
       <div class="uploadFile__content">
         {{#if content}}

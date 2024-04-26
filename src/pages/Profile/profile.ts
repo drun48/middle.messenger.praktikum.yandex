@@ -1,6 +1,7 @@
 import { Block, Props } from "../../core/Block";
 import { FormProfile } from "../../components/form-profile";
 import { FormPasswordProfile } from "../../components/form-password-profile";
+import { ModalUploadFile } from "../../components/modal-upload-file";
 
 export class PageProfile extends Block {
   profile = {
@@ -61,8 +62,8 @@ export class PageProfile extends Block {
   };
 
   openUploadFile() {
-    // this.props.openModalFile = true
-    this.refs.modalUpload.open()
+    const modal = this.refs.modalUpload as ModalUploadFile;
+    modal.open();
   }
 
   protected render() {

@@ -101,6 +101,12 @@
 }
 
 .container-chat__profile__menu {
+    position: relative;
+}
+
+.container-chat__profile__menu button {
+    border: none;
+    background: var(--primary-background);
     cursor: pointer;
 }
 
@@ -137,4 +143,26 @@
     border: none;
     background: var(--primary-background);
     cursor: pointer;
+}
+
+.modal-controller-chat {
+    top: calc(100% + 34px);
+    left: -270px;
+    width: max-content;
+}
+
+.container-chat__input__attacher {
+    position: relative;
+}
+
+.container-chat__input__attacher button {
+    cursor: pointer;
+    border: none;
+    background: var(--primary-background);
+}
+
+.modal-attach {
+    bottom: calc(100% + 34px);
+    left: 0;
+    width: max-content;
 }

@@ -2,6 +2,7 @@
     width: fit-content;
     height: fit-content;
     border: none;
+    z-index: 100;
 }
 
 .baseModal::backdrop {
