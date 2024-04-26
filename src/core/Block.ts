@@ -1,5 +1,5 @@
-import Handlebars from 'handlebars';
-import { EventBus } from './EventBus';
+import Handlebars from "handlebars";
+import { EventBus } from "./EventBus";
 
 export type Props = {
   [key: string]: unknown;
@@ -11,10 +11,10 @@ export type Refs = {
 
 export class Block {
   static EVENTS = {
-    INIT: 'init',
-    FLOW_CDM: 'flow:component-did-mount',
-    FLOW_CDU: 'flow:component-did-update',
-    FLOW_RENDER: 'flow:render',
+    INIT: "init",
+    FLOW_CDM: "flow:component-did-mount",
+    FLOW_CDU: "flow:component-did-update",
+    FLOW_RENDER: "flow:render",
   };
 
   private _element: HTMLElement | null = null;
@@ -60,7 +60,7 @@ export class Block {
     this.eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     this.eventBus.on(
       Block.EVENTS.FLOW_CDU,
-      this._componentDidUpdate.bind(this),
+      this._componentDidUpdate.bind(this)
     );
   }
 
@@ -77,8 +77,8 @@ export class Block {
 
   private makePropsProxy(props: Props) {
     const set = (target: Props, prop: string, value: unknown) => {
-      if (prop[0] == '_') {
-        throw new Error('нет доступа');
+      if (prop[0] == "_") {
+        throw new Error("нет доступа");
       }
       const oldTarget = { ...target };
       target[prop] = value;
@@ -86,14 +86,14 @@ export class Block {
       return true;
     };
     const get = (target: Props, prop: string) => {
-      if (prop[0] == '_') {
-        throw new Error('нет доступа');
+      if (prop[0] == "_") {
+        throw new Error("нет доступа");
       }
       const value = target[prop];
-      return typeof value === 'function' ? value.bind(target) : value;
+      return typeof value === "function" ? value.bind(target) : value;
     };
     const deleteProperty = () => {
-      throw new Error('нет доступа');
+      throw new Error("нет доступа");
     };
     return new Proxy(props, {
       get,
@@ -116,16 +116,19 @@ export class Block {
     this._addEvents();
   }
 
-  private compile(template: string, context: any) {
-    const contextAndStubs = { ...context, __refs: this.refs };
+  //
+  private compile(template: string, context: Props) {
+    const contextAndStubs = { ...context, __refs: this.refs, __children: [] };
 
     const html = Handlebars.compile(template)(contextAndStubs);
 
     const temp = document.createElement('template');
 
     temp.innerHTML = html;
-    contextAndStubs.__children?.forEach(({ embed }: any) => {
-      embed(temp.content);
+    contextAndStubs.__children?.forEach((item: object) => {
+      if ('embed' in item && item.embed instanceof Function) {
+        item.embed(temp.content);
+      }
     });
 
     return temp.content;
@@ -155,7 +158,7 @@ export class Block {
   }
 
   protected render(): string {
-    return '';
+    return "";
   }
 
   getContent() {
@@ -179,10 +182,12 @@ export class Block {
   };
 
   show() {
-    if (this.element instanceof HTMLElement) this.element.style.display = 'block';
+    if (this.element instanceof HTMLElement)
+      this.element.style.display = "block";
   }
 
   hide() {
-    if (this.element instanceof HTMLElement) this.element.style.display = 'none';
+    if (this.element instanceof HTMLElement)
+      this.element.style.display = "none";
   }
 }
