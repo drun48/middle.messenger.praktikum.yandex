@@ -9,11 +9,12 @@ export class Input extends Block {
         input: props.onInput,
       },
     });
-    this.element?.dispatchEvent(new Event("input"));
+    if (props.value) this.element?.dispatchEvent(new Event("input"));
   }
   protected render(): string {
     return `
-      <input class="{{class}}" type="{{type}}" style="{{style}}" name="{{name}}" placeholder="{{placeholder}}" autocomplete="on" value="{{value}}"
+      <input class="{{class}}" type="{{type}}" style="{{style}}" name="{{name}}" placeholder="{{placeholder}}" autocomplete="on" value="{{value}}" 
+      accept="{{accept}}"
       {{#if readonly}}
       readonly
       {{/if}}"/>

@@ -8,7 +8,7 @@ export class BaseModalFooter extends Block {
   protected render(): string {
     return `<footer>
     {{#if default}}
-      {{{Button class="primary-button" label=labelButton}}}
+      {{{Button class="primary-button" label=labelButton onClick=onClick}}}
     {{/if}}
     {{#if errorFooterText}}
         <p class="error">{{errorFooterText}}</p>

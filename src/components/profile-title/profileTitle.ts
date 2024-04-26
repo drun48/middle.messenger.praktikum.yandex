@@ -3,7 +3,10 @@ import { Block, Props } from "../../core/Block";
 export class ProfileTitle extends Block {
   constructor(props: Props) {
     super({
-      ...props
+      ...props,
+      events: {
+        click: props.onClick,
+      },
     });
   }
 

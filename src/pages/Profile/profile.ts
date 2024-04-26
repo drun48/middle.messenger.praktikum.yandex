@@ -18,8 +18,10 @@ export class PageProfile extends Block {
       stateChangePassword: () => this.stateChangePassword(),
       saveProfile: () => this.saveProfile(),
       savePassword: () => this.savePassword(),
+      openUploadFile: () => this.openUploadFile(),
       readonlyForm: true,
       changePassword: false,
+      openModalFile: false,
       profile: {
         email: "pochta@yandex.ru",
         login: "ivanivanov",
@@ -43,9 +45,9 @@ export class PageProfile extends Block {
     const formComponent = this.refs.formProfile as FormProfile;
     const form = formComponent.getForm();
     if (form) {
-      console.log(form);
       this.setProps({ profile: form });
       this.props.readonlyForm = true;
+      console.log(form);
     }
   };
 
@@ -53,16 +55,22 @@ export class PageProfile extends Block {
     const formComponent = this.refs.formPasswordProfile as FormPasswordProfile;
     const form = formComponent.getForm();
     if (form) {
-      console.log(form);
       this.props.changePassword = false;
+      console.log(form);
     }
   };
 
+  openUploadFile() {
+    // this.props.openModalFile = true
+    this.refs.modalUpload.open()
+  }
+
   protected render() {
     return `<div class="profile">
+    {{{ ModalUploadFile ref="modalUpload" input_name="avatar" labelButton="Поменять" accept=".jpg, .png" global=true}}}
     <div class="profile__form">
         <div class="profile__form__title">
-            {{{ ProfileTitle title="Иван" photo=profil_photo chagePhoto=true }}}
+            {{{ ProfileTitle title="Иван" photo=profil_photo chagePhoto=true onClick=openUploadFile}}}
         </div>
 
         {{#if changePassword}}
