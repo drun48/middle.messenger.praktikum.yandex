@@ -1,4 +1,4 @@
-import { Block, Props } from "../../core/Block";
+import { Block, Props } from '../../core/Block';
 
 export class Chat extends Block {
   constructor(props: Props) {

@@ -1,2 +1,3 @@
-import "./style.css";
-export { Chat } from "./chat";
+import './style.css';
+
+export { Chat } from './chat';

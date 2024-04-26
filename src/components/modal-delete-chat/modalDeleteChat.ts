@@ -1,4 +1,4 @@
-import { Block, Props } from "../../core/Block";
+import { Block, Props } from '../../core/Block';
 
 export class ModalDeleteChat extends Block {
   constructor(props: Props) {
@@ -8,7 +8,7 @@ export class ModalDeleteChat extends Block {
         this.props.open = false;
       },
       deleteBtn: () => {
-        this.props.open = false
+        this.props.open = false;
         if (this.props.delete instanceof Function) this.props.delete();
       },
     });

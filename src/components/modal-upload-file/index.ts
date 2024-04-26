@@ -1,2 +1,3 @@
-import "./style.css";
-export { ModalUploadFile } from "./modalUploadFile";
+import './style.css';
+
+export { ModalUploadFile } from './modalUploadFile';

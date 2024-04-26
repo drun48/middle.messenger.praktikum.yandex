@@ -1,17 +1,18 @@
-import { Block, Props } from "../../core/Block";
-import { FormProfile } from "../../components/form-profile";
-import { FormPasswordProfile } from "../../components/form-password-profile";
-import { ModalUploadFile } from "../../components/modal-upload-file";
+import { Block, Props } from '../../core/Block.ts';
+import { FormProfile } from '../../components/form-profile';
+import { FormPasswordProfile } from '../../components/form-password-profile';
+import { ModalUploadFile } from '../../components/modal-upload-file';
 
 export class PageProfile extends Block {
   profile = {
-    email: "pochta@yandex.ru",
-    login: "ivanivanov",
-    first_name: "Иван",
-    second_name: "Иванов",
-    display_name: "Иван",
-    phone: "79099673030",
+    email: 'pochta@yandex.ru',
+    login: 'ivanivanov',
+    first_name: 'Иван',
+    second_name: 'Иванов',
+    display_name: 'Иван',
+    phone: '79099673030',
   };
+
   constructor(props: Props) {
     super({
       ...props,
@@ -24,12 +25,12 @@ export class PageProfile extends Block {
       changePassword: false,
       openModalFile: false,
       profile: {
-        email: "pochta@yandex.ru",
-        login: "ivanivanov",
-        first_name: "Иван",
-        second_name: "Иванов",
-        display_name: "Иван",
-        phone: "79099673030",
+        email: 'pochta@yandex.ru',
+        login: 'ivanivanov',
+        first_name: 'Иван',
+        second_name: 'Иванов',
+        display_name: 'Иван',
+        phone: '79099673030',
       },
     });
   }

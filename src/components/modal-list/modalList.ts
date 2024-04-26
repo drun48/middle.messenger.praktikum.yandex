@@ -1,4 +1,4 @@
-import { Block, Props } from "../../core/Block";
+import { Block, Props } from '../../core/Block';
 
 export class ModalList extends Block {
   constructor(props: Props) {
@@ -10,7 +10,7 @@ export class ModalList extends Block {
       },
       click: (event: Event) => {
         const element = event.currentTarget as HTMLElement;
-        const valueElement = element.getElementsByTagName("p")[0];
+        const valueElement = element.getElementsByTagName('p')[0];
         const value = valueElement.textContent;
         if (value && this.props.controller instanceof Function) {
           this.props.controller(value);

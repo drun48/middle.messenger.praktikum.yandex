@@ -1,12 +1,12 @@
-import { Block, Props } from "../../core/Block";
-import { valid_login } from "../../utils/validator";
-import { InputForm } from "../../components/input-form";
+import { Block, Props } from '../../core/Block';
+import { validLogin } from '../../utils/validator';
+import { InputForm } from '../../components/input-form';
 
 export class ModalUser extends Block {
   constructor(props: Props) {
     super({
       ...props,
-      valid_login,
+      validLogin,
       onClose: () => {
         this.props.open = false;
       },
@@ -36,7 +36,7 @@ export class ModalUser extends Block {
     {{#BaseModal title=title class="modal-user" open=open global=global close=onClose}}
     {{#BaseModalContent}}
        <div class="modal-user__content">
-          {{{ InputForm ref="input" label="Логин" type="login" validate=valid_login }}}
+          {{{ InputForm ref="input" label="Логин" type="login" validate=validLogin }}}
        </div>
       {{/BaseModalContent}}
       {{{BaseModalFooter default=true labelButton=labelButton errorFooterText=errorFooterText errorTitle=errorTitle onClick=click}}}

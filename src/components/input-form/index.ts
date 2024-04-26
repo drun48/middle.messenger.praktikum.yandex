@@ -1,2 +1,3 @@
-import "./style.css";
-export { InputForm } from "./inputForm";
+import './style.css';
+
+export { InputForm } from './inputForm';

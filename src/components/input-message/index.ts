@@ -1,2 +1,3 @@
-import "./style.css";
-export { InputMessage } from "./inputMessage";
+import './style.css';
+
+export { InputMessage } from './inputMessage';

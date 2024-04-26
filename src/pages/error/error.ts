@@ -1,4 +1,4 @@
-import { Block, Props } from "../../core/Block";
+import { Block, Props } from '../../core/Block';
 
 export class PageError extends Block {
   constructor(props: Props) {
@@ -6,6 +6,7 @@ export class PageError extends Block {
       ...props,
     });
   }
+
   protected render() {
     return `
     <div class="container-error">

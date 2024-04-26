@@ -1,2 +1,3 @@
-import "./style.css";
-export { PageProfile } from "./profile";
+import './style.css';
+
+export { PageProfile } from './profile';

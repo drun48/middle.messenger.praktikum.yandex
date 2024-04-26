@@ -1,2 +1,3 @@
-import "./stye.css";
-export { InputProfile } from "./inputProfile";
+import './stye.css';
+
+export { InputProfile } from './inputProfile';

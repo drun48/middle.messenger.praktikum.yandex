@@ -1,6 +1,7 @@
-import "./style.css";
-import Handlebars from "handlebars";
-import search from "../../assets/search.svg";
-export { InputSearch } from "./inputSearch";
+import './style.css';
+import Handlebars from 'handlebars';
+import search from '../../assets/search.svg';
 
-Handlebars.registerHelper("search_img", () => search);
+export { InputSearch } from './inputSearch';
+
+Handlebars.registerHelper('search_img', () => search);

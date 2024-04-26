@@ -1,5 +1,7 @@
-/dist
+dist
 **/*.min.js
-/node_modules 
+node_modules 
 server.js
 vite.config.js
+*.css
+*.hbs

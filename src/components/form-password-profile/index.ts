@@ -1,1 +1,1 @@
-export { FormPasswordProfile } from "./formPasswordProfile";
+export { FormPasswordProfile } from './formPasswordProfile';

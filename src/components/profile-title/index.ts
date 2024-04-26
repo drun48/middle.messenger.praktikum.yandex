@@ -1,2 +1,3 @@
-import "./style.css";
-export { ProfileTitle } from "./profileTitle";
+import './style.css';
+
+export { ProfileTitle } from './profileTitle';

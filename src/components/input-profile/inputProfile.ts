@@ -1,8 +1,9 @@
-import { Block, Props } from "../../core/Block";
-import { Valid } from "../../utils/validator";
+import { Block, Props } from '../../core/Block';
+import { Valid } from '../../utils/validator';
 
 export class InputProfile extends Block {
   readonly = false;
+
   constructor(props: Props) {
     super({
       ...props,
@@ -30,8 +31,8 @@ export class InputProfile extends Block {
       const value = this.getValueInput();
       const valid: Valid = this.props.validate?.(value);
 
-      if (!valid.value) this.element?.classList.add("error");
-      else this.element?.classList.remove("error");
+      if (!valid.value) this.element?.classList.add('error');
+      else this.element?.classList.remove('error');
 
       return valid.value;
     }

@@ -1,4 +1,4 @@
-import { Block, Props } from "../../core/Block";
+import { Block, Props } from '../../core/Block';
 
 export class ModalUploadFile extends Block {
   file: File | undefined;
@@ -6,7 +6,7 @@ export class ModalUploadFile extends Block {
   constructor(props: Props) {
     super({
       ...props,
-      title: "Загрузите файл",
+      title: 'Загрузите файл',
       open: false,
       getFile: (event: Event) => this.getFile(event),
       upload: () => this.upload(),
@@ -19,7 +19,7 @@ export class ModalUploadFile extends Block {
   open() {
     this.clearError();
     this.file = undefined;
-    this.props.content = "";
+    this.props.content = '';
     this.props.open = true;
   }
 
@@ -28,8 +28,8 @@ export class ModalUploadFile extends Block {
   }
 
   clearError() {
-    this.props.title = "Загрузите файл";
-    this.props.errorFooterText = "";
+    this.props.title = 'Загрузите файл';
+    this.props.errorFooterText = '';
     this.props.errorTitle = false;
   }
 
@@ -38,19 +38,22 @@ export class ModalUploadFile extends Block {
     const input = event.target as HTMLInputElement;
 
     if (!input.files) {
-      this.props.title = "Ошибка, попробуйте ещё раз";
+      this.props.title = 'Ошибка, попробуйте ещё раз';
       this.props.errorTitle = true;
       return;
     }
 
-    this.file = input.files[0];
-    this.props.content = this.file.name;
+    if (input.files[0] instanceof File) {
+      const [file] = input.files;
+      this.file = file;
+      this.props.content = this.file.name;
+    }
   }
 
   upload() {
     this.clearError();
     if (!this.file) {
-      this.props.errorFooterText = "Нужно выбрать файл";
+      this.props.errorFooterText = 'Нужно выбрать файл';
       return;
     }
     this.props.open = false;

@@ -1,5 +1,5 @@
-import { Block, Props } from "../../core/Block";
-import { Valid } from "../../utils/validator";
+import { Block, Props } from '../../core/Block';
+import { Valid } from '../../utils/validator';
 
 export class InputForm extends Block {
   constructor(props: Props) {
@@ -24,7 +24,7 @@ export class InputForm extends Block {
 
   public setError(error: string | undefined) {
     const errorComponent = this.refs.error as Block;
-    errorComponent.setProps({ error: error ?? "" });
+    errorComponent.setProps({ error: error ?? '' });
   }
 
   private validate() {
@@ -33,9 +33,9 @@ export class InputForm extends Block {
       const valid: Valid = this.props.validate?.(value);
       this.setError(valid.errorText);
       return valid.value;
-    }else{
-      this.setError('')
     }
+    this.setError('');
+
     return true;
   }
 

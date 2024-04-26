@@ -1,5 +1,5 @@
-import { EventBus } from "./EventBus";
-import Handlebars from "handlebars";
+import Handlebars from 'handlebars';
+import { EventBus } from './EventBus';
 
 export type Props = {
   [key: string]: unknown;
@@ -11,16 +11,18 @@ export type Refs = {
 
 export class Block {
   static EVENTS = {
-    INIT: "init",
-    FLOW_CDM: "flow:component-did-mount",
-    FLOW_CDU: "flow:component-did-update",
-    FLOW_RENDER: "flow:render",
+    INIT: 'init',
+    FLOW_CDM: 'flow:component-did-mount',
+    FLOW_CDU: 'flow:component-did-update',
+    FLOW_RENDER: 'flow:render',
   };
 
   private _element: HTMLElement | null = null;
+
   private _eventBus: EventBus;
 
   protected refs: Refs = {} as Refs;
+
   protected props: Props;
 
   id: string = self.crypto.randomUUID();
@@ -58,7 +60,7 @@ export class Block {
     this.eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     this.eventBus.on(
       Block.EVENTS.FLOW_CDU,
-      this._componentDidUpdate.bind(this)
+      this._componentDidUpdate.bind(this),
     );
   }
 
@@ -75,8 +77,8 @@ export class Block {
 
   private makePropsProxy(props: Props) {
     const set = (target: Props, prop: string, value: unknown) => {
-      if (prop[0] == "_") {
-        throw new Error("нет доступа");
+      if (prop[0] == '_') {
+        throw new Error('нет доступа');
       }
       const oldTarget = { ...target };
       target[prop] = value;
@@ -84,14 +86,14 @@ export class Block {
       return true;
     };
     const get = (target: Props, prop: string) => {
-      if (prop[0] == "_") {
-        throw new Error("нет доступа");
+      if (prop[0] == '_') {
+        throw new Error('нет доступа');
       }
-      let value = target[prop];
-      return typeof value === "function" ? value.bind(target) : value;
+      const value = target[prop];
+      return typeof value === 'function' ? value.bind(target) : value;
     };
     const deleteProperty = () => {
-      throw new Error("нет доступа");
+      throw new Error('нет доступа');
     };
     return new Proxy(props, {
       get,
@@ -119,7 +121,7 @@ export class Block {
 
     const html = Handlebars.compile(template)(contextAndStubs);
 
-    const temp = document.createElement("template");
+    const temp = document.createElement('template');
 
     temp.innerHTML = html;
     contextAndStubs.__children?.forEach(({ embed }: any) => {
@@ -153,7 +155,7 @@ export class Block {
   }
 
   protected render(): string {
-    return "";
+    return '';
   }
 
   getContent() {
@@ -177,12 +179,10 @@ export class Block {
   };
 
   show() {
-    if (this.element instanceof HTMLElement)
-      this.element.style.display = "block";
+    if (this.element instanceof HTMLElement) this.element.style.display = 'block';
   }
 
   hide() {
-    if (this.element instanceof HTMLElement)
-      this.element.style.display = "none";
+    if (this.element instanceof HTMLElement) this.element.style.display = 'none';
   }
 }

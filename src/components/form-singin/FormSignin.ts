@@ -1,26 +1,26 @@
-import { Block, Props } from "../../core/Block";
+import { Block, Props } from '../../core/Block';
 import {
-  valid_name,
-  valid_login,
-  valid_email,
-  valid_password,
-  valid_phone,
-  valid_empty,
+  validName,
+  validLogin,
+  validEmail,
+  validPassword,
+  validPhone,
+  validEmpty,
   Valid,
-} from "../../utils/validator";
-import { maskPhone } from "../../utils/mask";
-import { InputForm } from "../input-form";
+} from '../../utils/validator';
+import { maskPhone } from '../../utils/mask';
+import { InputForm } from '../input-form';
 
 export class FormSignin extends Block {
   constructor(props: Props) {
     super({
       ...props,
-      valid_name,
-      valid_login,
-      valid_email,
-      valid_password,
-      valid_phone: (value: string) => this.validatePhone(value),
-      valid_empty,
+      validName,
+      validLogin,
+      validEmail,
+      validPassword,
+      validPhone: (value: string) => this.validatePhone(value),
+      validEmpty,
       maskPhone,
       validCopyPassword: (value: string) => this.validCopyPassword(value),
       events: {
@@ -30,12 +30,13 @@ export class FormSignin extends Block {
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
   formatPhone(value: string) {
-    return value.replace("(", "").replace(")", "").replaceAll(" ", "");
+    return value.replace('(', '').replace(')', '').replaceAll(' ', '');
   }
 
   validatePhone(value: string) {
-    return valid_phone(this.formatPhone(value));
+    return validPhone(this.formatPhone(value));
   }
 
   validCopyPassword(value: string): Valid {
@@ -44,10 +45,10 @@ export class FormSignin extends Block {
     }
     const password = this.refs.password as InputForm;
     const passwordValue = password.value();
-    if (passwordValue !== null && passwordValue == value) {
+    if (passwordValue !== null && passwordValue === value) {
       return { value: true };
     }
-    return { value: false, errorText: "Пароли должны совпадать" };
+    return { value: false, errorText: 'Пароли должны совпадать' };
   }
 
   Signin(event: Event) {
@@ -67,22 +68,21 @@ export class FormSignin extends Block {
 
     const res: Record<string, string> = {};
 
-    for (let item in inputs) {
-      const value = inputs[item].value();
-      if (typeof value == "string") {
-        res[item] = value;
-        const valid = valid_empty(value);
+    Object.entries(inputs).forEach(([key, value]) => {
+      const val = value.value();
+      if (typeof val === 'string') {
+        res[key] = val;
+        const valid = validEmpty(val);
         if (!valid.value) {
           validForm = false;
-          inputs[item].setError(valid.errorText);
+          inputs[key].setError(valid.errorText);
         }
       } else {
         validForm = false;
       }
-    }
+    });
 
-    if (this.props.signin instanceof Function && validForm)
-      this.props.signin(res);
+    if (this.props.signin instanceof Function && validForm) this.props.signin(res);
   }
 
   protected render() {
@@ -92,12 +92,12 @@ export class FormSignin extends Block {
         <h2>Регистрация</h2>
         </div>
         <div class="form-signin__inputs">
-        {{{ InputForm ref="email" label="Почта" name="email" type="email" validate=valid_email}}}
-        {{{ InputForm ref="login" label="Логин" name="login" type="login" validate=valid_login}}}
-        {{{ InputForm ref="first_name" label="Имя" name="first_name" type="text" validate=valid_name}}}
-        {{{ InputForm ref="second_name" label="Фамилия" name="second_name" type="text" validate=valid_name}}}
-        {{{ InputForm ref="phone" label="Телефон" name="phone" type="tel" validate=valid_phone  mask=maskPhone}}}
-        {{{ InputForm ref="password" label="Пароль" name="password" type="password" validate=valid_password}}}
+        {{{ InputForm ref="email" label="Почта" name="email" type="email" validate=validEmail}}}
+        {{{ InputForm ref="login" label="Логин" name="login" type="login" validate=validLogin}}}
+        {{{ InputForm ref="first_name" label="Имя" name="first_name" type="text" validate=validName}}}
+        {{{ InputForm ref="second_name" label="Фамилия" name="second_name" type="text" validate=validName}}}
+        {{{ InputForm ref="phone" label="Телефон" name="phone" type="tel" validate=validPhone  mask=maskPhone}}}
+        {{{ InputForm ref="password" label="Пароль" name="password" type="password" validate=validPassword}}}
         {{{ InputForm ref="copy_password" label="Пароль (ещё раз)" type="password" validate=validCopyPassword}}}
         </div>
     </div>

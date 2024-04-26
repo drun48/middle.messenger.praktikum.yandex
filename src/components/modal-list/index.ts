@@ -1,2 +1,3 @@
-import "./style.css";
-export { ModalList } from "./modalList";
+import './style.css';
+
+export { ModalList } from './modalList';

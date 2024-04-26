@@ -1,4 +1,4 @@
-import { Block, Props } from "../../core/Block";
+import { Block, Props } from '../../core/Block';
 
 export class BaseModal extends Block {
   constructor(props: Props) {
@@ -6,7 +6,7 @@ export class BaseModal extends Block {
       ...props,
       events: {
         close: props.close,
-        click: (event: Event) => {},
+        click: () => {},
       },
     });
   }
@@ -21,19 +21,18 @@ export class BaseModal extends Block {
 
   private _open() {
     const dialog = this.element as HTMLDialogElement;
-    dialog.classList.remove("close");
-    try{
+    dialog.classList.remove('close');
+    try {
       if (this.props.global) dialog?.showModal();
       else dialog?.show();
-    }
-    catch(e){
-
+    } catch (e) {
+      console.log(e);
     }
   }
 
   private _close() {
     const dialog = this.element as HTMLDialogElement;
-    dialog.classList.add("close");
+    dialog.classList.add('close');
     dialog?.close();
   }
 

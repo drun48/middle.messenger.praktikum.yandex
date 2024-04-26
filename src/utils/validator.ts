@@ -3,7 +3,7 @@ export type Valid = {
   errorText?: string;
 };
 
-export function valid_name(value: string): Valid {
+export function validName(value: string): Valid {
   if (!value) {
     return { value: true };
   }
@@ -19,7 +19,7 @@ export function valid_name(value: string): Valid {
   return { value: true };
 }
 
-export function valid_login(value: string): Valid {
+export function validLogin(value: string): Valid {
   if (!value) {
     return { value: true };
   }
@@ -35,7 +35,7 @@ export function valid_login(value: string): Valid {
   return { value: true };
 }
 
-export function valid_email(value: string): Valid {
+export function validEmail(value: string): Valid {
   if (!value) {
     return { value: true };
   }
@@ -47,7 +47,7 @@ export function valid_email(value: string): Valid {
   return { value: true };
 }
 
-export function valid_password(value: string): Valid {
+export function validPassword(value: string): Valid {
   if (!value) {
     return { value: true };
   }
@@ -76,7 +76,7 @@ export function valid_password(value: string): Valid {
   return { value: true };
 }
 
-export function valid_phone(value: string): Valid {
+export function validPhone(value: string): Valid {
   if (!value) {
     return { value: true };
   }
@@ -87,7 +87,7 @@ export function valid_phone(value: string): Valid {
   return { value: true };
 }
 
-export function valid_empty(value: string): Valid {
+export function validEmpty(value: string): Valid {
   if (value === "") {
     return { value: false, errorText: "Поле не должно быть пустым" };
   }

@@ -1,2 +1,3 @@
-import "./style.css";
-export { FormSignin } from "./formSignin";
+import './style.css';
+
+export { FormSignin } from './formSignin';

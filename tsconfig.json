@@ -21,6 +21,5 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "strictNullChecks": true 
-  },
-  "include": ["src"]
+  }
 }

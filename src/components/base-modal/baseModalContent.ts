@@ -1,4 +1,4 @@
-import { Block, Props } from "../../core/Block";
+import { Block, Props } from '../../core/Block';
 
 export class BaseModalContent extends Block {
   constructor(props: Props) {
@@ -6,6 +6,6 @@ export class BaseModalContent extends Block {
   }
 
   protected render(): string {
-    return `<div class="baseModal__content"></div>`;
+    return '<div class="baseModal__content"></div>';
   }
 }

@@ -1,13 +1,13 @@
-import Handlebars from "handlebars";
-import * as Components from "./components";
-import * as Pages from "./pages";
+import Handlebars from 'handlebars';
+import * as Components from './components';
+import * as Pages from './pages';
 
-import arrow_circle from "./assets/arrow-circle.svg";
-import attacher from "./assets/attacher.svg";
-import photo_user from "./assets/photoUser.png";
-import profil_photo from "./assets/profile_photo.svg";
-import { Block } from "./core/Block";
-import { registerComponent } from "./core/registerComponent";
+import arrow_circle from './assets/arrow-circle.svg';
+import attacher from './assets/attacher.svg';
+import photo_user from './assets/photoUser.png';
+import profil_photo from './assets/profile_photo.svg';
+import { Block } from './core/Block';
+import { registerComponent } from './core/registerComponent';
 
 const pages = {
   nav: [Pages.NavPage],
@@ -16,38 +16,36 @@ const pages = {
   chats: [
     Pages.PageChats,
     {
-      attacher: attacher,
-      arrow_circle: arrow_circle,
-      photo_user: photo_user,
+      attacher,
+      arrow_circle,
+      photo_user,
     },
   ],
   profile: [
     Pages.PageProfile,
-    { arrow_circle: arrow_circle, profil_photo: profil_photo },
+    { arrow_circle, profil_photo },
   ],
-  error404: [Pages.PageError, { code: "404", title: "Не туда попали" }],
-  error500: [Pages.PageError, { code: "500", title: "Мы уже фиксим" }],
+  error404: [Pages.PageError, { code: '404', title: 'Не туда попали' }],
+  error500: [Pages.PageError, { code: '500', title: 'Мы уже фиксим' }],
 };
 
 Object.entries(Components).forEach(([name, component]) => {
-  if (typeof component == "string") Handlebars.registerPartial(name, component);
+  if (typeof component === 'string') Handlebars.registerPartial(name, component);
   else {
     registerComponent(name, component);
   }
 });
 
-Handlebars.registerHelper("isEqual", function (value1, value2) {
-  return value1 == value2;
-});
+Handlebars.registerHelper('isEqual', (value1, value2) => value1 == value2);
 
 const navigate = (page: string) => {
-  //@ts-ignore
+  // @ts-ignore
   const [source, context] = pages[page];
-  const container = document.getElementById("app")!;
+  const container = document.getElementById('app')!;
 
   if (source instanceof Object) {
     const page = new source(context) as Block;
-    container.innerHTML = "";
+    container.innerHTML = '';
     container.append(page.getContent() as Node);
     return;
   }
@@ -55,11 +53,11 @@ const navigate = (page: string) => {
   container.innerHTML = Handlebars.compile(source)(context);
 };
 
-document.addEventListener("DOMContentLoaded", () => navigate("nav"));
+document.addEventListener('DOMContentLoaded', () => navigate('nav'));
 
-document.addEventListener("click", (e) => {
-  //@ts-ignore
-  const page = e.target.getAttribute("page");
+document.addEventListener('click', (e) => {
+  // @ts-ignore
+  const page = e.target.getAttribute('page');
   if (page) {
     navigate(page);
 

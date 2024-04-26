@@ -1,20 +1,28 @@
-import { Block, Props } from "../../core/Block";
-import avatar from "../../assets/photoUser.png";
-import arrow from "../../assets/arrow.svg";
-import menu from "../../assets/menu.svg";
-import photo1 from "../../assets/test_photo.jpg";
-import photo2 from "../../assets/test_photo2.png";
-import { InputMessage } from "../../components/input-message";
-import { ModalUser } from "../../components/modal-user";
-import { ModalList } from "../../components/modal-list";
-import { ModalDeleteChat } from "../../components/modal-delete-chat";
+import { Block, Props } from '../../core/Block';
+import avatar from '../../assets/photoUser.png';
+import arrow from '../../assets/arrow.svg';
+import menu from '../../assets/menu.svg';
+import photo1 from '../../assets/test_photo.jpg';
+import photo2 from '../../assets/test_photo2.png';
+import { InputMessage } from '../../components/input-message';
+import { ModalUser } from '../../components/modal-user';
+import { ModalList } from '../../components/modal-list';
+import { ModalDeleteChat } from '../../components/modal-delete-chat';
+
+import photoAttach from '../../assets/PhotoAttach.svg';
+import fileAttach from '../../assets/FileAttach.svg';
+import localAttach from '../../assets/LocalAttach.svg';
+
+import addUser from '../../assets/AddUser.svg';
+import deleteUser from '../../assets/DeleteUser.svg';
+import deleteChat from '../../assets/delete_chat.svg';
 
 export class PageChats extends Block {
   constructor(props: Props) {
     super({
       ...props,
       arrow,
-      search: "",
+      search: '',
       menu,
       activeChat: false,
       activeChatId: null,
@@ -26,42 +34,69 @@ export class PageChats extends Block {
       },
       openModalAttach: () => this.openModalAttach(),
       controllerChat: (str: string) => this.controllerChat(str),
-      openModalControllerChat: (event: Event) =>
-        this.openModalControllerChat(event),
+      openModalControllerChat: (event: Event) => this.openModalControllerChat(event),
       addUser: (value: string) => this.addUser(value),
       deleteUser: (value: string) => this.deleteUser(value),
       deleteChat: () => this.deleteChat(),
       filterListChat: [],
       listMessage: [
         {
-          day: "19 июня",
+          day: '19 июня',
           messages: [
             {
-              type: "text",
+              type: 'text',
               value:
-                "Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.",
+                'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.',
               myMessage: false,
-              time: "10:30",
+              time: '10:30',
             },
             {
-              type: "text",
-              value: "asd",
+              type: 'text',
+              value: 'asd',
               myMessage: true,
-              time: "10:30",
+              time: '10:30',
             },
             {
-              type: "photo",
+              type: 'photo',
               value: photo1,
               myMessage: false,
-              time: "10:30",
+              time: '10:30',
             },
             {
-              type: "photo",
+              type: 'photo',
               value: photo2,
               myMessage: true,
-              time: "10:31",
+              time: '10:31',
             },
           ],
+        },
+      ],
+      listAttach: [
+        {
+          value: 'Фото или Видео',
+          photo: photoAttach,
+        },
+        {
+          value: 'Файл',
+          photo: fileAttach,
+        },
+        {
+          value: 'Локация',
+          photo: localAttach,
+        },
+      ],
+      listControllerChat: [
+        {
+          value: 'Добавить пользователя',
+          photo: addUser,
+        },
+        {
+          value: 'Удалить пользователя',
+          photo: deleteUser,
+        },
+        {
+          value: 'Удалить чат',
+          photo: deleteChat,
         },
       ],
     });
@@ -69,100 +104,106 @@ export class PageChats extends Block {
 
   listChat: Array<Record<string, string>> = [
     {
-      id: "1",
-      name: "Андрей",
-      message: "Изображение",
+      id: '1',
+      name: 'Андрей',
+      message: 'Изображение',
       photo: avatar,
-      time: "10:49",
-      count: "2",
+      time: '10:49',
+      count: '2',
     },
     {
-      id: "2",
-      name: "Киноклуб",
-      meMessage: "стикер",
+      id: '2',
+      name: 'Киноклуб',
+      meMessage: 'стикер',
       photo: avatar,
-      time: "12:00",
-      count: "",
+      time: '12:00',
+      count: '',
     },
     {
-      id: "3",
-      name: "Илья",
+      id: '3',
+      name: 'Илья',
       message:
-        "Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей!",
+        'Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей!',
       photo: avatar,
-      time: "15:12",
-      count: "4",
+      time: '15:12',
+      count: '4',
     },
-    { id: "4", name: "Вадим", message: "Круто!", photo: avatar, time: "15:12" },
     {
-      id: "5",
-      name: "тет-а-теты",
+      id: '4',
+      name: 'Вадим',
+      message: 'Круто!',
+      photo: avatar,
+      time: '15:12',
+    },
+    {
+      id: '5',
+      name: 'тет-а-теты',
       message:
-        "И Human Interface Guidelines и Material Design рекомендуют И Human Interface Guidelines и Material Design рекомендуют",
+        'И Human Interface Guidelines и Material Design рекомендуют И Human Interface Guidelines и Material Design рекомендуют',
       photo: avatar,
-      time: "Пт",
+      time: 'Пт',
     },
     {
-      id: "6",
-      name: "Design Destroyer",
+      id: '6',
+      name: 'Design Destroyer',
       message:
-        "Миллионы россиян ежедневно проводят десятки часов свое Миллионы россиян ежедневно проводят десятки часов свое",
+        'Миллионы россиян ежедневно проводят десятки часов свое Миллионы россиян ежедневно проводят десятки часов свое',
       photo: avatar,
-      time: "Ср",
+      time: 'Ср',
     },
     {
-      id: "7",
-      name: "Стас Рогозин",
+      id: '7',
+      name: 'Стас Рогозин',
       message:
-        "В 2008 году художник Jon Rafman  начал собирать В 2008 году художник Jon Rafman  начал собирать",
+        'В 2008 году художник Jon Rafman  начал собирать В 2008 году художник Jon Rafman  начал собирать',
       photo: avatar,
-      time: "Пн",
+      time: 'Пн',
     },
     {
-      id: "8",
-      name: "Петров",
+      id: '8',
+      name: 'Петров',
       message:
-        "Так увлёкся работой по курсу, что совсем забыл его анонсир Так увлёкся работой по курсу, что совсем забыл его анонсир",
+        'Так увлёкся работой по курсу, что совсем забыл его анонсир Так увлёкся работой по курсу, что совсем забыл его анонсир',
       photo: avatar,
-      time: "Пн",
+      time: 'Пн',
     },
     {
-      id: "9",
-      name: "Настя",
-      message: "Можно или сегодня или завтра вечером.",
+      id: '9',
+      name: 'Настя',
+      message: 'Можно или сегодня или завтра вечером.',
       photo: avatar,
-      time: "1 Мая 2020",
+      time: '1 Мая 2020',
     },
     {
-      id: "10",
-      name: "Design Destroyer",
+      id: '10',
+      name: 'Design Destroyer',
       message:
-        "Миллионы россиян ежедневно проводят десятки часов свое Миллионы россиян ежедневно проводят десятки часов свое",
+        'Миллионы россиян ежедневно проводят десятки часов свое Миллионы россиян ежедневно проводят десятки часов свое',
       photo: avatar,
-      time: "Ср",
+      time: 'Ср',
     },
     {
-      id: "11",
-      name: "Стас Рогозин",
+      id: '11',
+      name: 'Стас Рогозин',
       message:
-        "В 2008 году художник Jon Rafman  начал собирать В 2008 году художник Jon Rafman  начал собирать",
+        'В 2008 году художник Jon Rafman  начал собирать В 2008 году художник Jon Rafman  начал собирать',
       photo: avatar,
-      time: "Пн",
+      time: 'Пн',
     },
     {
-      id: "12",
-      name: "Петров",
+      id: '12',
+      name: 'Петров',
       message:
-        "Так увлёкся работой по курсу, что совсем забыл его анонсир Так увлёкся работой по курсу, что совсем забыл его анонсир",
+        'Так увлёкся работой по курсу, что совсем забыл его анонсир Так увлёкся работой по курсу, что совсем забыл его анонсир',
       photo: avatar,
-      time: "Пн",
+      time: 'Пн',
     },
     {
-      id: "13",
-      name: "Настя",
-      message: "Можно или сегодня или завтра вечером.",
+      id: '13',
+      name: 'Настя',
+      message: 'Можно или сегодня или завтра вечером.',
       photo: avatar,
-      time: "1 Мая 2020",
+      time: '1 Мая 2020',
     },
   ];
 
@@ -177,9 +218,7 @@ export class PageChats extends Block {
       this.props.filterListChat = this.listChat;
       return;
     }
-    this.props.filterListChat = this.listChat.filter((item) => {
-      return item.name.includes(target.value);
-    });
+    this.props.filterListChat = this.listChat.filter((item) => item.name.includes(target.value));
   }
 
   sendMessage() {
@@ -211,28 +250,30 @@ export class PageChats extends Block {
 
   controllerChat(str: string) {
     switch (str) {
-      case "Добавить пользователя":
+      case 'Добавить пользователя':
         (this.refs.modalAdd as ModalUser).open();
         break;
-      case "Удалить пользователя":
+      case 'Удалить пользователя':
         (this.refs.modalDelete as ModalUser).open();
         break;
-      case "Удалить чат":
+      case 'Удалить чат':
         (this.refs.modalDeleteChat as ModalDeleteChat).open();
         break;
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   addUser(value: string) {
     console.log(value);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   deleteUser(value: string) {
     console.log(value);
   }
 
   deleteChat() {
-    console.log("Удалить чат", this.props.activeChatId);
+    console.log('Удалить чат', this.props.activeChatId);
   }
 
   protected render() {
@@ -277,7 +318,7 @@ export class PageChats extends Block {
                 {{#Button onClick=openModalControllerChat}}
                   <img src="{{menu}}" alt="Иконка"/>
                 {{/Button}}
-                {{{ ModalList class="modal-controller-chat" controller=controllerChat list=(listControllerChat) ref="modalControllerChat"}}}
+                {{{ ModalList class="modal-controller-chat" controller=controllerChat list=listControllerChat ref="modalControllerChat"}}}
               </div>
         </div>
           <div class="container-chat__element">
@@ -288,7 +329,7 @@ export class PageChats extends Block {
                 {{#Button onClick=openModalAttach}}
                   <img src="{{attacher}}" alt="Иконка"/>
                 {{/Button}}
-                {{{ ModalList class="modal-attach" list=(listAttach) ref="modalAttach" }}}
+                {{{ ModalList class="modal-attach" list=listAttach ref="modalAttach" }}}
               </div>
               <div class="container-chat__input__element">
                   {{{ InputMessage ref="inputMessage" placeholder="Сообщение" }}}

@@ -1,6 +1,6 @@
-import { Block, Props } from "../../core/Block";
-import { InputForm } from "../input-form";
-import { valid_empty } from "../../utils/validator";
+import { Block, Props } from '../../core/Block';
+import { InputForm } from '../input-form';
+import { validEmpty } from '../../utils/validator';
 
 export class FormLogin extends Block {
   constructor(props: Props) {
@@ -18,23 +18,22 @@ export class FormLogin extends Block {
       password: this.refs.password as InputForm,
     };
     const res: Record<string, string> = {};
-    
-    for (let item in inputs) {
-      const value = inputs[item].value();
-      if (typeof value == "string") {
-        res[item] = value
-        const valid = valid_empty(value);
+
+    Object.entries(inputs).forEach(([key, item]) => {
+      const value = item.value();
+      if (typeof value === 'string') {
+        res[key] = value;
+        const valid = validEmpty(value);
         if (!valid.value) {
           validForm = false;
-          inputs[item].setError(valid.errorText);
+          inputs[key].setError(valid.errorText);
         }
       } else {
         validForm = false;
       }
-    }
+    });
 
-    if (this.props.login instanceof Function && validForm)
-      this.props.login(res);
+    if (this.props.login instanceof Function && validForm) this.props.login(res);
   }
 
   protected render() {

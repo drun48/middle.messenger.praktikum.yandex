@@ -1,2 +1,3 @@
-import "./style.css";
-export { ModalUser } from "./modalUser";
+import './style.css';
+
+export { ModalUser } from './modalUser';

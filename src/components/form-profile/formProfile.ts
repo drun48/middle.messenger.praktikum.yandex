@@ -1,33 +1,34 @@
-import { Block, Props } from "../../core/Block";
-import { maskPhone } from "../../utils/mask";
-import { InputProfile } from "../input-profile";
+import { Block, Props } from '../../core/Block';
+import { maskPhone } from '../../utils/mask';
+import { InputProfile } from '../input-profile';
 import {
-  valid_name,
-  valid_login,
-  valid_email,
-  valid_phone,
-  valid_empty,
-} from "../../utils/validator";
+  validName,
+  validLogin,
+  validEmail,
+  validPhone,
+  validEmpty,
+} from '../../utils/validator';
 
 export class FormProfile extends Block {
   constructor(props: Props) {
     super({
       ...props,
       maskPhone,
-      valid_name,
-      valid_login,
-      valid_email,
-      valid_empty,
-      valid_phone: (value: string) => this.validatePhone(value),
+      validName,
+      validLogin,
+      validEmail,
+      validEmpty,
+      validPhone: (value: string) => this.validatePhone(value),
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
   formatPhone(value: string) {
-    return value.replace("(", "").replace(")", "").replaceAll(" ", "");
+    return value.replace('(', '').replace(')', '').replaceAll(' ', '');
   }
 
   validatePhone(value: string) {
-    return valid_phone(this.formatPhone(value));
+    return validPhone(this.formatPhone(value));
   }
 
   getForm() {
@@ -40,29 +41,29 @@ export class FormProfile extends Block {
       phone: this.refs.phone as InputProfile,
     };
 
-    let form: Record<string, string> = {};
+    const form: Record<string, string> = {};
 
-    for (let item in inputs) {
-      const value = inputs[item].value();
-      if (!value) return null;
-      if (item == "phone") {
-        form[item] = this.formatPhone(value);
-      } else {
-        form[item] = value;
+    Object.entries(inputs).forEach(([key, value]) => {
+      const val = value.value();
+      if (val) {
+        if (key === 'phone') {
+          form[key] = this.formatPhone(val);
+        } else {
+          form[key] = val;
+        }
       }
-    }
-
+    });
     return form;
   }
 
   protected render() {
     return `<form class="with-delimetr">
-    {{{ InputProfile ref="email" label="Почта" value=form.email type="email" name="email" readonly=readonly validate=valid_email }}}
-    {{{ InputProfile ref="login" label="Логин" value=form.login type="login" name="login" readonly=readonly validate=valid_login}}}
-    {{{ InputProfile ref="first_name" label="Имя" value=form.first_name type="text" name="first_name" readonly=readonly validate=valid_name }}}
-    {{{ InputProfile ref="second_name" label="Фамилия" value=form.second_name type="text" name="second_name" readonly=readonly validate=valid_name }}}
-    {{{ InputProfile ref="display_name" label="Имя в чате" value=form.display_name type="text" name="display_name" readonly=readonly validate=valid_name }}}
-    {{{ InputProfile ref="phone" label="Телефон" value=form.phone type="tel" name="phone" readonly=readonly mask=maskPhone validate=valid_phone }}}
+    {{{ InputProfile ref="email" label="Почта" value=form.email type="email" name="email" readonly=readonly validate=validEmail }}}
+    {{{ InputProfile ref="login" label="Логин" value=form.login type="login" name="login" readonly=readonly validate=validLogin}}}
+    {{{ InputProfile ref="first_name" label="Имя" value=form.first_name type="text" name="first_name" readonly=readonly validate=validName }}}
+    {{{ InputProfile ref="second_name" label="Фамилия" value=form.second_name type="text" name="second_name" readonly=readonly validate=validName }}}
+    {{{ InputProfile ref="display_name" label="Имя в чате" value=form.display_name type="text" name="display_name" readonly=readonly validate=validName }}}
+    {{{ InputProfile ref="phone" label="Телефон" value=form.phone type="tel" name="phone" readonly=readonly mask=maskPhone validate=validPhone }}}
 </form>
   `;
   }

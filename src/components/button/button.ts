@@ -1,4 +1,4 @@
-import { Block, Props } from "../../core/Block";
+import { Block, Props } from '../../core/Block';
 
 export class Button extends Block {
   constructor(props: Props) {
@@ -9,6 +9,7 @@ export class Button extends Block {
       },
     });
   }
+
   protected render(): string {
     return `
       <button class="{{class}}" >{{label}}</button>

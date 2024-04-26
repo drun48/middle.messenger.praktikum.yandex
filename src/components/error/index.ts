@@ -1,2 +1,3 @@
-import "./style.css";
-export { Error } from "./error";
+import './style.css';
+
+export { Error } from './error';
