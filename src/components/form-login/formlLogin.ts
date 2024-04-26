@@ -1,11 +1,17 @@
 import { Block, Props } from '../../core/Block';
 import { InputForm } from '../input-form';
-import { validEmpty } from '../../utils/validator';
+import {
+  validEmpty,
+  validLogin,
+  validPassword,
+} from '../../utils/validator';
 
 export class FormLogin extends Block {
   constructor(props: Props) {
     super({
       ...props,
+      validLogin,
+      validPassword,
       Login: (event: Event) => this.Login(event),
     });
   }
@@ -45,8 +51,8 @@ export class FormLogin extends Block {
         <h2>Вход</h2>
         </div>
         <div class="form-login__inputs">
-        {{{ InputForm label="Логин" ref="login" name="login" type="email" }}}
-        {{{ InputForm label="Пароль" ref="password" name="password" type="password" }}}
+        {{{ InputForm label="Логин" ref="login" name="login" type="email" validate=validLogin}}}
+        {{{ InputForm label="Пароль" ref="password" name="password" type="password" validate=validPassword}}}
         </div>
     </div>
     <footer class="form-login__footer">
