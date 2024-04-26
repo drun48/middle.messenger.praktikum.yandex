@@ -1,6 +1,5 @@
 import Handlebars from "handlebars";
 import "./style.css";
-// export { default as PageModals } from "./index.hbs?raw";
 export { PageModals } from "./modals";
 
 import photo_attach from "../../assets/PhotoAttach.svg";

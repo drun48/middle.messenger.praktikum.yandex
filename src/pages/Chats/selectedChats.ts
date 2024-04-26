@@ -16,7 +16,7 @@ export class PageChats extends Block {
       arrow,
       search: "",
       menu,
-      activeChat: true,
+      activeChat: false,
       activeChatId: null,
       searchChat: (event: Event) => this.searchChat(event),
       sendMessage: () => this.sendMessage(),
@@ -26,10 +26,11 @@ export class PageChats extends Block {
       },
       openModalAttach: () => this.openModalAttach(),
       controllerChat: (str: string) => this.controllerChat(str),
-      openModalControllerChat: (event: Event) => this.openModalControllerChat(event),
-      addUser:(value:string)=>this.addUser(value),
-      deleteUser:(value:string)=>this.deleteUser(value),
-      deleteChat:()=>this.deleteChat(),
+      openModalControllerChat: (event: Event) =>
+        this.openModalControllerChat(event),
+      addUser: (value: string) => this.addUser(value),
+      deleteUser: (value: string) => this.deleteUser(value),
+      deleteChat: () => this.deleteChat(),
       filterListChat: [],
       listMessage: [
         {
@@ -222,16 +223,16 @@ export class PageChats extends Block {
     }
   }
 
-  addUser(value:string){
-    console.log(value)
+  addUser(value: string) {
+    console.log(value);
   }
 
-  deleteUser(value:string){
-    console.log(value)
+  deleteUser(value: string) {
+    console.log(value);
   }
 
-  deleteChat(){
-    console.log('Удалить чат', this.props.activeChatId)
+  deleteChat() {
+    console.log("Удалить чат", this.props.activeChatId);
   }
 
   protected render() {

@@ -6,9 +6,7 @@ export class BaseModal extends Block {
       ...props,
       events: {
         close: props.close,
-        click: (event: Event) => {
-          // console.log("asdas", event);
-        },
+        click: (event: Event) => {},
       },
     });
   }
