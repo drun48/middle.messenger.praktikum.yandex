@@ -8,22 +8,21 @@ export class FormLogin extends Block {
       ...props,
       Login: (event: Event) => this.Login(event),
     });
-    if (props.login instanceof Function) this.eventBus.on("login", props.login);
   }
 
   Login(event: Event) {
     event.preventDefault();
-
     let validForm = true;
     const inputs: Record<string, InputForm> = {
       login: this.refs.login as InputForm,
       password: this.refs.password as InputForm,
     };
     const res: Record<string, string> = {};
-
+    
     for (let item in inputs) {
       const value = inputs[item].value();
       if (typeof value == "string") {
+        res[item] = value
         const valid = valid_empty(value);
         if (!valid.value) {
           validForm = false;
@@ -35,7 +34,7 @@ export class FormLogin extends Block {
     }
 
     if (this.props.login instanceof Function && validForm)
-      this.eventBus.emit("login", res);
+      this.props.login(res);
   }
 
   protected render() {

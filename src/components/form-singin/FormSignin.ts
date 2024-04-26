@@ -8,6 +8,7 @@ import {
   valid_empty,
   Valid,
 } from "../../utils/validator";
+import { maskPhone } from "../../utils/mask";
 import { InputForm } from "../input-form";
 
 export class FormSignin extends Block {
@@ -18,16 +19,23 @@ export class FormSignin extends Block {
       valid_login,
       valid_email,
       valid_password,
-      valid_phone,
+      valid_phone: (value: string) => this.validatePhone(value),
       valid_empty,
+      maskPhone,
       validCopyPassword: (value: string) => this.validCopyPassword(value),
       events: {
         signin: props.signin,
       },
       Signin: (event: Event) => this.Signin(event),
     });
-    if (props.signin instanceof Function)
-      this.eventBus.on("signin", props.signin);
+  }
+
+  formatPhone(value: string) {
+    return value.replace("(", "").replace(")", "").replaceAll(" ", "");
+  }
+
+  validatePhone(value: string) {
+    return valid_phone(this.formatPhone(value));
   }
 
   validCopyPassword(value: string): Valid {
@@ -62,7 +70,7 @@ export class FormSignin extends Block {
     for (let item in inputs) {
       const value = inputs[item].value();
       if (typeof value == "string") {
-        res[item] = value
+        res[item] = value;
         const valid = valid_empty(value);
         if (!valid.value) {
           validForm = false;
@@ -74,7 +82,7 @@ export class FormSignin extends Block {
     }
 
     if (this.props.signin instanceof Function && validForm)
-      this.eventBus.emit("signin", res);
+      this.props.signin(res);
   }
 
   protected render() {
@@ -88,7 +96,7 @@ export class FormSignin extends Block {
         {{{ InputForm ref="login" label="Логин" name="login" type="login" validate=valid_login}}}
         {{{ InputForm ref="first_name" label="Имя" name="first_name" type="text" validate=valid_name}}}
         {{{ InputForm ref="second_name" label="Фамилия" name="second_name" type="text" validate=valid_name}}}
-        {{{ InputForm ref="phone" label="Телефон" name="phone" type="tel" validate=valid_phone}}}
+        {{{ InputForm ref="phone" label="Телефон" name="phone" type="tel" validate=valid_phone  mask=maskPhone}}}
         {{{ InputForm ref="password" label="Пароль" name="password" type="password" validate=valid_password}}}
         {{{ InputForm ref="copy_password" label="Пароль (ещё раз)" type="password" validate=validCopyPassword}}}
         </div>

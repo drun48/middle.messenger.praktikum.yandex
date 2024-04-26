@@ -42,7 +42,7 @@ export class InputForm extends Block {
   protected render(): string {
     return `<div class="input">
     <label class="input__container">
-      {{{ Input ref="input" class="input__element" type=type onBlur=onBlur name=name placeholder="" }}}
+      {{{ Input ref="input" class="input__element" type=type onBlur=onBlur name=name onInput=mask placeholder="" }}}
       <div class="input__label">{{label}}</div>
       {{{ ErrorInputText ref="error" class="input__text-error" error=error }}}
     </label>
