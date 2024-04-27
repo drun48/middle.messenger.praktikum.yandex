@@ -114,6 +114,8 @@ export class Block {
       this._element.replaceWith(newElement);
     }
 
+    this._removeEvents();
+
     this._element = newElement;
 
     this._addEvents();
@@ -135,6 +137,17 @@ export class Block {
     });
 
     return temp.content;
+  }
+
+  private _removeEvents() {
+    const { events } = this.props as { events: { [key: string]: () => {} } };
+    if (events) {
+      Object.keys(events).forEach((eventName) => {
+        if (this._element instanceof HTMLElement) {
+          this._element.removeEventListener(eventName, events[eventName]);
+        }
+      });
+    }
   }
 
   private _addEvents() {
