@@ -4,6 +4,7 @@
 }
 
 .input-profile__label {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -32,6 +33,11 @@
     cursor: auto;
 } 
 
-.input-profile.error .input-profile__element{
-    color: red;
+.input-profile__text-error{
+    position: absolute;
+    top: calc(100% + 4.5px);
+    right: 0;
+    color: var(--color-error);
+    font-size: 8px;
+    background: var(--primary-background);
 }

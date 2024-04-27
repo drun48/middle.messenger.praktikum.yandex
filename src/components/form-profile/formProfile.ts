@@ -17,7 +17,6 @@ export class FormProfile extends Block {
       validName,
       validLogin,
       validEmail,
-      validEmpty,
       validPhone: (value: string) => this.validatePhone(value),
     });
   }
@@ -43,17 +42,27 @@ export class FormProfile extends Block {
 
     const form: Record<string, string> = {};
 
+    let valid = true;
+
     Object.entries(inputs).forEach(([key, value]) => {
       const val = value.value();
-      if (val) {
+      if (typeof val === 'string') {
+        const emptyValid = validEmpty(val);
+        if (!emptyValid.value) {
+          valid = false;
+          value.setError(emptyValid.errorText);
+        }
         if (key === 'phone') {
           form[key] = this.formatPhone(val);
         } else {
           form[key] = val;
         }
+      } else {
+        valid = false;
       }
     });
-    return form;
+
+    return valid ? form : null;
   }
 
   protected render() {

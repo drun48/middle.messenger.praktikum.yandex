@@ -25,11 +25,17 @@ export class InputProfile extends Block {
     return this.getValueInput();
   }
 
+  public setError(error: string | undefined) {
+    const errorComponent = this.refs.error as Block;
+    errorComponent.setProps({ error: error ?? '' });
+  }
+
   private validate() {
     if (this.readonly) return true;
     if (this.props.validate instanceof Function) {
       const value = this.getValueInput();
       const valid: Valid = this.props.validate?.(value);
+      this.setError(valid.errorText);
 
       if (!valid.value) this.element?.classList.add('error');
       else this.element?.classList.remove('error');
@@ -50,10 +56,9 @@ export class InputProfile extends Block {
       name=name
       readonly=readonly 
       onBlur=onBlur
-      onInput=mask }}}        
+      onInput=mask }}}
+      {{{ ErrorInputText ref="error" class="input-profile__text-error" error=error }}}        
     </label>
-  </div>
-  
-  `;
+  </div>`;
   }
 }

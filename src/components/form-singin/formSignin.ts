@@ -20,7 +20,6 @@ export class FormSignin extends Block {
       validEmail,
       validPassword,
       validPhone: (value: string) => this.validatePhone(value),
-      validEmpty,
       maskPhone,
       validCopyPassword: (value: string) => this.validCopyPassword(value),
       events: {
