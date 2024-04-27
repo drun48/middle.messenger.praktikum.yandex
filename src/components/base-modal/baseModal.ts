@@ -22,11 +22,9 @@ export class BaseModal extends Block {
   private _open() {
     const dialog = this.element as HTMLDialogElement;
     dialog.classList.remove('close');
-    try {
+    if (dialog.isConnected) {
       if (this.props.global) dialog?.showModal();
       else dialog?.show();
-    } catch (e) {
-      console.log(e);
     }
   }
 
