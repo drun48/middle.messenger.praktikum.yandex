@@ -10,7 +10,7 @@ export class Message extends Block {
   protected render() {
     return `<div class="message">
     {{#if (isEqual type "photo")}}
-      <img class="message__element" src="{{value}}" alt="Фото"/>
+      <img class="message__element" src="{{value}}" alt="Изображения в сообщении"/>
     {{else}}
       <p class="message__element">{{value}}</p>
     {{/if}}

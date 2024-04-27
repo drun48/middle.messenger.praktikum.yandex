@@ -17,7 +17,7 @@ export class CardUser extends Block {
     return `<div class="card-user {{class}}">
     <div class="card-user__profile">
       <div class="card-user__profile__photo">
-        <img src="{{photo}}" alt="Фото"/>
+        <img src="{{photo}}" alt="Фото пользователя"/>
       </div>
       <div class="card-user__profile__text">
         <h3>{{name}}</h3>

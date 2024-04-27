@@ -13,7 +13,7 @@ export class ProfileTitle extends Block {
   protected render() {
     return `<div class="profile-title">
     <div class="profile-title__photo">
-      <img class="profile-title__photo__element" src="{{photo}}" alt="Фото"/>
+      <img class="profile-title__photo__element" src="{{photo}}" alt="Ваше фото"/>
       {{#if chagePhoto}}
         <div class="profile-title__photo__upload">
           <p>Поменять аватар</p>

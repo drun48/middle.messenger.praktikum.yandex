@@ -100,7 +100,7 @@ export class PageProfile extends Block {
     </div>
     <div class="profile__back">
         <a class="profile__back__button">
-            <img src={{arrowCircle}} alt="Иконка">
+            <img src={{arrowCircle}} alt="Иконка перехода">
         </a>
     </div>
 </div>

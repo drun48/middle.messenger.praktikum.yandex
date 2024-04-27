@@ -286,7 +286,7 @@ export class PageChats extends Block {
             <div class="container-search__nav">
                 <a class="container-search__nav__element">
                     <p>Профиль</p>
-                    <img src="{{arrow}}" alt="Иконка"/>
+                    <img src="{{arrow}}" alt="Иконка перехода"/>
                 </a>
             </div>
             <div class="container-search__element">
@@ -316,7 +316,7 @@ export class PageChats extends Block {
               {{{ CardUser name="Вадим" photo=photoUser }}}
               <div class="container-chat__profile__menu">
                 {{#Button onClick=openModalControllerChat}}
-                  <img src="{{menu}}" alt="Иконка"/>
+                  <img src="{{menu}}" alt="Иконка меню чата"/>
                 {{/Button}}
                 {{{ ModalList class="modal-controller-chat" controller=controllerChat list=listControllerChat ref="modalControllerChat"}}}
               </div>
@@ -327,7 +327,7 @@ export class PageChats extends Block {
           <div class="container-chat__input">
               <div class="container-chat__input__attacher">
                 {{#Button onClick=openModalAttach}}
-                  <img src="{{attacher}}" alt="Иконка"/>
+                  <img src="{{attacher}}" alt="Иконка прикрепления файла"/>
                 {{/Button}}
                 {{{ ModalList class="modal-attach" list=listAttach ref="modalAttach" }}}
               </div>
@@ -335,7 +335,7 @@ export class PageChats extends Block {
                   {{{ InputMessage ref="inputMessage" placeholder="Сообщение" }}}
               </div>
               {{#Button class="container-chat__input__button" onClick=sendMessage}}
-                <img src="{{arrowCircle}}" alt="Иконка">
+                <img src="{{arrowCircle}}" alt="Иконка отправки сообщения">
               {{/Button}}
               <div class="container-chat__input__button">
               </div>
