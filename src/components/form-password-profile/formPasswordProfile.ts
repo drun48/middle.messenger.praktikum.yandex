@@ -1,5 +1,5 @@
 import { Block, Props } from '../../core/Block';
-import { validPassword } from '../../utils/validator';
+import { Valid, validPassword, validEmpty } from '../../utils/validator';
 import { InputProfile } from '../input-profile';
 
 export class FormPasswordProfile extends Block {
@@ -11,7 +11,7 @@ export class FormPasswordProfile extends Block {
     });
   }
 
-  validateCopyPassword(value: string) {
+  validateCopyPassword(value: string):Valid {
     if (!value) {
       return { value: true };
     }
@@ -20,7 +20,7 @@ export class FormPasswordProfile extends Block {
     if (passwordValue !== null && passwordValue === value) {
       return { value: true };
     }
-    return { value: false };
+    return { value: false, errorText: 'Пароли должны совпадать' };
   }
 
   getForm() {
@@ -31,15 +31,23 @@ export class FormPasswordProfile extends Block {
     };
 
     const form: Record<string, string> = {};
+    let valid = true;
 
     Object.entries(inputs).forEach(([key, item]) => {
       const value = item.value();
-      if (value) {
+      if (typeof value === 'string') {
         form[key] = value;
+        const emptyValid = validEmpty(value);
+        if (!emptyValid.value) {
+          valid = false;
+          item.setError(emptyValid.errorText);
+        }
+      } else {
+        valid = false;
       }
     });
 
-    return form;
+    return valid ? form : null;
   }
 
   protected render() {
