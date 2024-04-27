@@ -1,2 +1,3 @@
-import './style.css'
-export {default as Error} from './index.hbs?raw'
+import './style.css';
+
+export { Error } from './error';

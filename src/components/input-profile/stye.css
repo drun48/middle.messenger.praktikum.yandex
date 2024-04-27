@@ -4,12 +4,11 @@
 }
 
 .input-profile__label {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     width: 100%;
-
     font-weight: 500;
     font-size: 13px;
     line-height: 100%;
@@ -32,4 +31,13 @@
 
 .input-profile__element[readonly] {
     cursor: auto;
+} 
+
+.input-profile__text-error{
+    position: absolute;
+    top: calc(100% + 4.5px);
+    right: 0;
+    color: var(--color-error);
+    font-size: 8px;
+    background: var(--primary-background);
 }

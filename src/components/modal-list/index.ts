@@ -1,2 +1,3 @@
-import "./style.css";
-export { default as ModalList } from "./index.hbs?raw";
+import './style.css';
+
+export { ModalList } from './modalList';

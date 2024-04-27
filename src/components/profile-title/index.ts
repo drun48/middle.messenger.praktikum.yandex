@@ -1,2 +1,3 @@
-import "./style.css";
-export { default as ProfileTitle } from "./index.hbs?raw";
+import './style.css';
+
+export { ProfileTitle } from './profileTitle';

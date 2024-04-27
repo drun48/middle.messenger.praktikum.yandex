@@ -1,6 +1,5 @@
 .modal-list {
     display: flex;
-
     width: fit-content;
     height: fit-content;
     padding: 15px;
@@ -15,4 +14,10 @@
 .modal-list__element__item {
     display: flex;
     gap: 15px;
+}
+
+.modal-list__element__item>button{
+    background: var(--primary-background);
+    cursor: pointer;
+    border: none;
 }

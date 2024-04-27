@@ -1,0 +1,1 @@
+export { ErrorInputText } from './errorInputText';

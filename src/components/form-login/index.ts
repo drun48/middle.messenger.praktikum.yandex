@@ -1,2 +1,3 @@
-import "./style.css";
-export { default as FormLogin } from "./index.hbs?raw";
+import './style.css';
+
+export { FormLogin } from './formlLogin';

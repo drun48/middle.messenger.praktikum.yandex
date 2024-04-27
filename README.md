@@ -10,6 +10,12 @@ TypeScript, Handlebars, Vite
 
 ---
 
+### Функциональность
+
+Возможонсть заполнять данные пользователя, менять данные в профиле и поиск чатов по имени
+
+---
+
 ### Ссылка на ресурс
 
 https://roaring-pasca-82642f.netlify.app/
@@ -27,4 +33,9 @@ npm run dev
 ```
 npm run build
 npm run start
+```
+### Линтеры
+```
+npm run eslint
+npm run stylelint
 ```

@@ -1,6 +1,6 @@
 .uploadFile {
     width: 340px;
-    min-height: 257px;
+    height: 257px;
 }
 
 .uploadFile__content {
@@ -8,7 +8,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     width: 100%;
     height: 100%;
 }

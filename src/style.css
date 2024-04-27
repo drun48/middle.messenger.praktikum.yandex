@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Inter", sans-serif;
+    font-family: Inter, sans-serif;
 }
 
 html,
@@ -16,7 +16,7 @@ body,
     --primary-background: #fff;
     --primary-border: #EAEAEA;
     --pirmary-color: #3369F3;
-    --color-secondery-text: #999999;
+    --color-secondery-text: #999;
     --color-error: #FF2F2F;
     --color-message: #1E1E1E;
     --background-input: #EFEFEF;
@@ -26,12 +26,9 @@ body,
     display: flex;
     flex-direction: column;
     align-items: center;
-
     background: var(--primary-background);
-    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.14);
-
+    box-shadow: 0 0 6px 0 rgb(0 0 0 / 14%);
     padding: 40px 30px;
-
     border-radius: 12px;
 }
 
@@ -52,18 +49,15 @@ body,
 
 .primary-button {
     width: 100%;
-
     font-weight: 500;
     font-size: 13px;
     line-height: 100%;
     text-align: center;
     color: #FFF;
-
     border: none;
     border-radius: 8px;
     background: var(--pirmary-color);
     padding: 12px 0;
-
     cursor: pointer;
 }
 

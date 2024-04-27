@@ -1,2 +1,3 @@
-import './style.css'
-export {default as Chat} from './index.hbs?raw'
+import './style.css';
+
+export { Chat } from './chat';
