@@ -2,6 +2,8 @@ import { Block, Props } from '../../core/Block.ts';
 import { FormProfile } from '../../components/form-profile';
 import { FormPasswordProfile } from '../../components/form-password-profile';
 import { ModalUploadFile } from '../../components/modal-upload-file';
+import arrowCircle from '../../assets/arrow-circle.svg';
+import profilPhoto from '../../assets/profile_photo.svg';
 
 export class PageProfile extends Block {
   profile = {
@@ -16,6 +18,8 @@ export class PageProfile extends Block {
   constructor(props: Props) {
     super({
       ...props,
+      arrowCircle,
+      profilPhoto,
       changeForm: () => this.changeForm(),
       stateChangePassword: () => this.stateChangePassword(),
       saveProfile: () => this.saveProfile(),

@@ -17,6 +17,9 @@ import addUser from '../../assets/AddUser.svg';
 import deleteUser from '../../assets/DeleteUser.svg';
 import deleteChat from '../../assets/delete_chat.svg';
 
+import arrowCircle from '../../assets/arrow-circle.svg';
+import attacher from '../../assets/attacher.svg';
+
 export class PageChats extends Block {
   constructor(props: Props) {
     super({
@@ -99,6 +102,9 @@ export class PageChats extends Block {
           photo: deleteChat,
         },
       ],
+      arrowCircle,
+      attacher,
+      photoUser: avatar,
     });
   }
 

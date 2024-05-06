@@ -2,32 +2,28 @@ import Handlebars from 'handlebars';
 import * as Components from './components';
 import * as Pages from './pages';
 
-import arrowCircle from './assets/arrow-circle.svg';
-import attacher from './assets/attacher.svg';
-import photoUser from './assets/photoUser.png';
-import profilPhoto from './assets/profile_photo.svg';
-import { Block, Props } from './core/Block';
 import { registerComponent } from './core/registerComponent';
+import Router from './core/Router';
 
-const pages: Record<
-  string,
-  [string | (new (...args: Props[]) => Block), Props]
-> = {
-  nav: [Pages.NavPage, {}],
-  login: [Pages.LoginPage, {}],
-  signin: [Pages.PageSign, {}],
-  chats: [
-    Pages.PageChats,
-    {
-      attacher,
-      arrowCircle,
-      photoUser,
-    },
-  ],
-  profile: [Pages.PageProfile, { arrowCircle, profilPhoto }],
-  error404: [Pages.PageError, { code: '404', title: 'Не туда попали' }],
-  error500: [Pages.PageError, { code: '500', title: 'Мы уже фиксим' }],
-};
+// const pages: Record<
+//   string,
+//   [string | (new (...args: Props[]) => Block), Props]
+// > = {
+//   nav: [Pages.NavPage, {}],
+//   login: [Pages.LoginPage, {}],
+//   signin: [Pages.PageSign, {}],
+//   chats: [
+//     Pages.PageChats,
+//     {
+//       attacher,
+//       arrowCircle,
+//       photoUser,
+//     },
+//   ],
+//   profile: [Pages.PageProfile, { arrowCircle, profilPhoto }],
+//   error404: [Pages.PageError, { code: '404', title: 'Не туда попали' }],
+//   error500: [Pages.PageError, { code: '500', title: 'Мы уже фиксим' }],
+// };
 
 Object.entries(Components).forEach(([name, component]) => {
   if (typeof component === 'string') Handlebars.registerPartial(name, component);
@@ -38,29 +34,8 @@ Object.entries(Components).forEach(([name, component]) => {
 
 Handlebars.registerHelper('isEqual', (value1, value2) => value1 === value2);
 
-const navigate = (page: string) => {
-  const [Source, context] = pages[page];
-  const container = document.getElementById('app')!;
-
-  if (Source instanceof Object) {
-    const element = new Source(context) as Block;
-    container.innerHTML = '';
-    container.append(element.getContent() as Node);
-    return;
-  }
-
-  container.innerHTML = Handlebars.compile(Source)(context);
-};
-
-document.addEventListener('DOMContentLoaded', () => navigate('nav'));
-
-document.addEventListener('click', (e) => {
-  const element = e.target as HTMLElement;
-  const page = element.getAttribute('page');
-  if (page) {
-    navigate(page);
-
-    e.preventDefault();
-    e.stopImmediatePropagation();
-  }
-});
+Router.use('/', Pages.LoginPage)
+  .use('/sign-up', Pages.PageSign)
+  .use('/messenger', Pages.PageChats)
+  .use('/settings', Pages.PageProfile)
+  .start();
