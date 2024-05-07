@@ -1,4 +1,5 @@
-type Indexed = Record<string, unknown> | string
+import { Indexed } from '../core/Store';
+
 export function isEqual(a:Indexed, b: Indexed): boolean {
   if (typeof a !== 'object' && typeof b !== 'object') {
     return a === b;

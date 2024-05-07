@@ -1,18 +1,22 @@
+import constants from '../constants';
+
+// eslint-disable-next-line no-shadow
+enum METHODS {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  PATCH = 'PATCH',
+  DELETE = 'DELETE'
+}
+
 type Options = {
   data?: Record<string, unknown>;
   headers?: Record<string, string>;
   timeout?: number;
-  method: string;
+  method: METHODS;
 };
 
-type HTTPMethod = (url: string, options?: Options) => Promise<unknown>
-
-const METHODS = {
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT',
-  DELETE: 'DELETE',
-};
+type HTTPMethod = (url: string, options?: Omit<Options, 'method'>) => Promise<unknown>
 
 function queryStringify(data: Record<string, unknown>) {
   if (typeof data !== 'object') {
@@ -26,6 +30,12 @@ function queryStringify(data: Record<string, unknown>) {
 }
 
 export class HTTPTransport {
+  private url:string;
+
+  constructor(url:string) {
+    this.url = constants.HOST + url;
+  }
+
   GET:HTTPMethod = (url, options) => {
     let str = url;
     if (options?.data) {
@@ -54,8 +64,8 @@ export class HTTPTransport {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
-      xhr.open(method, url);
-
+      xhr.open(method, this.url + url);
+      xhr.withCredentials = true;
       Object.entries(headers ?? {}).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value);
       });
