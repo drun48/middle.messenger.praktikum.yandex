@@ -1,4 +1,5 @@
 import { Block, Props } from '../../core/Block';
+import Router from '../../core/Router';
 import { InputForm } from '../input-form';
 import {
   validEmpty,
@@ -13,6 +14,7 @@ export class FormLogin extends Block {
       validLogin,
       validPassword,
       Login: (event: Event) => this.Login(event),
+      goToSignin: (event:Event) => this.goToSignin(event),
     });
   }
 
@@ -42,6 +44,12 @@ export class FormLogin extends Block {
     if (this.props.login instanceof Function && validForm) this.props.login(res);
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  goToSignin(event:Event) {
+    event.preventDefault();
+    Router.go('/sign-up');
+  }
+
   protected render() {
     return `
     <div>
@@ -57,7 +65,7 @@ export class FormLogin extends Block {
     </div>
     <footer class="form-login__footer">
     {{{Button class="primary-button" label="Авторизоваться" onClick=Login}}}
-    <a class="primary-link">Нет аккаунта?</a>
+    {{{Button class="primary-link" label="Нет аккаунта?" onClick=goToSignin}}}
     </footer>
   </form>
   </div>

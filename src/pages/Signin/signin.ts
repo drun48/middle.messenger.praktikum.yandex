@@ -1,12 +1,13 @@
 import { Block, Props } from '../../core/Block.ts';
+import connect from '../../core/connect.ts';
+import { signup } from '../../services/auth.ts';
 
-export class PageSign extends Block {
+class PageSign extends Block {
   constructor(props: Props) {
     super({
       ...props,
       signin: (value: Record<string, string>) => {
-        // eslint-disable-next-line no-console
-        console.log(value);
+        signup(value);
       },
     });
   }
@@ -17,3 +18,5 @@ export class PageSign extends Block {
 </div>`;
   }
 }
+
+export default connect(({ isLoading, loginError }) => ({ isLoading, loginError }))(PageSign);

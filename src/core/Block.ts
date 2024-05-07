@@ -201,7 +201,7 @@ export class Block {
   };
 
   show() {
-    if (this.element instanceof HTMLElement) this.element.style.display = 'block';
+    if (this.element instanceof HTMLElement) this.element.style.display = '';
   }
 
   hide() {

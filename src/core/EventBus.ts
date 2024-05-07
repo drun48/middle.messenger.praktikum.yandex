@@ -24,12 +24,10 @@ export class EventBus {
   }
 
   emit(event: string, ...args: unknown[]) {
-    if (!this.listeners[event]) {
-      throw new Error(`Нет события: ${event}`);
+    if (this.listeners[event]) {
+      this.listeners[event].forEach((fn) => {
+        fn(...args);
+      });
     }
-
-    this.listeners[event].forEach((fn) => {
-      fn(...args);
-    });
   }
 }

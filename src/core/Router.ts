@@ -1,4 +1,5 @@
 import { Block } from './Block';
+import { MiddlewareManager } from './Middleware';
 import { Route } from './Route';
 
 class Router {
@@ -9,6 +10,13 @@ class Router {
   private currentRoute:Route|null = null;
 
   private rootQuery:string;
+
+  // eslint-disable-next-line max-len
+  private _middleware:MiddlewareManager<{redirect:(pathname:string)=>void, pathname:string}> = new MiddlewareManager();
+
+  get middleware() {
+    return this._middleware;
+  }
 
   constructor(rootQuery:string) {
     this.rootQuery = rootQuery;
@@ -27,14 +35,17 @@ class Router {
     this.onRoute(window.location.pathname);
   }
 
-  private onRoute(pathname:string) {
+  private async onRoute(pathname:string) {
     const route = this.getRoute(pathname);
+
     if (this.currentRoute && this.currentRoute !== route) {
       this.currentRoute.leave();
     }
-
-    this.currentRoute = route;
-    route.render();
+    const access = await this.middleware.execute({ redirect: this.go, pathname });
+    if (access) {
+      this.currentRoute = route;
+      route.render();
+    }
   }
 
   go(pathname:string) {
@@ -51,7 +62,7 @@ class Router {
   }
 
   getRoute(pathname:string):Route {
-    return this.routes[pathname];
+    return this.routes[pathname] ?? this.routes['/'];
   }
 }
 

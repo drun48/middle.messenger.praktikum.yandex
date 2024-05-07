@@ -1,4 +1,5 @@
 import constants from '../constants';
+import merge from '../utils/merge';
 
 // eslint-disable-next-line no-shadow
 enum METHODS {
@@ -9,9 +10,11 @@ enum METHODS {
   DELETE = 'DELETE'
 }
 
+type Header = Record<string, string>
+
 type Options = {
   data?: Record<string, unknown>;
-  headers?: Record<string, string>;
+  headers?: Header;
   timeout?: number;
   method: METHODS;
 };
@@ -32,8 +35,11 @@ function queryStringify(data: Record<string, unknown>) {
 export class HTTPTransport {
   private url:string;
 
-  constructor(url:string) {
+  private header:Header;
+
+  constructor(url:string, header:Header = {}) {
     this.url = constants.HOST + url;
+    this.header = header;
   }
 
   GET:HTTPMethod = (url, options) => {
@@ -66,11 +72,13 @@ export class HTTPTransport {
 
       xhr.open(method, this.url + url);
       xhr.withCredentials = true;
-      Object.entries(headers ?? {}).forEach(([key, value]) => {
+      const headersMerge = merge(this.header, headers ?? {});
+      Object.entries(headersMerge).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value);
       });
 
       xhr.onload = function () {
+        console.log(xhr, 'dfsfdsfdsfsfd');
         resolve(xhr);
       };
 

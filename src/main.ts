@@ -4,6 +4,8 @@ import * as Pages from './pages';
 
 import { registerComponent } from './core/registerComponent';
 import Router from './core/Router';
+import Store from './core/Store';
+import { getUser } from './services/auth.ts';
 
 // const pages: Record<
 //   string,
@@ -33,6 +35,29 @@ Object.entries(Components).forEach(([name, component]) => {
 });
 
 Handlebars.registerHelper('isEqual', (value1, value2) => value1 === value2);
+
+Store.set('user', null);
+Store.set('auth', null);
+Store.set('isLoading', false);
+
+Router.middleware.use(async (ctx, next) => {
+  const state = Store.getState();
+
+  if (state.auth === null) {
+    await getUser();
+  }
+
+  if (ctx.pathname === '/' || ctx.pathname === '/sign-up') {
+    next();
+    return;
+  }
+
+  if (state.auth) {
+    next();
+    return;
+  }
+  ctx.redirect('/');
+});
 
 Router.use('/', Pages.LoginPage)
   .use('/sign-up', Pages.PageSign)
