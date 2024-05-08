@@ -6,17 +6,10 @@ import arrowCircle from '../../assets/arrow-circle.svg';
 import profilPhoto from '../../assets/profile_photo.svg';
 
 import { logout } from '../../services/auth';
+import connect from '../../core/connect.ts';
+import { deleteError, updateUser } from '../../services/user.ts';
 
-export class PageProfile extends Block {
-  profile = {
-    email: 'pochta@yandex.ru',
-    login: 'ivanivanov',
-    first_name: 'Иван',
-    second_name: 'Иванов',
-    display_name: 'Иван',
-    phone: '79099673030',
-  };
-
+class PageProfile extends Block {
   constructor(props: Props) {
     super({
       ...props,
@@ -31,22 +24,24 @@ export class PageProfile extends Block {
       readonlyForm: true,
       changePassword: false,
       openModalFile: false,
-      profile: {
-        email: 'pochta@yandex.ru',
-        login: 'ivanivanov',
-        first_name: 'Иван',
-        second_name: 'Иванов',
-        display_name: 'Иван',
-        phone: '79099673030',
-      },
     });
   }
 
+  hide() {
+    this.setProps({ readonlyForm: true });
+    this.setProps({ changePassword: false });
+    this.setProps({ openModalFile: false });
+    deleteError();
+    if (this.element instanceof HTMLElement) this.element.style.display = 'none';
+  }
+
   changeForm = () => {
+    deleteError();
     this.props.readonlyForm = false;
   };
 
   stateChangePassword = () => {
+    deleteError();
     this.props.changePassword = true;
   };
 
@@ -54,9 +49,8 @@ export class PageProfile extends Block {
     const formComponent = this.refs.formProfile as FormProfile;
     const form = formComponent.getForm();
     if (form) {
-      this.setProps({ profile: form });
       this.props.readonlyForm = true;
-      console.log(form);
+      updateUser(form);
     }
   };
 
@@ -91,11 +85,11 @@ export class PageProfile extends Block {
 
           {{{ FormPasswordProfile ref="formPasswordProfile" }}}
           <div class="profile__form__btn">
-            {{{ Button class="primary-button" form=profile label="Сохранить" onClick=savePassword}}}
+            {{{ Button class="primary-button" form=user label="Сохранить" onClick=savePassword}}}
           </div>
 
         {{else}}
-          {{{ FormProfile ref="formProfile" readonly=readonlyForm form=profile}}}
+          {{{ FormProfile ref="formProfile" readonly=readonlyForm form=user}}}
 
           {{#if (isEqual readonlyForm false)}}
           <div class="profile__form__btn">
@@ -109,6 +103,9 @@ export class PageProfile extends Block {
           </div>
         {{/if}}
         {{/if}}
+        {{#if errorUpdateProfile}}
+          <p class="error-text">{{errorUpdateProfile}}</p>
+        {{/if}}
     </div>
     <div class="profile__back">
       {{#RouterLink class="profile__back__button" to="/messenger"}}
@@ -119,3 +116,6 @@ export class PageProfile extends Block {
 `;
   }
 }
+
+// eslint-disable-next-line max-len
+export default connect(({ user, errorUpdateProfile }) => ({ user, errorUpdateProfile }))(PageProfile);

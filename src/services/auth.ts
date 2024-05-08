@@ -22,9 +22,11 @@ const getUser = async () => {
   const response = await authApi.getUser();
   if (response.data) {
     Store.set('auth', true);
+    Store.set('user', response.data);
   }
   if (response.error) {
     Store.set('auth', false);
+    Store.set('user', null);
   }
 };
 

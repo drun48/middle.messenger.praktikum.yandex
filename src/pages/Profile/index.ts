@@ -1,3 +1,3 @@
 import './style.css';
 
-export { PageProfile } from './profile';
+export { default as PageProfile } from './profile';

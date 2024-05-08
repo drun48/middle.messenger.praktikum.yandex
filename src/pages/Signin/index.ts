@@ -1,3 +1,1 @@
-import PageSign from './signin';
-
-export default PageSign;
+export { default as PageSign } from './signin';

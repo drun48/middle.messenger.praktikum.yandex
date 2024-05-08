@@ -1,25 +1,25 @@
 import { HTTPTransport } from '../core/HttpTransport';
 
-export default class AuthApi {
-  private authApi = new HTTPTransport('/auth', { 'content-type': 'application/json' });
+export default class api {
+  private api = new HTTPTransport('/auth', { 'content-type': 'application/json' });
 
   async signup(data: any) {
-    return this.authApi.POST('/signup', {
+    return this.api.POST('/signup', {
       data,
     });
   }
 
   async login(data: any) {
-    return this.authApi.POST('/signin', {
+    return this.api.POST('/signin', {
       data,
     });
   }
 
   async getUser() {
-    return this.authApi.GET<{test:string}>('/user');
+    return this.api.GET<{test:string}>('/user');
   }
 
   async logout() {
-    return this.authApi.POST('/logout');
+    return this.api.POST('/logout');
   }
 }
