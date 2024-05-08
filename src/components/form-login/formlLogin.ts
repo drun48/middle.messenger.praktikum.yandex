@@ -14,7 +14,6 @@ export class FormLogin extends Block {
       validLogin,
       validPassword,
       Login: (event: Event) => this.Login(event),
-      goToSignin: (event:Event) => this.goToSignin(event),
     });
   }
 
@@ -44,12 +43,6 @@ export class FormLogin extends Block {
     if (this.props.login instanceof Function && validForm) this.props.login(res);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  goToSignin(event:Event) {
-    event.preventDefault();
-    Router.go('/sign-up');
-  }
-
   protected render() {
     return `
     <div>
@@ -65,7 +58,12 @@ export class FormLogin extends Block {
     </div>
     <footer class="form-login__footer">
     {{{Button class="primary-button" label="Авторизоваться" onClick=Login}}}
-    {{{Button class="primary-link" label="Нет аккаунта?" onClick=goToSignin}}}
+    {{#RouterLink class="primary-link" to="/sign-up"}}
+      <p>Нет аккаунта?</p>
+    {{/RouterLink}}
+    {{#if error}}
+      <p class="error-text">{{error}}</p>
+    {{/if}}
     </footer>
   </form>
   </div>

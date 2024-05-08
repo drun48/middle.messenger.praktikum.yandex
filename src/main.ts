@@ -47,16 +47,17 @@ Router.middleware.use(async (ctx, next) => {
     await getUser();
   }
 
-  if (ctx.pathname === '/' || ctx.pathname === '/sign-up') {
-    next();
+  if (state.auth && (ctx.pathname === '/' || ctx.pathname === '/sign-up')) {
+    ctx.redirect('/messenger');
     return;
   }
 
-  if (state.auth) {
-    next();
+  if (!state.auth && ctx.pathname !== '/' && ctx.pathname !== '/sign-up') {
+    ctx.redirect('/');
     return;
   }
-  ctx.redirect('/');
+
+  next();
 });
 
 Router.use('/', Pages.LoginPage)

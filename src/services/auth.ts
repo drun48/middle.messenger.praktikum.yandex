@@ -9,14 +9,22 @@ const login = async (data:any) => {
   const response = checkStatus(await authApi.login(data));
   if (response.data) {
     Store.set('auth', true);
+    Store.set('loginError', '');
+
     Router.go('/messenger');
+  }
+  if (response.error) {
+    Store.set('loginError', response.error.reason);
   }
 };
 
 const getUser = async () => {
-  const response = checkStatus(await authApi.getUser());
+  const response = await authApi.getUser();
   if (response.data) {
     Store.set('auth', true);
+  }
+  if (response.error) {
+    Store.set('auth', false);
   }
 };
 
@@ -25,11 +33,15 @@ const signup = async (data:any) => {
   if (response.data) {
     Router.go('/');
   }
+  if (response.error) {
+    Store.set('signinError', response.error.reason);
+  }
 };
 
 const logout = async () => {
   const response = checkStatus(await authApi.logout());
   if (!response.error) {
+    Store.set('auth', false);
     Router.go('/');
   }
 };

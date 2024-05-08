@@ -1,7 +1,7 @@
 import { Block, Props } from '../../core/Block';
 import connect from '../../core/connect';
 
-import { login, getUser, logout } from '../../services/auth';
+import { login } from '../../services/auth';
 
 class LoginPage extends Block {
   constructor(props: Props) {
@@ -9,8 +9,6 @@ class LoginPage extends Block {
       ...props,
       login: (form: Record<string, string>) => this.login(form),
     });
-    // getUser();
-    // logout();
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -20,9 +18,9 @@ class LoginPage extends Block {
 
   protected render() {
     return `
-        <div class="container-center" >
-          {{{ FormLogin login=login}}}
-        </div>`;
+      <div class="container-center" >
+          {{{ FormLogin login=login error=loginError}}}
+      </div>`;
   }
 }
 

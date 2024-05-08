@@ -21,3 +21,4 @@ export { FormPasswordProfile } from './form-password-profile';
 export { Input } from './input';
 export { Button } from './button';
 export { ErrorInputText } from './error-input-text';
+export { RouterLink } from './router-link';

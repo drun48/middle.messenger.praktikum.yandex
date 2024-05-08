@@ -5,6 +5,8 @@ import { ModalUploadFile } from '../../components/modal-upload-file';
 import arrowCircle from '../../assets/arrow-circle.svg';
 import profilPhoto from '../../assets/profile_photo.svg';
 
+import { logout } from '../../services/auth';
+
 export class PageProfile extends Block {
   profile = {
     email: 'pochta@yandex.ru',
@@ -25,6 +27,7 @@ export class PageProfile extends Block {
       saveProfile: () => this.saveProfile(),
       savePassword: () => this.savePassword(),
       openUploadFile: () => this.openUploadFile(),
+      logout: () => this.logout(),
       readonlyForm: true,
       changePassword: false,
       openModalFile: false,
@@ -71,6 +74,11 @@ export class PageProfile extends Block {
     modal.open();
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  logout() {
+    logout();
+  }
+
   protected render() {
     return `<div class="profile">
     {{{ ModalUploadFile ref="modalUpload" input_name="avatar" labelButton="Поменять" accept=".jpg, .png" global=true}}}
@@ -97,15 +105,15 @@ export class PageProfile extends Block {
           <div class="profile__form__changed with-delimetr">
             {{{ Button class="profile__form__changed__element" label="Изменить данные" onClick=changeForm }}}
             {{{ Button class="profile__form__changed__element" label="Изменить пароль" onClick=stateChangePassword}}}
-            {{{ Button class="profile__form__changed__element" label="Выйти" }}}
+            {{{ Button class="profile__form__changed__element" label="Выйти" onClick=logout}}}
           </div>
         {{/if}}
         {{/if}}
     </div>
     <div class="profile__back">
-        <a class="profile__back__button">
-            <img src={{arrowCircle}} alt="Иконка перехода">
-        </a>
+      {{#RouterLink class="profile__back__button" to="/messenger"}}
+        <img src={{arrowCircle}} alt="Иконка перехода">
+      {{/RouterLink}}
     </div>
 </div>
 `;

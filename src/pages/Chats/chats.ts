@@ -290,10 +290,10 @@ export class PageChats extends Block {
     <div class="wrapper-choice">
         <div class="container-search">
             <div class="container-search__nav">
-                <a class="container-search__nav__element">
-                    <p>Профиль</p>
-                    <img src="{{arrow}}" alt="Иконка перехода"/>
-                </a>
+              {{#RouterLink to="/settings" class="container-search__nav__element"}}
+                <p>Профиль</p>
+                <img src="{{arrow}}" alt="Иконка перехода"/>
+              {{/RouterLink}}
             </div>
             <div class="container-search__element">
                 {{{ InputSearch ref="search" onBlur=searchChat value=search}}}

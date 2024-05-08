@@ -91,21 +91,24 @@ export class FormSignin extends Block {
         <h2>Регистрация</h2>
         </div>
         <div class="form-signin__inputs">
-        {{{ InputForm ref="email" label="Почта" name="email" type="email" validate=validEmail}}}
-        {{{ InputForm ref="login" label="Логин" name="login" type="login" validate=validLogin}}}
-        {{{ InputForm ref="first_name" label="Имя" name="first_name" type="text" validate=validName}}}
-        {{{ InputForm ref="second_name" label="Фамилия" name="second_name" type="text" validate=validName}}}
-        {{{ InputForm ref="phone" label="Телефон" name="phone" type="tel" validate=validPhone  mask=maskPhone}}}
-        {{{ InputForm ref="password" label="Пароль" name="password" type="password" validate=validPassword}}}
-        {{{ InputForm ref="copy_password" label="Пароль (ещё раз)" type="password" validate=validCopyPassword}}}
+        {{{ InputForm ref="email" value=form.email label="Почта" name="email" type="email" validate=validEmail}}}
+        {{{ InputForm ref="login" value=form.login label="Логин" name="login" type="login" validate=validLogin}}}
+        {{{ InputForm ref="first_name" value=form.first_name label="Имя" name="first_name" type="text" validate=validName}}}
+        {{{ InputForm ref="second_name" value=form.second_name label="Фамилия" name="second_name" type="text" validate=validName}}}
+        {{{ InputForm ref="phone" value=form.phone label="Телефон" name="phone" type="tel" validate=validPhone  mask=maskPhone}}}
+        {{{ InputForm ref="password" value=form.password label="Пароль" name="password" type="password" validate=validPassword}}}
+        {{{ InputForm ref="copy_password" value=form.copy_password  label="Пароль (ещё раз)" type="password" validate=validCopyPassword}}}
         </div>
     </div>
     <footer class="form-signin__footer">
       {{{Button class="primary-button" label="Зарегистрироваться" onClick=Signin}}}
-      <a class="primary-link">Войти</a>
+      {{#RouterLink class="primary-link" to="/"}}
+        <p>Войти</p>
+      {{/RouterLink}}
+      {{#if error}}
+        <p class="error-text">{{error}}</p>
+      {{/if}}
     </footer>
-  </form>
-  
-  `;
+  </form>`;
   }
 }
