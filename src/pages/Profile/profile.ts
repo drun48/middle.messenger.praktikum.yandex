@@ -7,7 +7,7 @@ import profilPhoto from '../../assets/profile_photo.svg';
 
 import { logout } from '../../services/auth';
 import connect from '../../core/connect.ts';
-import { deleteError, updateUser } from '../../services/user.ts';
+import { deleteError, updatePassword, updateUser } from '../../services/user.ts';
 
 class PageProfile extends Block {
   constructor(props: Props) {
@@ -21,6 +21,7 @@ class PageProfile extends Block {
       savePassword: () => this.savePassword(),
       openUploadFile: () => this.openUploadFile(),
       logout: () => this.logout(),
+      back: () => this.back(),
       readonlyForm: true,
       changePassword: false,
       openModalFile: false,
@@ -28,11 +29,15 @@ class PageProfile extends Block {
   }
 
   hide() {
-    this.setProps({ readonlyForm: true });
-    this.setProps({ changePassword: false });
     this.setProps({ openModalFile: false });
+    this.back();
     deleteError();
     if (this.element instanceof HTMLElement) this.element.style.display = 'none';
+  }
+
+  back() {
+    this.setProps({ readonlyForm: true });
+    this.setProps({ changePassword: false });
   }
 
   changeForm = () => {
@@ -59,7 +64,7 @@ class PageProfile extends Block {
     const form = formComponent.getForm();
     if (form) {
       this.props.changePassword = false;
-      console.log(form);
+      updatePassword(form);
     }
   };
 
@@ -85,17 +90,19 @@ class PageProfile extends Block {
 
           {{{ FormPasswordProfile ref="formPasswordProfile" }}}
           <div class="profile__form__btn">
+            {{{ Button class="primary-button" label="Назад" onClick=back }}}
             {{{ Button class="primary-button" form=user label="Сохранить" onClick=savePassword}}}
           </div>
 
         {{else}}
           {{{ FormProfile ref="formProfile" readonly=readonlyForm form=user}}}
 
-          {{#if (isEqual readonlyForm false)}}
-          <div class="profile__form__btn">
-            {{{ Button class="primary-button" label="Сохранить" onClick=saveProfile}}}
-          </div>
-        {{else}}
+            {{#if (isEqual readonlyForm false)}}
+              <div class="profile__form__btn">
+              {{{Button class="primary-button" label="Назад" onClick=back}}}
+                {{{ Button class="primary-button" label="Сохранить" onClick=saveProfile}}}
+              </div>
+            {{else}}
           <div class="profile__form__changed with-delimetr">
             {{{ Button class="profile__form__changed__element" label="Изменить данные" onClick=changeForm }}}
             {{{ Button class="profile__form__changed__element" label="Изменить пароль" onClick=stateChangePassword}}}

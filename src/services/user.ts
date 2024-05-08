@@ -18,7 +18,15 @@ const updateUser = async (data:any) => {
   }
 };
 
+const updatePassword = async (data:any) => {
+  const response = checkStatus(await userApi.updatePassword(data));
+  if (response.error) {
+    Store.set('errorUpdateProfile', `Не удалось обновить пароль: ${response.error.reason}`);
+  }
+};
+
 export {
   deleteError,
   updateUser,
+  updatePassword,
 };

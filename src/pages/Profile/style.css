@@ -60,5 +60,11 @@
 }
 
 .profile__form__btn{
-    max-width: 280px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.profile__form__btn button{
+    max-width: 240px;
 }

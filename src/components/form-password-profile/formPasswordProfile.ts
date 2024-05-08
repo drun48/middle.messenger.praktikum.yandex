@@ -25,8 +25,8 @@ export class FormPasswordProfile extends Block {
 
   getForm() {
     const inputs: Record<string, InputProfile> = {
-      old_password: this.refs.old_password as InputProfile,
-      password: this.refs.password as InputProfile,
+      oldPassword: this.refs.old_password as InputProfile,
+      newPassword: this.refs.password as InputProfile,
       copy_password: this.refs.copy_password as InputProfile,
     };
 
