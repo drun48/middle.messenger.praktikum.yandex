@@ -1,4 +1,5 @@
 import constants from '../constants';
+import { ApiError } from '../types/apiError';
 import merge from '../utils/merge';
 
 // eslint-disable-next-line no-shadow
@@ -19,7 +20,13 @@ type Options = {
   method: METHODS;
 };
 
-type HTTPMethod = (url: string, options?: Omit<Options, 'method'>) => Promise<unknown>
+export type Responce<T> = {
+  status:number,
+  data?:T,
+  error?:ApiError
+}
+
+type HTTPMethod = <T=unknown>(url: string, options?: Omit<Options, 'method'>) => Promise<Responce<T>>
 
 function queryStringify(data: Record<string, unknown>) {
   if (typeof data !== 'object') {
@@ -64,10 +71,10 @@ export class HTTPTransport {
   DELETE:HTTPMethod = (url, options) => this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
 
   // eslint-disable-next-line class-methods-use-this
-  request = (url: string, options: Options, timeout = 5000) => {
+  request = <T>(url: string, options: Options, timeout = 5000) => {
     const { method, data, headers } = options;
 
-    return new Promise((resolve, reject) => {
+    return new Promise<Responce<T>>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
       xhr.open(method, this.url + url);
@@ -77,9 +84,16 @@ export class HTTPTransport {
         xhr.setRequestHeader(key, value);
       });
 
-      xhr.onload = function () {
-        console.log(xhr, 'dfsfdsfdsfsfd');
-        resolve(xhr);
+      xhr.onload = () => {
+        const isJson = xhr.getResponseHeader('content-type')?.includes('application/json');
+        const body = isJson ? JSON.parse(xhr.response) : xhr.response;
+        const responce:Responce<T> = { status: xhr.status };
+        if (xhr.status < 400) {
+          responce.data = body;
+        } else {
+          responce.error = body;
+        }
+        resolve(responce);
       };
 
       xhr.onabort = reject;

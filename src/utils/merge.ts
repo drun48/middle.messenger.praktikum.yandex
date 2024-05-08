@@ -1,6 +1,6 @@
 type Indexed<T> = {
     [key in string]: T;
-  };
+};
 
 /* eslint-disable no-param-reassign */
 function merge<T = unknown>(lhs: Indexed<T>, rhs: Indexed<T>): Indexed<T> {

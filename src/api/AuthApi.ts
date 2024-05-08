@@ -3,7 +3,7 @@ import { HTTPTransport } from '../core/HttpTransport';
 export default class AuthApi {
   private authApi = new HTTPTransport('/auth', { 'content-type': 'application/json' });
 
-  async create(data: any) {
+  async signup(data: any) {
     return this.authApi.POST('/signup', {
       data,
     });
@@ -16,7 +16,7 @@ export default class AuthApi {
   }
 
   async getUser() {
-    return this.authApi.GET('/user');
+    return this.authApi.GET<{test:string}>('/user');
   }
 
   async logout() {

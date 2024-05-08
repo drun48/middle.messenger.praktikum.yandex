@@ -1,12 +1,18 @@
-import { Indexed } from '../core/Store';
+type Indexed = {
+  [key in string]:unknown
+}
 
-export function isEqual(a:Indexed, b: Indexed): boolean {
-  if (typeof a !== 'object' && typeof b !== 'object') {
+function isIndexed(x: any): x is Indexed {
+  return typeof x === 'object' && x !== null;
+}
+
+export function isEqual(a:Indexed|unknown, b: Indexed|unknown): boolean {
+  if (!isIndexed(a) && !isIndexed(b)) {
     return a === b;
-  } if (typeof a !== 'object' || typeof b !== 'object') {
+  }
+  if (!isIndexed(a) || !isIndexed(b)) {
     return false;
   }
-
   const keysA = Object.keys(a);
   const keysB = Object.keys(b);
 
@@ -14,7 +20,7 @@ export function isEqual(a:Indexed, b: Indexed): boolean {
 
   // eslint-disable-next-line no-restricted-syntax
   for (const key of keysA) {
-    const equal = isEqual(a[key] as Indexed, b[key] as Indexed);
+    const equal = isEqual(a[key], b[key]);
     if (!equal) return false;
   }
 

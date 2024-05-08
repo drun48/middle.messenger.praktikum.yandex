@@ -41,7 +41,7 @@ class Router {
     if (this.currentRoute && this.currentRoute !== route) {
       this.currentRoute.leave();
     }
-    const access = await this.middleware.execute({ redirect: this.go, pathname });
+    const access = await this.middleware.execute({ redirect: this.go.bind(this), pathname });
     if (access) {
       this.currentRoute = route;
       route.render();

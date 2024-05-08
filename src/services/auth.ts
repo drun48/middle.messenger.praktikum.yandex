@@ -1,33 +1,35 @@
 import AuthApi from '../api/AuthApi';
 import Router from '../core/Router';
 import Store from '../core/Store';
+import { checkStatus } from './checkStatus';
 
 const authApi = new AuthApi();
 
 const login = async (data:any) => {
-  const answer = await authApi.login(data);
-  if (!answer.error) {
+  const response = checkStatus(await authApi.login(data));
+  if (response.data) {
+    Store.set('auth', true);
     Router.go('/messenger');
   }
 };
 
 const getUser = async () => {
-  const responseUser = await authApi.getUser();
-  if (responseUser.status == 401) {
-    Router.go('/');
-    return;
+  const response = checkStatus(await authApi.getUser());
+  if (response.data) {
+    Store.set('auth', true);
   }
-  Store.set('auth', true);
 };
 
 const signup = async (data:any) => {
-  const answer = await authApi.create(data);
-  console.log(answer);
+  const response = await authApi.signup(data);
+  if (response.data) {
+    Router.go('/');
+  }
 };
 
 const logout = async () => {
-  const answer = await authApi.logout();
-  if (!answer.error) {
+  const response = checkStatus(await authApi.logout());
+  if (!response.error) {
     Router.go('/');
   }
 };
