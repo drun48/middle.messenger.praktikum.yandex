@@ -21,7 +21,6 @@ export class FormProfile extends Block {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   formatPhone(value: string) {
     return value.replace('(', '').replace(')', '').replaceAll(' ', '');
   }

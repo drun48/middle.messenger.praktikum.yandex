@@ -1,7 +1,7 @@
 import { HTTPTransport } from '../core/HttpTransport';
 
 export default class api {
-  private api = new HTTPTransport('/auth', { 'content-type': 'application/json' });
+  private api = new HTTPTransport('/auth');
 
   async signup(data: any) {
     return this.api.POST('/signup', {

@@ -1,6 +1,7 @@
 import constants from '../constants';
 import { ApiError } from '../types/apiError';
 import merge from '../utils/merge';
+import queryStringify from '../utils/queryStringify';
 
 // eslint-disable-next-line no-shadow
 enum METHODS {
@@ -14,7 +15,7 @@ enum METHODS {
 type Header = Record<string, string>
 
 type Options = {
-  data?: Record<string, unknown>;
+  data?: Record<string, unknown> | FormData;
   headers?: Header;
   timeout?: number;
   method: METHODS;
@@ -28,16 +29,16 @@ export type Responce<T> = {
 
 type HTTPMethod = <T=unknown>(url: string, options?: Omit<Options, 'method'>) => Promise<Responce<T>>
 
-function queryStringify(data: Record<string, unknown>) {
-  if (typeof data !== 'object') {
-    throw new Error('Data must be object');
-  }
-  const keys = Object.keys(data);
-  return keys.reduce(
-    (result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`,
-    '?',
-  );
-}
+// function queryStringify(data: Record<string, unknown>) {
+//   if (typeof data !== 'object') {
+//     throw new Error('Data must be object');
+//   }
+//   const keys = Object.keys(data);
+//   return keys.reduce(
+//     (result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`,
+//     '?',
+//   );
+// }
 
 export class HTTPTransport {
   private url:string;
@@ -51,7 +52,7 @@ export class HTTPTransport {
 
   GET:HTTPMethod = (url, options) => {
     let str = url;
-    if (options?.data) {
+    if (options?.data && !(options.data instanceof FormData)) {
       str += queryStringify(options.data);
     }
     return this.request(
@@ -70,18 +71,23 @@ export class HTTPTransport {
   // eslint-disable-next-line max-len
   DELETE:HTTPMethod = (url, options) => this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
 
-  // eslint-disable-next-line class-methods-use-this
   request = <T>(url: string, options: Options, timeout = 5000) => {
-    const { method, data, headers } = options;
+    const { method, data, headers = {} } = options;
 
     return new Promise<Responce<T>>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
+
+      if (!(data instanceof FormData)) {
+        headers['content-type'] = 'application/json';
+      } else {
+        headers['content-type'] = '';
+      }
 
       xhr.open(method, this.url + url);
       xhr.withCredentials = true;
       const headersMerge = merge(this.header, headers ?? {});
       Object.entries(headersMerge).forEach(([key, value]) => {
-        xhr.setRequestHeader(key, value);
+        if (value) xhr.setRequestHeader(key, value);
       });
 
       xhr.onload = () => {
@@ -103,8 +109,10 @@ export class HTTPTransport {
 
       if (method === 'GET' || !data) {
         xhr.send();
-      } else {
+      } else if (!(data instanceof FormData)) {
         xhr.send(JSON.stringify(data));
+      } else {
+        xhr.send(data);
       }
     });
   };

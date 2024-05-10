@@ -7,14 +7,16 @@ import profilPhoto from '../../assets/profile_photo.svg';
 
 import { logout } from '../../services/auth';
 import connect from '../../core/connect.ts';
-import { deleteError, updatePassword, updateUser } from '../../services/user.ts';
+import {
+  deleteError, updatePassword, updateUser, updateAvatar,
+} from '../../services/user.ts';
+import constants from '../../constants.ts';
 
 class PageProfile extends Block {
   constructor(props: Props) {
     super({
       ...props,
       arrowCircle,
-      profilPhoto,
       changeForm: () => this.changeForm(),
       stateChangePassword: () => this.stateChangePassword(),
       saveProfile: () => this.saveProfile(),
@@ -22,10 +24,20 @@ class PageProfile extends Block {
       openUploadFile: () => this.openUploadFile(),
       logout: () => this.logout(),
       back: () => this.back(),
+      changeAvatar: (file:File) => this.changeAvatar(file),
       readonlyForm: true,
       changePassword: false,
       openModalFile: false,
     });
+  }
+
+  init() {
+    this.setProps({ avatarProfile: () => this.avatarProfile() });
+  }
+
+  // eslint-disable-next-line max-len
+  avatarProfile() {
+    return this.props.user.avatar ? `${constants.HOST}/resources${this.props.user.avatar}` : profilPhoto;
   }
 
   hide() {
@@ -40,50 +52,53 @@ class PageProfile extends Block {
     this.setProps({ changePassword: false });
   }
 
-  changeForm = () => {
+  changeForm() {
     deleteError();
     this.props.readonlyForm = false;
-  };
+  }
 
-  stateChangePassword = () => {
+  stateChangePassword() {
     deleteError();
     this.props.changePassword = true;
-  };
+  }
 
-  saveProfile = () => {
+  saveProfile() {
     const formComponent = this.refs.formProfile as FormProfile;
     const form = formComponent.getForm();
     if (form) {
       this.props.readonlyForm = true;
       updateUser(form);
     }
-  };
+  }
 
-  savePassword = () => {
+  savePassword() {
     const formComponent = this.refs.formPasswordProfile as FormPasswordProfile;
     const form = formComponent.getForm();
     if (form) {
       this.props.changePassword = false;
       updatePassword(form);
     }
-  };
+  }
 
   openUploadFile() {
     const modal = this.refs.modalUpload as ModalUploadFile;
     modal.open();
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  logout() {
+  logout = () => {
     logout();
+  };
+
+  changeAvatar(file:File) {
+    updateAvatar({ avatar: file });
   }
 
   protected render() {
     return `<div class="profile">
-    {{{ ModalUploadFile ref="modalUpload" input_name="avatar" labelButton="Поменять" accept=".jpg, .png" global=true}}}
+    {{{ ModalUploadFile ref="modalUpload" upload=changeAvatar input_name="avatar" labelButton="Поменять" accept="image/gif, image/jpeg, image/png" global=true}}}
     <div class="profile__form">
         <div class="profile__form__title">
-            {{{ ProfileTitle title="Иван" photo=profilPhoto chagePhoto=true onClick=openUploadFile}}}
+            {{{ ProfileTitle title="Иван" photo=avatarProfile chagePhoto=true onClick=openUploadFile}}}
         </div>
 
         {{#if changePassword}}

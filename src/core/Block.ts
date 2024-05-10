@@ -161,7 +161,6 @@ export class Block {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   protected init() {}
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars

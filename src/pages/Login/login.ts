@@ -11,7 +11,6 @@ class LoginPage extends Block {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   login(form: Record<string, string>) {
     login(form);
   }

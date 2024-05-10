@@ -9,7 +9,7 @@ export class ModalUploadFile extends Block {
       title: 'Загрузите файл',
       open: false,
       getFile: (event: Event) => this.getFile(event),
-      upload: () => this.upload(),
+      sendFile: () => this.sendFile(),
       onClose: () => {
         this.props.open = false;
       },
@@ -50,14 +50,16 @@ export class ModalUploadFile extends Block {
     }
   }
 
-  upload() {
+  sendFile() {
     this.clearError();
     if (!this.file) {
       this.props.errorFooterText = 'Нужно выбрать файл';
       return;
     }
     this.props.open = false;
-    console.log(this.file);
+    if (this.props.upload instanceof Function) {
+      this.props.upload(this.file);
+    }
   }
 
   protected render(): string {
@@ -76,7 +78,7 @@ export class ModalUploadFile extends Block {
           {{/if}}
       </div>
       {{/BaseModalContent }}
-    {{{BaseModalFooter default=true labelButton=labelButton errorFooterText=errorFooterText onClick=upload}}}
+    {{{BaseModalFooter default=true labelButton=labelButton errorFooterText=errorFooterText onClick=sendFile}}}
     {{/BaseModal}}`;
   }
 }

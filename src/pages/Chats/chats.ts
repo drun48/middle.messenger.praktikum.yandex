@@ -268,12 +268,10 @@ export class PageChats extends Block {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   addUser(value: string) {
     console.log(value);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   deleteUser(value: string) {
     console.log(value);
   }

@@ -25,8 +25,19 @@ const updatePassword = async (data:any) => {
   }
 };
 
+const updateAvatar = async (data:any) => {
+  const response = checkStatus(await userApi.updateAvatat(data));
+  if (response.data) {
+    Store.set('user', response.data);
+  }
+  if (response.error) {
+    Store.set('errorUpdateProfile', `Не удалось обновить фото: ${response.error.reason}`);
+  }
+};
+
 export {
   deleteError,
   updateUser,
   updatePassword,
+  updateAvatar,
 };
