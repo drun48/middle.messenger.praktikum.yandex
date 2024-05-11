@@ -76,12 +76,12 @@ export class FormSignin extends Block {
           validForm = false;
           inputs[key as keyof SingupDTO | 'copy_password'].setError(valid.errorText);
         }
-      } else {
+      } else if (key !== 'copy_password') {
         validForm = false;
       }
     });
 
-    if (this.props.signin instanceof Function && validForm) this.props.signin(res);
+    if (this.props.signin instanceof Function && validForm) this.props.signin(res as SingupDTO);
   }
 
   protected render() {

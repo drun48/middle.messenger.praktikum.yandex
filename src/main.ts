@@ -42,7 +42,6 @@ Store.set('isLoading', false);
 
 Router.middleware.use(async (ctx, next) => {
   const state = Store.getState();
-
   if (state.auth === null) {
     await getUser();
   }

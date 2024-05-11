@@ -35,7 +35,8 @@ const getUser = async () => {
 const signup = async (data:SingupDTO) => {
   const response = await authApi.signup(data);
   if (response.data) {
-    Router.go('/');
+    await getUser();
+    Router.go('/messenger');
   }
   if (response.error) {
     Store.set('signinError', response.error.reason);

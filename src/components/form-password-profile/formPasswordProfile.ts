@@ -43,7 +43,7 @@ export class FormPasswordProfile extends Block {
           valid = false;
           item.setError(emptyValid.errorText);
         }
-      } else {
+      } else if (key !== 'copy_password') {
         valid = false;
       }
     });
