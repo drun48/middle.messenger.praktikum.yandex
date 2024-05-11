@@ -1,4 +1,5 @@
 import { HTTPTransport } from '../core/HttpTransport';
+import { UserDTO } from '../dto/UserDTO';
 
 export default class api {
   private api = new HTTPTransport('/auth');
@@ -16,7 +17,7 @@ export default class api {
   }
 
   async getUser() {
-    return this.api.GET<{test:string}>('/user');
+    return this.api.GET<UserDTO>('/user');
   }
 
   async logout() {

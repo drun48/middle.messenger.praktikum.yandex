@@ -1,4 +1,5 @@
 import { Block, Props } from '../../core/Block';
+import { PasswordDTO } from '../../dto/PasswordDTO';
 import { Valid, validPassword, validEmpty } from '../../utils/validator';
 import { InputProfile } from '../input-profile';
 
@@ -24,19 +25,19 @@ export class FormPasswordProfile extends Block {
   }
 
   getForm() {
-    const inputs: Record<string, InputProfile> = {
+    const inputs: Record<keyof PasswordDTO | 'copy_password', InputProfile> = {
       oldPassword: this.refs.old_password as InputProfile,
       newPassword: this.refs.password as InputProfile,
       copy_password: this.refs.copy_password as InputProfile,
     };
 
-    const form: Record<string, string> = {};
+    const form: Partial<PasswordDTO> = {};
     let valid = true;
 
     Object.entries(inputs).forEach(([key, item]) => {
       const value = item.value();
-      if (typeof value === 'string') {
-        form[key] = value;
+      if (typeof value === 'string' && key !== 'copy_password') {
+        form[key as keyof PasswordDTO] = value;
         const emptyValid = validEmpty(value);
         if (!emptyValid.value) {
           valid = false;
@@ -47,7 +48,7 @@ export class FormPasswordProfile extends Block {
       }
     });
 
-    return valid ? form : null;
+    return valid ? form as PasswordDTO : null;
   }
 
   protected render() {

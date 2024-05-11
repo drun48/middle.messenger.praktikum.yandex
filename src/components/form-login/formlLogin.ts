@@ -1,5 +1,4 @@
 import { Block, Props } from '../../core/Block';
-import Router from '../../core/Router';
 import { InputForm } from '../input-form';
 import {
   validEmpty,

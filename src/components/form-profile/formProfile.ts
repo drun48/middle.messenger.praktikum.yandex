@@ -8,6 +8,7 @@ import {
   validPhone,
   validEmpty,
 } from '../../utils/validator';
+import { UserDTO } from '../../dto/UserDTO';
 
 export class FormProfile extends Block {
   constructor(props: Props) {
@@ -30,7 +31,7 @@ export class FormProfile extends Block {
   }
 
   getForm() {
-    const inputs: Record<string, InputProfile> = {
+    const inputs: Record<keyof Omit<UserDTO, 'id' | 'avatar'>, InputProfile> = {
       email: this.refs.email as InputProfile,
       login: this.refs.login as InputProfile,
       first_name: this.refs.first_name as InputProfile,
@@ -39,7 +40,7 @@ export class FormProfile extends Block {
       phone: this.refs.phone as InputProfile,
     };
 
-    const form: Record<string, string> = {};
+    const form: Partial<Omit<UserDTO, 'id' | 'avatar'>> = {};
 
     let valid = true;
 
@@ -54,14 +55,14 @@ export class FormProfile extends Block {
         if (key === 'phone') {
           form[key] = this.formatPhone(val);
         } else {
-          form[key] = val;
+          form[key as keyof Omit<UserDTO, 'id' | 'avatar'>] = val;
         }
       } else {
         valid = false;
       }
     });
 
-    return valid ? form : null;
+    return valid ? form as UserDTO : null;
   }
 
   protected render() {
