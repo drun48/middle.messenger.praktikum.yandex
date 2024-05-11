@@ -1,12 +1,13 @@
 import { Block, Props } from '../../core/Block.ts';
 import connect from '../../core/connect.ts';
+import { SingupDTO } from '../../dto/SingupDTO.ts';
 import { signup } from '../../services/auth.ts';
 
 class PageSign extends Block {
   constructor(props: Props) {
     super({
       ...props,
-      signin: (value: Record<string, string>) => {
+      signin: (value: SingupDTO) => {
         this.setProps({ form: value });
         signup(value);
       },

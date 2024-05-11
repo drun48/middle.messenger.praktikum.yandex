@@ -2,7 +2,7 @@ type Indexed = {
   [key in string]:unknown
 }
 
-function isIndexed(x: any): x is Indexed {
+function isIndexed(x: unknown): x is Indexed {
   return typeof x === 'object' && x !== null;
 }
 

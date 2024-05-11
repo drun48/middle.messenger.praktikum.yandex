@@ -10,6 +10,7 @@ import {
 } from '../../utils/validator';
 import { maskPhone } from '../../utils/mask';
 import { InputForm } from '../input-form';
+import { SingupDTO } from '../../dto/SingupDTO';
 
 export class FormSignin extends Block {
   constructor(props: Props) {
@@ -54,7 +55,7 @@ export class FormSignin extends Block {
 
     let validForm = true;
 
-    const inputs: Record<string, InputForm> = {
+    const inputs: Record<keyof SingupDTO | 'copy_password', InputForm> = {
       email: this.refs.email as InputForm,
       login: this.refs.login as InputForm,
       first_name: this.refs.first_name as InputForm,
@@ -64,16 +65,16 @@ export class FormSignin extends Block {
       copy_password: this.refs.copy_password as InputForm,
     };
 
-    const res: Record<string, string> = {};
+    const res: Partial<SingupDTO> = {};
 
     Object.entries(inputs).forEach(([key, value]) => {
       const val = value.value();
-      if (typeof val === 'string') {
-        res[key] = val;
+      if (typeof val === 'string' && key !== 'copy_password') {
+        res[key as keyof SingupDTO] = val;
         const valid = validEmpty(val);
         if (!valid.value) {
           validForm = false;
-          inputs[key].setError(valid.errorText);
+          inputs[key as keyof SingupDTO | 'copy_password'].setError(valid.errorText);
         }
       } else {
         validForm = false;

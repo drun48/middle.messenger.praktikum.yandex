@@ -1,11 +1,13 @@
 import AuthApi from '../api/AuthApi';
 import Router from '../core/Router';
 import Store from '../core/Store';
+import { SingupDTO } from '../dto/SingupDTO';
+import { LoginDTO } from '../dto/loginDTO';
 import { checkStatus } from './checkStatus';
 
 const authApi = new AuthApi();
 
-const login = async (data:any) => {
+const login = async (data:LoginDTO) => {
   const response = checkStatus(await authApi.login(data));
   if (response.data) {
     Store.set('auth', true);
@@ -30,7 +32,7 @@ const getUser = async () => {
   }
 };
 
-const signup = async (data:any) => {
+const signup = async (data:SingupDTO) => {
   const response = await authApi.signup(data);
   if (response.data) {
     Router.go('/');

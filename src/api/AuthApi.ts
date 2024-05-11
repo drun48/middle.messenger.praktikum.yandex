@@ -1,18 +1,20 @@
 import { HTTPTransport } from '../core/HttpTransport';
+import { SingupDTO } from '../dto/SingupDTO';
 import { UserDTO } from '../dto/UserDTO';
+import { LoginDTO } from '../dto/loginDTO';
 
 export default class api {
   private api = new HTTPTransport('/auth');
 
-  async signup(data: any) {
+  async signup(data: SingupDTO) {
     return this.api.POST('/signup', {
-      data,
+      data: { ...data },
     });
   }
 
-  async login(data: any) {
+  async login(data: LoginDTO) {
     return this.api.POST('/signin', {
-      data,
+      data: { ...data },
     });
   }
 

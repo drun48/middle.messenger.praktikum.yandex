@@ -1,5 +1,6 @@
 import { Block, Props } from '../../core/Block';
 import connect from '../../core/connect';
+import { LoginDTO } from '../../dto/loginDTO';
 
 import { login } from '../../services/auth';
 
@@ -7,11 +8,11 @@ class LoginPage extends Block {
   constructor(props: Props) {
     super({
       ...props,
-      login: (form: Record<string, string>) => this.login(form),
+      login: (form: LoginDTO) => this.login(form),
     });
   }
 
-  login(form: Record<string, string>) {
+  login(form: LoginDTO) {
     login(form);
   }
 
