@@ -16,17 +16,22 @@ import localAttach from '../../assets/LocalAttach.svg';
 import addUser from '../../assets/AddUser.svg';
 import deleteUser from '../../assets/DeleteUser.svg';
 import deleteChat from '../../assets/delete_chat.svg';
+import addChatIcon from '../../assets/icon-add.svg';
 
 import arrowCircle from '../../assets/arrow-circle.svg';
 import attacher from '../../assets/attacher.svg';
+import { getChats } from '../../services/chats';
+import connect from '../../core/connect';
+import { ModalAddChat } from '../../components/modal-add-chat/modalAddChat';
 
-export class PageChats extends Block {
+class PageChats extends Block {
   constructor(props: Props) {
     super({
       ...props,
       arrow,
       search: '',
       menu,
+      addChatIcon,
       activeChat: false,
       activeChatId: null,
       searchChat: (event: Event) => this.searchChat(event),
@@ -41,6 +46,7 @@ export class PageChats extends Block {
       addUser: (value: string) => this.addUser(value),
       deleteUser: (value: string) => this.deleteUser(value),
       deleteChat: () => this.deleteChat(),
+      openModalAddChat: () => this.openModalAddChat(),
       filterListChat: [],
       listMessage: [
         {
@@ -105,126 +111,28 @@ export class PageChats extends Block {
       arrowCircle,
       attacher,
       photoUser: avatar,
+      watch: {
+        listChat: () => {
+          this.props.filterListChat = this.props.listChat;
+        },
+      },
     });
+    getChats();
   }
 
-  listChat: Array<Record<string, string>> = [
-    {
-      id: '1',
-      name: 'Андрей',
-      message: 'Изображение',
-      photo: avatar,
-      time: '10:49',
-      count: '2',
-    },
-    {
-      id: '2',
-      name: 'Киноклуб',
-      meMessage: 'стикер',
-      photo: avatar,
-      time: '12:00',
-      count: '',
-    },
-    {
-      id: '3',
-      name: 'Илья',
-      message:
-        'Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей!',
-      photo: avatar,
-      time: '15:12',
-      count: '4',
-    },
-    {
-      id: '4',
-      name: 'Вадим',
-      message: 'Круто!',
-      photo: avatar,
-      time: '15:12',
-    },
-    {
-      id: '5',
-      name: 'тет-а-теты',
-      message:
-        'И Human Interface Guidelines и Material Design рекомендуют И Human Interface Guidelines и Material Design рекомендуют',
-      photo: avatar,
-      time: 'Пт',
-    },
-    {
-      id: '6',
-      name: 'Design Destroyer',
-      message:
-        'Миллионы россиян ежедневно проводят десятки часов свое Миллионы россиян ежедневно проводят десятки часов свое',
-      photo: avatar,
-      time: 'Ср',
-    },
-    {
-      id: '7',
-      name: 'Стас Рогозин',
-      message:
-        'В 2008 году художник Jon Rafman  начал собирать В 2008 году художник Jon Rafman  начал собирать',
-      photo: avatar,
-      time: 'Пн',
-    },
-    {
-      id: '8',
-      name: 'Петров',
-      message:
-        'Так увлёкся работой по курсу, что совсем забыл его анонсир Так увлёкся работой по курсу, что совсем забыл его анонсир',
-      photo: avatar,
-      time: 'Пн',
-    },
-    {
-      id: '9',
-      name: 'Настя',
-      message: 'Можно или сегодня или завтра вечером.',
-      photo: avatar,
-      time: '1 Мая 2020',
-    },
-    {
-      id: '10',
-      name: 'Design Destroyer',
-      message:
-        'Миллионы россиян ежедневно проводят десятки часов свое Миллионы россиян ежедневно проводят десятки часов свое',
-      photo: avatar,
-      time: 'Ср',
-    },
-    {
-      id: '11',
-      name: 'Стас Рогозин',
-      message:
-        'В 2008 году художник Jon Rafman  начал собирать В 2008 году художник Jon Rafman  начал собирать',
-      photo: avatar,
-      time: 'Пн',
-    },
-    {
-      id: '12',
-      name: 'Петров',
-      message:
-        'Так увлёкся работой по курсу, что совсем забыл его анонсир Так увлёкся работой по курсу, что совсем забыл его анонсир',
-      photo: avatar,
-      time: 'Пн',
-    },
-    {
-      id: '13',
-      name: 'Настя',
-      message: 'Можно или сегодня или завтра вечером.',
-      photo: avatar,
-      time: '1 Мая 2020',
-    },
-  ];
-
   componentDidMount() {
-    this.props.filterListChat = this.listChat;
+    this.props.filterListChat = this.props.listChat;
   }
 
   searchChat(event: Event) {
     const target = event.target as HTMLInputElement;
     this.props.search = target.value;
     if (!target.value) {
-      this.props.filterListChat = this.listChat;
+      this.props.filterListChat = this.props.listChat;
       return;
     }
-    this.props.filterListChat = this.listChat.filter((item) => item.name.includes(target.value));
+
+    this.props.filterListChat = this.props.listChat.filter((item) => item.title.includes(target.value));
   }
 
   sendMessage() {
@@ -280,17 +188,25 @@ export class PageChats extends Block {
     console.log('Удалить чат', this.props.activeChatId);
   }
 
+  openModalAddChat() {
+    (this.refs.modalAddChat as ModalAddChat).open();
+  }
+
   protected render() {
     return `<div class="wrapper-chat">
     {{{ ModalUser ref="modalAdd" title="Добавить пользователя" labelButton="Добавить" global=true getLogin=addUser}}}
     {{{ ModalUser ref="modalDelete" title="Удалить пользователя" labelButton='Удалить' global=true getLogin=deleteUser}}}
     {{{ ModalDeleteChat delete=deleteChat ref="modalDeleteChat" global=true}}}
+    {{{ ModalAddChat ref="modalAddChat" global=true}}}
     <div class="wrapper-choice">
         <div class="container-search">
             <div class="container-search__nav">
+              {{#Button class="icon-add-chat" onClick=openModalAddChat }}
+                <img src="{{addChatIcon}}" alt="Добавить чат">
+              {{/Button}}
               {{#RouterLink to="/settings" class="container-search__nav__element"}}
                 <p>Профиль</p>
-                <img src="{{arrow}}" alt="Иконка перехода"/>
+                <img src="{{arrow}}" alt="Перейти в профиль"/>
               {{/RouterLink}}
             </div>
             <div class="container-search__element">
@@ -302,8 +218,8 @@ export class PageChats extends Block {
                 <div class="list-chat__delimiter"></div>
                 {{#each filterListChat}}
                   <li class="list-chat__element {{#if (isEqual id ../this.activeChatId) }}active{{/if}}">
-                      {{{ CardUser onClick=../this.clickCard id=id photo=this.photo name=this.name message=this.message time=this.time 
-                        count=this.count meMessage=this.meMessage }}}
+                      {{{ CardUser onClick=../this.clickCard id=id photo=this.avatar name=this.title message=this.message time=this.timw 
+                        count=this.unread_count meMessage=this.meMessage }}}
                   </li>
                   <div class="list-chat__delimiter"></div>
                 {{/each}}
@@ -349,3 +265,5 @@ export class PageChats extends Block {
 </div>`;
   }
 }
+
+export default connect(({ listChat }) => ({ listChat }))(PageChats);

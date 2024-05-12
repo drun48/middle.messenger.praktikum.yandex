@@ -20,6 +20,7 @@
 .container-search__nav {
     display: flex;
     justify-content: flex-end;
+    justify-content: space-between;
     width: 100%;
 }
 
@@ -159,4 +160,9 @@
     bottom: calc(100% + 34px);
     left: 0;
     width: max-content;
+}
+
+.icon-add-chat{
+    background: unset;
+    border: none;
 }

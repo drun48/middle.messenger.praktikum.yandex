@@ -3,7 +3,8 @@ import uuid from 'uuid-random';
 import { EventBus } from './EventBus';
 
 export type Props = {
-  [key: string]: unknown;
+  [key: string]: unknown,
+  watch?:Record<string, (newValue?:unknown, oldValue?:unknown) => void>
 };
 
 export type Refs = {
@@ -85,6 +86,7 @@ export class Block {
       }
       const oldTarget = { ...target };
       target[prop] = value;
+      this._watch(prop, value, oldTarget[prop]);
       this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
       return true;
     };
@@ -119,6 +121,12 @@ export class Block {
     this._element = newElement;
 
     this._addEvents();
+  }
+
+  private _watch(prop:string, newValue:unknown, oldValue:unknown) {
+    if (this.props.watch?.[prop] instanceof Function) {
+      this.props.watch[prop](newValue, oldValue);
+    }
   }
 
   //

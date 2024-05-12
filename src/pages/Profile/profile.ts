@@ -35,7 +35,6 @@ class PageProfile extends Block {
     this.setProps({ avatarProfile: () => this.avatarProfile() });
   }
 
-  // eslint-disable-next-line max-len
   avatarProfile() {
     return this.props.user.avatar ? `${constants.HOST}/resources${this.props.user.avatar}` : profilPhoto;
   }
@@ -139,5 +138,4 @@ class PageProfile extends Block {
   }
 }
 
-// eslint-disable-next-line max-len
 export default connect(({ user, errorUpdateProfile }) => ({ user, errorUpdateProfile }))(PageProfile);

@@ -11,7 +11,6 @@ class Router {
 
   private rootQuery:string;
 
-  // eslint-disable-next-line max-len
   private _middleware:MiddlewareManager<{redirect:(pathname:string)=>void, pathname:string}> = new MiddlewareManager();
 
   get middleware() {

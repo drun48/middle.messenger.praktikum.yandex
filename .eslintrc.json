@@ -12,6 +12,7 @@
         "import/extensions": "off",
         "default-case": "off",
         "no-underscore-dangle": "off",
-        "class-methods-use-this":"off"
+        "class-methods-use-this":"off",
+        "max-len":"off"
     }
 }

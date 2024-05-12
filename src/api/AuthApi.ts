@@ -3,7 +3,7 @@ import { SingupDTO } from '../dto/SingupDTO';
 import { UserDTO } from '../dto/UserDTO';
 import { LoginDTO } from '../dto/loginDTO';
 
-export default class api {
+export default class AuthApi {
   private api = new HTTPTransport('/auth');
 
   async signup(data: SingupDTO) {

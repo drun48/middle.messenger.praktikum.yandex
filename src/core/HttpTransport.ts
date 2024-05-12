@@ -62,13 +62,10 @@ export class HTTPTransport {
     );
   };
 
-  // eslint-disable-next-line max-len
   POST:HTTPMethod = (url, options) => this.request(url, { ...options, method: METHODS.POST }, options?.timeout);
 
-  // eslint-disable-next-line max-len
   PUT:HTTPMethod = (url, options) => this.request(url, { ...options, method: METHODS.PUT }, options?.timeout);
 
-  // eslint-disable-next-line max-len
   DELETE:HTTPMethod = (url, options) => this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
 
   request = <T>(url: string, options: Options, timeout = 5000) => {
