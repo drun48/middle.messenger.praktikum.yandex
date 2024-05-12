@@ -10,4 +10,8 @@ export default class ChatApi {
   async create(data:any) {
     return this.api.POST('', { data });
   }
+
+  async delete(data:any) {
+    return this.api.DELETE('', { data });
+  }
 }

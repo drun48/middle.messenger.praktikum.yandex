@@ -7,7 +7,7 @@ export enum StoreEvents {
 }
 
 export type Indexed<T = unknown> = {
-    [key in string]: T;
+  [key in string]: T;
 };
 
 class Store extends EventBus {

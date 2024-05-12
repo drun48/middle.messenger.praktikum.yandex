@@ -45,7 +45,6 @@ class PageChats extends Block {
       openModalControllerChat: (event: Event) => this.openModalControllerChat(event),
       addUser: (value: string) => this.addUser(value),
       deleteUser: (value: string) => this.deleteUser(value),
-      deleteChat: () => this.deleteChat(),
       openModalAddChat: () => this.openModalAddChat(),
       filterListChat: [],
       listMessage: [
@@ -184,10 +183,6 @@ class PageChats extends Block {
     console.log(value);
   }
 
-  deleteChat() {
-    console.log('Удалить чат', this.props.activeChatId);
-  }
-
   openModalAddChat() {
     (this.refs.modalAddChat as ModalAddChat).open();
   }
@@ -196,7 +191,7 @@ class PageChats extends Block {
     return `<div class="wrapper-chat">
     {{{ ModalUser ref="modalAdd" title="Добавить пользователя" labelButton="Добавить" global=true getLogin=addUser}}}
     {{{ ModalUser ref="modalDelete" title="Удалить пользователя" labelButton='Удалить' global=true getLogin=deleteUser}}}
-    {{{ ModalDeleteChat delete=deleteChat ref="modalDeleteChat" global=true}}}
+    {{{ ModalDeleteChat ref="modalDeleteChat" global=true id=activeChatId}}}
     {{{ ModalAddChat ref="modalAddChat" global=true}}}
     <div class="wrapper-choice">
         <div class="container-search">

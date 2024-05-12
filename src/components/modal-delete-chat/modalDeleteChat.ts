@@ -1,15 +1,19 @@
 import { Block, Props } from '../../core/Block';
+import connect from '../../core/connect';
+import { clearError, deleteChact, ErrorsChats } from '../../services/chats';
 
 export class ModalDeleteChat extends Block {
   constructor(props: Props) {
     super({
       ...props,
       onClose: () => {
-        this.props.open = false;
+        this.close();
       },
-      deleteBtn: () => {
-        this.props.open = false;
-        if (this.props.delete instanceof Function) this.props.delete();
+      deleteBtn: async () => {
+        const access = await deleteChact({ chatId: this.props.id });
+        if (access) {
+          this.close();
+        }
       },
     });
   }
@@ -19,6 +23,7 @@ export class ModalDeleteChat extends Block {
   }
 
   close() {
+    clearError(ErrorsChats.errorDeleteChat);
     this.props.open = false;
   }
 
@@ -32,10 +37,14 @@ export class ModalDeleteChat extends Block {
           
           {{#BaseModalFooter }}
            <div class="deleteChat__footer">
-                  {{{Button class="primary-button" label="Отменить" onClick=onClose}}}
-                  {{{Button class="primary-button error-btn" label="Удалить" onClick=deleteBtn}}}
-              </div>
+                {{{Button class="primary-button" label="Отменить" onClick=onClose}}}
+                {{{Button class="primary-button error-btn" label="Удалить" onClick=deleteBtn}}}
+            </div>
+            {{#if errorDeleteChat}}
+              <p class="error-text" style="margin:10px;">{{errorDeleteChat}}</p>
+            {{/if}}
           {{/BaseModalFooter}}
       {{/BaseModal}}`;
   }
 }
+export default connect<{errorDeleteChat:string}>(({ errorDeleteChat }) => ({ errorDeleteChat }))(ModalDeleteChat);
