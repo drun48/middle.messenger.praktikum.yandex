@@ -1,34 +1,37 @@
 import { HTTPTransport } from '../core/HttpTransport';
+import { ChatDTO } from '../dto/ChatDTO';
+import { DeleteChatDTO } from '../dto/DeleteChatDTO';
+import { UpdateUserChatDTO } from '../dto/UpdateUserChatDTO';
 import objectToFormData from '../utils/objectToFormData';
 
 export default class ChatApi {
   private api = new HTTPTransport('/chats');
 
   async get() {
-    return this.api.GET('');
+    return this.api.GET<Array<ChatDTO>>('');
   }
 
   async getToken(id:number) {
     return this.api.POST(`/token/${id}`);
   }
 
-  async create(data:any) {
-    return this.api.POST('', { data });
+  async create(data:{title:string}) {
+    return this.api.POST<{id:number}>('', { data });
   }
 
-  async delete(data:any) {
-    return this.api.DELETE('', { data });
+  async delete(data:{chatId:number}) {
+    return this.api.DELETE<DeleteChatDTO>('', { data });
   }
 
-  async addUser(data:any) {
-    return this.api.PUT('/users', { data });
+  async addUser(data:UpdateUserChatDTO) {
+    return this.api.PUT<string>('/users', { data: { ...data } });
   }
 
-  async updateAvatar(data:any) {
-    return this.api.PUT('/avatar', { data: objectToFormData(data) });
+  async updateAvatar(data:{chatId:number, avatar:File}) {
+    return this.api.PUT<Pick<ChatDTO, 'id' | 'avatar' | 'title' | 'created_by'>>('/avatar', { data: objectToFormData(data) });
   }
 
-  async deleteUser(data:any) {
-    return this.api.DELETE('/users', { data });
+  async deleteUser(data:UpdateUserChatDTO) {
+    return this.api.DELETE('/users', { data: { ...data } });
   }
 }

@@ -28,7 +28,7 @@ export class ModalAddChat extends Block {
     const input = this.refs.input as InputForm;
     const value = input.value();
     if (value) {
-      const access = await createChat({ title: value });
+      const access = await createChat(value);
       if (access) {
         this.props.open = false;
       }

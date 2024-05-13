@@ -4,6 +4,7 @@ import { checkStatus } from './checkStatus';
 import avatar from '../assets/photoUser.png';
 import UserApi from '../api/UserApi';
 import constants from '../constants';
+import { ChatDTO } from '../dto/ChatDTO';
 
 const chatApi = new ChatApi();
 const userApi = new UserApi();
@@ -14,9 +15,9 @@ enum ErrorsChats {
   errorDeleteChat = 'errorDeleteChat'
 }
 
-const getListChat = ():Array<unknown> => {
+const getListChat = () => {
   const { listChat } = Store.getState();
-  return Array.isArray(listChat) ? [...listChat] as Array<unknown> : [];
+  return Array.isArray(listChat) ? [...listChat] as Array<ChatDTO> : [];
 };
 
 const findActiveChatIndex = (id:number) => {
@@ -31,7 +32,7 @@ const findActiveChat = (id:number) => {
   return chatIndex !== -1 ? { ...listChat[chatIndex] } : null;
 };
 
-const formatChat = (chat:any) => ({
+const formatChat = (chat:ChatDTO) => ({
   id: chat.id,
   // eslint-disable-next-line no-nested-ternary
   avatar: chat.avatar ? constants.GET_PHOTO + chat.avatar : chat.last_message?.user?.avatar ? constants.GET_PHOTO + chat.last_message.user.avatar : avatar,
@@ -63,7 +64,7 @@ const setActiveChat = (id:number) => {
 const getChats = async () => {
   const responce = checkStatus(await chatApi.get());
   if (responce.data) {
-    const list = (responce.data as Array<unknown>).map((item:any) => formatChat(item));
+    const list = responce.data.map((item) => formatChat(item));
     Store.set('listChat', list);
   }
   if (responce.error) {
@@ -71,10 +72,10 @@ const getChats = async () => {
   }
 };
 
-const createChat = async (data:any) => {
-  const responce = checkStatus(await chatApi.create(data));
+const createChat = async (title:string) => {
+  const responce = checkStatus(await chatApi.create({ title }));
   if (responce.error) {
-    Store.set(ErrorsChats.errorCreateChat, `Ошибка создание чата: ${responce.error.reason})`);
+    Store.set(ErrorsChats.errorCreateChat, `Ошибка создание чата: ${responce.error.reason}`);
     return false;
   }
   getChats();

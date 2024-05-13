@@ -8,7 +8,7 @@ import changeAvatar from '../../assets/change_avatar.svg';
 import { InputMessage } from '../../components/input-message';
 import { ModalUser } from '../../components/modal-user';
 import { ModalList } from '../../components/modal-list';
-import { ModalDeleteChat } from '../../components/modal-delete-chat';
+import { ModalDeleteChat } from '../../components/modal-delete-chat/modalDeleteChat';
 
 import photoAttach from '../../assets/PhotoAttach.svg';
 import fileAttach from '../../assets/FileAttach.svg';
