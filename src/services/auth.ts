@@ -1,6 +1,8 @@
 import AuthApi from '../api/AuthApi';
 import Router from '../core/Router';
 import Store from '../core/Store';
+import avatar from '../assets/photoUser.png';
+import constants from '../constants';
 import { SingupDTO } from '../dto/SingupDTO';
 import { LoginDTO } from '../dto/loginDTO';
 import { checkStatus } from './checkStatus';
@@ -23,8 +25,10 @@ const login = async (data:LoginDTO) => {
 const getUser = async () => {
   const response = await authApi.getUser();
   if (response.data) {
+    const user = response.data;
+    user.avatar = user.avatar ? constants.GET_PHOTO + user.avatar : avatar;
     Store.set('auth', true);
-    Store.set('user', response.data);
+    Store.set('user', user);
   }
   if (response.error) {
     Store.set('auth', false);

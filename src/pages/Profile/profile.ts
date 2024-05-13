@@ -3,14 +3,12 @@ import { FormProfile } from '../../components/form-profile';
 import { FormPasswordProfile } from '../../components/form-password-profile';
 import { ModalUploadFile } from '../../components/modal-upload-file';
 import arrowCircle from '../../assets/arrow-circle.svg';
-import profilPhoto from '../../assets/profile_photo.svg';
 
 import { logout } from '../../services/auth';
 import connect from '../../core/connect.ts';
 import {
   deleteError, updatePassword, updateUser, updateAvatar,
 } from '../../services/user.ts';
-import constants from '../../constants.ts';
 
 class PageProfile extends Block {
   constructor(props: Props) {
@@ -29,14 +27,6 @@ class PageProfile extends Block {
       changePassword: false,
       openModalFile: false,
     });
-  }
-
-  init() {
-    this.setProps({ avatarProfile: () => this.avatarProfile() });
-  }
-
-  avatarProfile() {
-    return this.props.user.avatar ? `${constants.HOST}/resources${this.props.user.avatar}` : profilPhoto;
   }
 
   hide() {
@@ -97,7 +87,7 @@ class PageProfile extends Block {
     {{{ ModalUploadFile ref="modalUpload" upload=changeAvatar input_name="avatar" labelButton="Поменять" accept="image/gif, image/jpeg, image/png" global=true}}}
     <div class="profile__form">
         <div class="profile__form__title">
-            {{{ ProfileTitle title="Иван" photo=avatarProfile chagePhoto=true onClick=openUploadFile}}}
+            {{{ ProfileTitle title=user.first_name photo=user.avatar chagePhoto=true onClick=openUploadFile}}}
         </div>
 
         {{#if changePassword}}

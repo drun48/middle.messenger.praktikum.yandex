@@ -1,3 +1,5 @@
+const HOST = 'https://ya-praktikum.tech/api/v2';
 export default {
-  HOST: 'https://ya-praktikum.tech/api/v2',
+  HOST,
+  GET_PHOTO: `${HOST}/resources`,
 } as const;

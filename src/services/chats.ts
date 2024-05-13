@@ -3,6 +3,7 @@ import Store from '../core/Store';
 import { checkStatus } from './checkStatus';
 import avatar from '../assets/photoUser.png';
 import UserApi from '../api/UserApi';
+import constants from '../constants';
 
 const chatApi = new ChatApi();
 const userApi = new UserApi();
@@ -27,7 +28,7 @@ async function getChats() {
     const list = (responce.data as Array<unknown>).map((item:any) => ({
       id: item.id,
       // eslint-disable-next-line no-nested-ternary
-      avatar: item.avatar ? item.avatar : item.last_message?.user?.avatar ? item.last_message.user.avatar : avatar,
+      avatar: item.avatar ? constants.GET_PHOTO + item.avatar : item.last_message?.user?.avatar ? constants.GET_PHOTO + item.last_message.user.avatar : avatar,
       title: item.title,
       unread_count: item.unread_count,
       message: item.content,

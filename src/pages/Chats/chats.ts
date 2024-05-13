@@ -227,7 +227,7 @@ class PageChats extends Block {
     {{else}}
       <div class="container-chat">
         <div class="container-chat__profile">
-              {{{ CardUser name="Вадим" photo=photoUser }}}
+              {{{ CardUser name=user.first_name photo=user.avatar }}}
               <div class="container-chat__profile__menu">
                 {{#Button onClick=openModalControllerChat}}
                   <img src="{{menu}}" alt="Иконка меню чата"/>
@@ -260,4 +260,4 @@ class PageChats extends Block {
   }
 }
 
-export default connect(({ listChat, activeChatId = null }) => ({ listChat, activeChatId }))(PageChats);
+export default connect(({ listChat, activeChatId = null, user }) => ({ listChat, activeChatId, user }))(PageChats);

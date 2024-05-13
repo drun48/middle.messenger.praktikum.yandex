@@ -13,14 +13,18 @@
 }
 
 .profile-title__photo {
+    display: flex;
+    width: 130px;
     position: relative;
     border-radius: 100%;
 }
 
 .profile-title__photo__element {
-    width: 130px;
+    width: 100%;
     aspect-ratio: 1/1;
     border-radius: inherit;
+    object-fit: cover;
+    object-position: center;
 }
 
 .profile-title__photo__upload {
