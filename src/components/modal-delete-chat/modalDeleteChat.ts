@@ -10,7 +10,7 @@ export class ModalDeleteChat extends Block {
         this.close();
       },
       deleteBtn: async () => {
-        const access = await deleteChact({ chatId: this.props.id });
+        const access = await deleteChact();
         if (access) {
           this.close();
         }

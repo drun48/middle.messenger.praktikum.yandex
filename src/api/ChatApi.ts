@@ -14,4 +14,12 @@ export default class ChatApi {
   async delete(data:any) {
     return this.api.DELETE('', { data });
   }
+
+  async addUser(data:any) {
+    return this.api.PUT('/users', { data });
+  }
+
+  async deleteUser(data:any) {
+    return this.api.DELETE('/users', { data });
+  }
 }

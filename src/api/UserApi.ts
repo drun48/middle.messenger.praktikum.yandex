@@ -18,4 +18,8 @@ export default class UserApi {
   updatePassword(data:PasswordDTO) {
     return this.api.PUT('/password', { data: { ...data } });
   }
+
+  searchUser(data:any) {
+    return this.api.POST<Array<UserDTO>>('/search', { data: { ...data } });
+  }
 }

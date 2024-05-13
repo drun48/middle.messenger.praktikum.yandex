@@ -2,13 +2,23 @@ import ChatApi from '../api/ChatApi';
 import Store from '../core/Store';
 import { checkStatus } from './checkStatus';
 import avatar from '../assets/photoUser.png';
+import UserApi from '../api/UserApi';
 
 const chatApi = new ChatApi();
+const userApi = new UserApi();
 
 // eslint-disable-next-line no-shadow
 enum ErrorsChats {
   errorCreateChat = 'errorCreateChat',
   errorDeleteChat = 'errorDeleteChat'
+}
+
+function setActiveChat(id:number) {
+  Store.set('activeChatId', id);
+}
+
+function getActiveChat():null|number {
+  return Store.getState().activeChatId as null|number;
 }
 
 async function getChats() {
@@ -40,14 +50,42 @@ async function createChat(data:any) {
   return true;
 }
 
-async function deleteChact(data:any) {
-  const responce = checkStatus(await chatApi.delete(data));
+async function deleteChact() {
+  const id = getActiveChat();
+  if (!id) {
+    Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
+    return false;
+  }
+  const responce = checkStatus(await chatApi.delete({ chatId: id }));
   if (responce.error) {
     Store.set(ErrorsChats.errorDeleteChat, `Ошибка удаление чата: ${responce.error.reason}`);
     return false;
   }
   getChats();
+  Store.set('activeChatId', null);
   return true;
+}
+
+async function addUserChat(login:string) {
+  const id = getActiveChat();
+  if (!id) {
+    Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
+  }
+  const responceSearch = await userApi.searchUser({ login });
+  if (responceSearch.data && responceSearch.data[0]) {
+    await chatApi.addUser({ users: [responceSearch.data[0].id], chatId: id });
+  }
+}
+
+async function deleteUserChat(login:string) {
+  const id = getActiveChat();
+  if (!id) {
+    Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
+  }
+  const responceSearch = await userApi.searchUser({ login });
+  if (responceSearch.data && responceSearch.data[0]) {
+    await chatApi.deleteUser({ users: [responceSearch.data[0].id], chatId: id });
+  }
 }
 
 function clearError(error:ErrorsChats) {
@@ -57,7 +95,10 @@ function clearError(error:ErrorsChats) {
 export {
   ErrorsChats,
   clearError,
+  setActiveChat,
   createChat,
   getChats,
   deleteChact,
+  addUserChat,
+  deleteUserChat,
 };

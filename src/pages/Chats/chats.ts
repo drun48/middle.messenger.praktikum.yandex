@@ -20,7 +20,9 @@ import addChatIcon from '../../assets/icon-add.svg';
 
 import arrowCircle from '../../assets/arrow-circle.svg';
 import attacher from '../../assets/attacher.svg';
-import { getChats } from '../../services/chats';
+import {
+  addUserChat, deleteUserChat, getChats, setActiveChat,
+} from '../../services/chats';
 import connect from '../../core/connect';
 import { ModalAddChat } from '../../components/modal-add-chat/modalAddChat';
 
@@ -32,13 +34,10 @@ class PageChats extends Block {
       search: '',
       menu,
       addChatIcon,
-      activeChat: false,
-      activeChatId: null,
       searchChat: (event: Event) => this.searchChat(event),
       sendMessage: () => this.sendMessage(),
-      clickCard: (id: string) => {
-        this.props.activeChat = true;
-        this.props.activeChatId = id;
+      clickCard: (id: number) => {
+        setActiveChat(id);
       },
       openModalAttach: () => this.openModalAttach(),
       controllerChat: (str: string) => this.controllerChat(str),
@@ -176,11 +175,11 @@ class PageChats extends Block {
   }
 
   addUser(value: string) {
-    console.log(value);
+    addUserChat(value);
   }
 
   deleteUser(value: string) {
-    console.log(value);
+    deleteUserChat(value);
   }
 
   openModalAddChat() {
@@ -191,7 +190,7 @@ class PageChats extends Block {
     return `<div class="wrapper-chat">
     {{{ ModalUser ref="modalAdd" title="Добавить пользователя" labelButton="Добавить" global=true getLogin=addUser}}}
     {{{ ModalUser ref="modalDelete" title="Удалить пользователя" labelButton='Удалить' global=true getLogin=deleteUser}}}
-    {{{ ModalDeleteChat ref="modalDeleteChat" global=true id=activeChatId}}}
+    {{{ ModalDeleteChat ref="modalDeleteChat" global=true }}}
     {{{ ModalAddChat ref="modalAddChat" global=true}}}
     <div class="wrapper-choice">
         <div class="container-search">
@@ -221,7 +220,7 @@ class PageChats extends Block {
             </ul>
         </div>
     </div>
-    {{#if (isEqual activeChat false)}}
+    {{#if (isEqual activeChatId null)}}
         <div class="empty-chat">
             <h3>Выберите чат чтобы отправить сообщение</h3>
         </div>
@@ -261,4 +260,4 @@ class PageChats extends Block {
   }
 }
 
-export default connect(({ listChat }) => ({ listChat }))(PageChats);
+export default connect(({ listChat, activeChatId = null }) => ({ listChat, activeChatId }))(PageChats);
