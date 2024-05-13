@@ -8,6 +8,10 @@ export default class ChatApi {
     return this.api.GET('');
   }
 
+  async getToken(id:number) {
+    return this.api.POST(`/token/${id}`);
+  }
+
   async create(data:any) {
     return this.api.POST('', { data });
   }

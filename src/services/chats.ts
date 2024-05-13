@@ -41,12 +41,24 @@ const formatChat = (chat:any) => ({
   time: chat.time,
 });
 
+const getActiveChatId = ():null|number => Store.getState().activeChatId as null|number;
+
+const getToken = async () => {
+  const id = getActiveChatId();
+  if (!id) {
+    return;
+  }
+  const responce = await chatApi.getToken(id);
+  if (responce.data) {
+    Store.getState('tokenChat', responce.data.token);
+  }
+};
+
 const setActiveChat = (id:number) => {
   Store.set('activeChatId', id);
   Store.set('activeChat', findActiveChat(id));
+  getToken();
 };
-
-const getActiveChat = ():null|number => Store.getState().activeChatId as null|number;
 
 const getChats = async () => {
   const responce = checkStatus(await chatApi.get());
@@ -70,7 +82,7 @@ const createChat = async (data:any) => {
 };
 
 const deleteChact = async () => {
-  const id = getActiveChat();
+  const id = getActiveChatId();
   if (!id) {
     Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
     return false;
@@ -86,7 +98,7 @@ const deleteChact = async () => {
 };
 
 const addUserChat = async (login:string) => {
-  const id = getActiveChat();
+  const id = getActiveChatId();
   if (!id) {
     Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
     return;
@@ -98,7 +110,7 @@ const addUserChat = async (login:string) => {
 };
 
 const deleteUserChat = async (login:string) => {
-  const id = getActiveChat();
+  const id = getActiveChatId();
   if (!id) {
     Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
     return;
@@ -110,7 +122,7 @@ const deleteUserChat = async (login:string) => {
 };
 
 const changeChatAvatar = async (file:File) => {
-  const id = getActiveChat();
+  const id = getActiveChatId();
   if (!id) {
     Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
     return;
