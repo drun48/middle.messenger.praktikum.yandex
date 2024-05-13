@@ -4,6 +4,7 @@ import arrow from '../../assets/arrow.svg';
 import menu from '../../assets/menu.svg';
 import photo1 from '../../assets/test_photo.jpg';
 import photo2 from '../../assets/test_photo2.png';
+import changeAvatar from '../../assets/change_avatar.svg';
 import { InputMessage } from '../../components/input-message';
 import { ModalUser } from '../../components/modal-user';
 import { ModalList } from '../../components/modal-list';
@@ -21,10 +22,11 @@ import addChatIcon from '../../assets/icon-add.svg';
 import arrowCircle from '../../assets/arrow-circle.svg';
 import attacher from '../../assets/attacher.svg';
 import {
-  addUserChat, deleteUserChat, getChats, setActiveChat,
+  addUserChat, changeChatAvatar, deleteUserChat, getChats, setActiveChat,
 } from '../../services/chats';
 import connect from '../../core/connect';
 import { ModalAddChat } from '../../components/modal-add-chat/modalAddChat';
+import { ModalUploadFile } from '../../components';
 
 class PageChats extends Block {
   constructor(props: Props) {
@@ -45,6 +47,7 @@ class PageChats extends Block {
       addUser: (value: string) => this.addUser(value),
       deleteUser: (value: string) => this.deleteUser(value),
       openModalAddChat: () => this.openModalAddChat(),
+      changeChatAvatar: (file:File) => this.changeChatAvatar(file),
       filterListChat: [],
       listMessage: [
         {
@@ -100,6 +103,10 @@ class PageChats extends Block {
         {
           value: 'Удалить пользователя',
           photo: deleteUser,
+        },
+        {
+          value: 'Поменять фото',
+          photo: changeAvatar,
         },
         {
           value: 'Удалить чат',
@@ -168,6 +175,9 @@ class PageChats extends Block {
       case 'Удалить пользователя':
         (this.refs.modalDelete as ModalUser).open();
         break;
+      case 'Поменять фото':
+        (this.refs.modalChangeChatAvatar as ModalUploadFile).open();
+        break;
       case 'Удалить чат':
         (this.refs.modalDeleteChat as ModalDeleteChat).open();
         break;
@@ -182,6 +192,10 @@ class PageChats extends Block {
     deleteUserChat(value);
   }
 
+  changeChatAvatar(file:File) {
+    changeChatAvatar(file);
+  }
+
   openModalAddChat() {
     (this.refs.modalAddChat as ModalAddChat).open();
   }
@@ -192,6 +206,7 @@ class PageChats extends Block {
     {{{ ModalUser ref="modalDelete" title="Удалить пользователя" labelButton='Удалить' global=true getLogin=deleteUser}}}
     {{{ ModalDeleteChat ref="modalDeleteChat" global=true }}}
     {{{ ModalAddChat ref="modalAddChat" global=true}}}
+    {{{ ModalUploadFile ref="modalChangeChatAvatar" upload=changeChatAvatar input_name="avatar" labelButton="Поменять" accept="image/gif, image/jpeg, image/png" global=true}}}
     <div class="wrapper-choice">
         <div class="container-search">
             <div class="container-search__nav">
@@ -227,7 +242,7 @@ class PageChats extends Block {
     {{else}}
       <div class="container-chat">
         <div class="container-chat__profile">
-              {{{ CardUser name=user.first_name photo=user.avatar }}}
+              {{{ CardUser name=activeChat.title photo=activeChat.avatar }}}
               <div class="container-chat__profile__menu">
                 {{#Button onClick=openModalControllerChat}}
                   <img src="{{menu}}" alt="Иконка меню чата"/>
@@ -260,4 +275,4 @@ class PageChats extends Block {
   }
 }
 
-export default connect(({ listChat, activeChatId = null, user }) => ({ listChat, activeChatId, user }))(PageChats);
+export default connect(({ listChat, activeChatId = null, activeChat }) => ({ listChat, activeChatId, activeChat }))(PageChats);

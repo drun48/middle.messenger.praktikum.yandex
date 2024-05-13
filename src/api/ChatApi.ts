@@ -1,4 +1,5 @@
 import { HTTPTransport } from '../core/HttpTransport';
+import objectToFormData from '../utils/objectToFormData';
 
 export default class ChatApi {
   private api = new HTTPTransport('/chats');
@@ -17,6 +18,10 @@ export default class ChatApi {
 
   async addUser(data:any) {
     return this.api.PUT('/users', { data });
+  }
+
+  async updateAvatar(data:any) {
+    return this.api.PUT('/avatar', { data: objectToFormData(data) });
   }
 
   async deleteUser(data:any) {

@@ -79,7 +79,7 @@ class PageProfile extends Block {
   };
 
   changeAvatar(file:File) {
-    updateAvatar({ avatar: file });
+    updateAvatar(file);
   }
 
   protected render() {
