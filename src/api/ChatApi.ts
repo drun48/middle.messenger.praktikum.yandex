@@ -12,7 +12,7 @@ export default class ChatApi {
   }
 
   async getToken(id:number) {
-    return this.api.POST(`/token/${id}`);
+    return this.api.POST<{token:string}>(`/token/${id}`);
   }
 
   async create(data:{title:string}) {

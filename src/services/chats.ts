@@ -51,7 +51,7 @@ const getToken = async () => {
   }
   const responce = await chatApi.getToken(id);
   if (responce.data) {
-    Store.getState('tokenChat', responce.data.token);
+    Store.set('tokenChat', responce.data.token);
   }
 };
 
