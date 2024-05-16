@@ -1,5 +1,7 @@
 import ChatApi from '../api/ChatApi';
 import MessageApi from '../api/MessageApi';
+import ResourcesAPI from '../api/ResourcesAPI';
+import constants from '../constants';
 import Store from '../core/Store';
 import { formatDate } from '../utils/formatDate';
 import { getActiveChatId, getToken } from './chats';
@@ -7,6 +9,7 @@ import { getUser } from './user';
 
 const messageApi = new MessageApi();
 const chatApi = new ChatApi();
+const resourcesAPI = new ResourcesAPI();
 
 let offset = 0;
 let noReadCount = -1;
@@ -25,7 +28,7 @@ const getListMessage = () => {
 const formatMessage = (data:any, userId:number) => ({
   type: data.file ? 'photo' : 'text',
   id: data.id,
-  value: data.content,
+  value: data.file ? constants.GET_PHOTO + data.file.path : data.content,
   myMessage: data.user_id === userId,
   time: formatDate(data.time).time,
 });
@@ -57,15 +60,15 @@ const pushMessage = (data:any) => {
   const user = getUser();
   if (!user) return;
   const list = getListMessage();
-  let last = list.length - 1;
-  if (!list[last]) {
+  let lastIndex = list.length - 1;
+  if (!list[lastIndex]) {
     list.push({
       day: formatDate(data.time).dayString,
       messages: [],
     });
-    last++;
+    lastIndex++;
   }
-  list[last].messages.push(formatMessage(data, user.id));
+  list[lastIndex].messages.push(formatMessage(data, user.id));
   Store.set('listMessage', list);
 };
 
@@ -117,12 +120,15 @@ const openChat = () => {
   messageApi.init(user.id, chatID, token, getMessage, getOpenConnect);
 };
 
-const sendMessage:SendMessage = (message) => {
+const sendMessage:SendMessage = async (message) => {
   if (typeof message === 'string') {
     messageApi.sendMessageText(message);
   }
   if (message instanceof File) {
-    messageApi.sendMessageFile(1);
+    const responce = await resourcesAPI.uploadFile({ resource: message });
+    if (responce.data) {
+      messageApi.sendMessageFile(responce.data.id);
+    }
   }
 };
 

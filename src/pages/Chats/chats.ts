@@ -2,8 +2,7 @@ import { Block, Props } from '../../core/Block';
 import avatar from '../../assets/photoUser.png';
 import arrow from '../../assets/arrow.svg';
 import menu from '../../assets/menu.svg';
-// import photo1 from '../../assets/test_photo.jpg';
-// import photo2 from '../../assets/test_photo2.png';
+
 import changeAvatar from '../../assets/change_avatar.svg';
 import { InputMessage } from '../../components/input-message';
 import { ModalUser } from '../../components/modal-user';
@@ -11,8 +10,6 @@ import { ModalList } from '../../components/modal-list';
 import { ModalDeleteChat } from '../../components/modal-delete-chat/modalDeleteChat';
 
 import photoAttach from '../../assets/PhotoAttach.svg';
-import fileAttach from '../../assets/FileAttach.svg';
-import localAttach from '../../assets/LocalAttach.svg';
 
 import addUser from '../../assets/AddUser.svg';
 import deleteUser from '../../assets/DeleteUser.svg';
@@ -44,8 +41,10 @@ class PageChats extends Block {
       },
       openModalAttach: () => this.openModalAttach(),
       controllerChat: (str: string) => this.controllerChat(str),
+      fileMessage: () => (this.refs.modalUploadPhotoMessage as ModalUploadFile).open(),
       openModalControllerChat: (event: Event) => this.openModalControllerChat(event),
       addUser: (value: string) => this.addUser(value),
+      uploadPhotoVideoMessage: (file:File) => this.uploadPhotoVideoMessage(file),
       deleteUser: (value: string) => this.deleteUser(value),
       openModalAddChat: () => this.openModalAddChat(),
       changeChatAvatar: (file:File) => this.changeChatAvatar(file),
@@ -54,50 +53,10 @@ class PageChats extends Block {
         this.setProps({ oldHeightScrollChat: oldHeight });
       },
       filterListChat: [],
-      // listMessage: [
-      //   {
-      //     day: '19 июня',
-      //     messages: [
-      //       {
-      //         type: 'text',
-      //         value:
-      //           'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.',
-      //         myMessage: false,
-      //         time: '10:30',
-      //       },
-      //       {
-      //         type: 'text',
-      //         value: 'asd',
-      //         myMessage: true,
-      //         time: '10:30',
-      //       },
-      //       {
-      //         type: 'photo',
-      //         value: photo1,
-      //         myMessage: false,
-      //         time: '10:30',
-      //       },
-      //       {
-      //         type: 'photo',
-      //         value: photo2,
-      //         myMessage: true,
-      //         time: '10:31',
-      //       },
-      //     ],
-      //   },
-      // ],
       listAttach: [
         {
-          value: 'Фото или Видео',
+          value: 'Фото',
           photo: photoAttach,
-        },
-        {
-          value: 'Файл',
-          photo: fileAttach,
-        },
-        {
-          value: 'Локация',
-          photo: localAttach,
         },
       ],
       listControllerChat: [
@@ -138,7 +97,7 @@ class PageChats extends Block {
             }
           }
           setTimeout(() => {
-            (this.refs.chat as Chat).scrollBottomChat();
+            (this.refs.chat as Chat)?.scrollBottomChat();
           });
         },
       },
@@ -221,6 +180,10 @@ class PageChats extends Block {
     (this.refs.modalAddChat as ModalAddChat).open();
   }
 
+  uploadPhotoVideoMessage(file:File) {
+    sendMessage(file);
+  }
+
   protected render() {
     return `<div class="wrapper-chat">
     {{{ ModalUser ref="modalAdd" title="Добавить пользователя" labelButton="Добавить" global=true getLogin=addUser}}}
@@ -228,6 +191,7 @@ class PageChats extends Block {
     {{{ ModalDeleteChat ref="modalDeleteChat" global=true }}}
     {{{ ModalAddChat ref="modalAddChat" global=true}}}
     {{{ ModalUploadFile ref="modalChangeChatAvatar" upload=changeChatAvatar input_name="avatar" labelButton="Поменять" accept="image/gif, image/jpeg, image/png" global=true}}}
+    {{{ ModalUploadFile ref="modalUploadPhotoMessage" upload=uploadPhotoVideoMessage input_name="file" labelButton="Отправить" accept="image/jpeg, image/jpg, image/png, image/gif, image/webp" global=true}}}
     <div class="wrapper-choice">
         <div class="container-search">
             <div class="container-search__nav">
@@ -279,7 +243,7 @@ class PageChats extends Block {
                 {{#Button onClick=openModalAttach}}
                   <img src="{{attacher}}" alt="Иконка прикрепления файла"/>
                 {{/Button}}
-                {{{ ModalList class="modal-attach" list=listAttach ref="modalAttach" }}}
+                {{{ ModalList class="modal-attach" controller=fileMessage list=listAttach ref="modalAttach" }}}
               </div>
               <div class="container-chat__input__element">
                   {{{ InputMessage ref="inputMessage" placeholder="Сообщение" }}}

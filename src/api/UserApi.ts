@@ -1,6 +1,5 @@
 import { HTTPTransport } from '../core/HttpTransport';
 import { PasswordDTO } from '../dto/PasswordDTO';
-import { UserAvatarDTO } from '../dto/UserAvatatDTO';
 import { UserDTO } from '../dto/UserDTO';
 import objectToFormData from '../utils/objectToFormData';
 
@@ -11,7 +10,7 @@ export default class UserApi {
     return this.api.PUT<UserDTO>('/profile', { data: { ...data } });
   }
 
-  updateAvatar(data:UserAvatarDTO) {
+  updateAvatar(data:{avatar:File}) {
     return this.api.PUT<UserDTO>('/profile/avatar', { data: objectToFormData(data) });
   }
 
