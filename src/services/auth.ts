@@ -10,7 +10,7 @@ import { checkStatus } from './checkStatus';
 const authApi = new AuthApi();
 
 const getUser = async () => {
-  const response = await authApi.getUser();
+  const response = checkStatus(await authApi.getUser());
   if (response.data) {
     const user = response.data;
     user.avatar = user.avatar ? constants.GET_PHOTO + user.avatar : avatar;
