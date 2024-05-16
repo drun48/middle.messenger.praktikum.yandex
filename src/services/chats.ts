@@ -5,6 +5,7 @@ import avatar from '../assets/photoUser.png';
 import UserApi from '../api/UserApi';
 import constants from '../constants';
 import { ChatDTO } from '../dto/ChatDTO';
+import { openChat } from './message';
 
 const chatApi = new ChatApi();
 const userApi = new UserApi();
@@ -14,6 +15,16 @@ enum ErrorsChats {
   errorCreateChat = 'errorCreateChat',
   errorDeleteChat = 'errorDeleteChat'
 }
+
+const formatChat = (chat:ChatDTO) => ({
+  id: chat.id,
+  // eslint-disable-next-line no-nested-ternary
+  avatar: chat.avatar ? constants.GET_PHOTO + chat.avatar : chat.last_message?.user?.avatar ? constants.GET_PHOTO + chat.last_message.user.avatar : avatar,
+  title: chat.title,
+  unread_count: chat.unread_count,
+  message: chat.content,
+  time: chat.time,
+});
 
 const getListChat = () => {
   const { listChat } = Store.getState();
@@ -32,19 +43,14 @@ const findActiveChat = (id:number) => {
   return chatIndex !== -1 ? { ...listChat[chatIndex] } : null;
 };
 
-const formatChat = (chat:ChatDTO) => ({
-  id: chat.id,
-  // eslint-disable-next-line no-nested-ternary
-  avatar: chat.avatar ? constants.GET_PHOTO + chat.avatar : chat.last_message?.user?.avatar ? constants.GET_PHOTO + chat.last_message.user.avatar : avatar,
-  title: chat.title,
-  unread_count: chat.unread_count,
-  message: chat.content,
-  time: chat.time,
-});
-
 const getActiveChatId = ():null|number => Store.getState().activeChatId as null|number;
 
-const getToken = async () => {
+const getToken = () => {
+  const token = Store.getState().tokenChat as string;
+  return token || null;
+};
+
+const getTokenApi = async () => {
   const id = getActiveChatId();
   if (!id) {
     return;
@@ -55,10 +61,11 @@ const getToken = async () => {
   }
 };
 
-const setActiveChat = (id:number) => {
+const setActiveChat = async (id:number) => {
   Store.set('activeChatId', id);
   Store.set('activeChat', findActiveChat(id));
-  getToken();
+  await getTokenApi();
+  openChat();
 };
 
 const getChats = async () => {
@@ -154,4 +161,6 @@ export {
   addUserChat,
   changeChatAvatar,
   deleteUserChat,
+  getToken,
+  getActiveChatId,
 };

@@ -12,6 +12,11 @@ const deleteError = () => {
   Store.set('errorUpdateProfile', '');
 };
 
+const getUser = () => {
+  const { user } = Store.getState();
+  return user ? user as UserDTO : null;
+};
+
 const formatAvatar = (user:UserDTO) => {
   // eslint-disable-next-line no-param-reassign
   user.avatar = user.avatar ? constants.GET_PHOTO + user.avatar : photoUser;
@@ -52,4 +57,5 @@ export {
   updateUser,
   updatePassword,
   updateAvatar,
+  getUser,
 };

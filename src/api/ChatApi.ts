@@ -34,4 +34,8 @@ export default class ChatApi {
   async deleteUser(data:UpdateUserChatDTO) {
     return this.api.DELETE('/users', { data: { ...data } });
   }
+
+  async getNewMessageCount(id:number) {
+    return this.api.GET<{unread_count:number}>(`/new/${id}`);
+  }
 }
