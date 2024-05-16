@@ -18,7 +18,7 @@ export default class UserApi {
     return this.api.PUT('/password', { data: { ...data } });
   }
 
-  searchUser(data:{loging:string}) {
+  searchUser(data:{login:string}) {
     return this.api.POST<Array<UserDTO>>('/search', { data: { ...data } });
   }
 }

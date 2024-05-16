@@ -4,7 +4,7 @@ import Store from '../core/Store';
 import avatar from '../assets/photoUser.png';
 import constants from '../constants';
 import { SingupDTO } from '../dto/SingupDTO';
-import { LoginDTO } from '../dto/loginDTO';
+import { LoginDTO } from '../dto/LoginDTO';
 import { checkStatus } from './checkStatus';
 
 const authApi = new AuthApi();

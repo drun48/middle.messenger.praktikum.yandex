@@ -1,6 +1,6 @@
 import { Block, Props } from '../../core/Block';
 import connect from '../../core/connect';
-import { LoginDTO } from '../../dto/loginDTO';
+import { LoginDTO } from '../../dto/LoginDTO';
 
 import { login } from '../../services/auth';
 

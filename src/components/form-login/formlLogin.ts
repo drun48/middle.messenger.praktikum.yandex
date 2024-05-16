@@ -5,7 +5,7 @@ import {
   validLogin,
   validPassword,
 } from '../../utils/validator';
-import { LoginDTO } from '../../dto/loginDTO';
+import { LoginDTO } from '../../dto/LoginDTO';
 
 export class FormLogin extends Block {
   constructor(props: Props) {
