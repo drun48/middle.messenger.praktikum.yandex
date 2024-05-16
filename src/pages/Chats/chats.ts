@@ -253,17 +253,18 @@ class PageChats extends Block {
               {{#Button class="container-chat__input__button" onClick=sendMessage}}
                 <img src="{{arrowCircle}}" alt="Иконка отправки сообщения">
               {{/Button}}
-              <div class="container-chat__input__button">
-              </div>
-      </div>
+          </div>
+          {{#if errorMessage}}
+            <p class="error-text">{{errorMessage}}</p>
+          {{/if}}
       </div>
     {{/if}}
 </div>`;
   }
 }
 
-export default connect<{listChat:Array<ChatDTO>, activeChatId:number|null, activeChat:ChatDTO, listMessage:ListMessage}>(({
-  listChat, activeChatId = null, activeChat, listMessage,
+export default connect<{listChat:Array<ChatDTO>, activeChatId:number|null, activeChat:ChatDTO, listMessage:ListMessage, errorMessage:string}>(({
+  listChat, activeChatId = null, activeChat, listMessage, errorMessage,
 }) => ({
-  listChat, activeChatId, activeChat, listMessage,
+  listChat, activeChatId, activeChat, listMessage, errorMessage,
 }))(PageChats);

@@ -10,10 +10,13 @@ export default class MessageApi {
 
   private callbackOpen?:()=>void;
 
-  init(userId:number, chatId:number, token:string, callbackResponce?:(resources:MessageDTO)=>void, callbackOpen?:()=>void) {
+  private callbackError?:()=>void;
+
+  init(userId:number, chatId:number, token:string, callbackResponce?:(resources:MessageDTO)=>void, callbackOpen?:()=>void, callbackError?:()=>void) {
     this.socket = new WebSocket(`${constants.WSS}/ws/chats/${userId}/${chatId}/${token}`);
     this.callbackResponce = callbackResponce;
     this.callbackOpen = callbackOpen;
+    this.callbackError = callbackError;
     this.pingPong();
 
     this.socket.addEventListener('open', () => {
@@ -32,8 +35,11 @@ export default class MessageApi {
       this.closePingPong();
     });
 
-    this.socket.addEventListener('error', () => {
-      this.closePingPong();
+    this.socket.addEventListener('error', (event) => {
+      if (this.callbackError) {
+        console.log('Ошибка', event);
+        this.callbackError();
+      }
     });
   }
 
@@ -50,7 +56,7 @@ export default class MessageApi {
   }
 
   close() {
-    this.closePingPong();
+    this.socket?.close();
     this.socket = null;
   }
 

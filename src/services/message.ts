@@ -109,27 +109,40 @@ const getOpenConnect = () => {
   getNoReadMessage();
 };
 
+const callbackError = () => {
+  Store.set('errorMessage', 'Произошла ошибка при отпраки сообщения');
+};
+
 const openChat = () => {
   messageApi.close();
   const token = getToken();
   const user = getUser();
   const chatID = getActiveChatId();
+  Store.set('errorMessage', '');
   if (!token || !user || !chatID) return;
   offset = 0;
   noReadCount = -1;
   last = false;
   Store.set('listMessage', []);
-  messageApi.init(user.id, chatID, token, getMessage, getOpenConnect);
+  messageApi.init(user.id, chatID, token, getMessage, getOpenConnect, callbackError);
 };
 
 const sendMessage:SendMessage = async (message) => {
+  Store.set('errorMessage', '');
   if (typeof message === 'string') {
     messageApi.sendMessageText(message);
   }
   if (message instanceof File) {
-    const responce = await resourcesAPI.uploadFile({ resource: message });
-    if (responce.data) {
-      messageApi.sendMessageFile(responce.data.id);
+    try {
+      const responce = await resourcesAPI.uploadFile({ resource: message });
+      if (responce.data) {
+        messageApi.sendMessageFile(responce.data.id);
+      }
+      if (responce.error) {
+        Store.set('errorMessage', 'Произошла ошибка при загрузки файла');
+      }
+    } catch (e) {
+      Store.set('errorMessage', 'Произошла ошибка при загрузки файла');
     }
   }
 };
