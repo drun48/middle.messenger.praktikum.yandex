@@ -38,7 +38,6 @@ Handlebars.registerHelper('isEqual', (value1, value2) => value1 === value2);
 
 Store.set('user', null);
 Store.set('auth', null);
-Store.set('isLoading', false);
 
 Router.middleware.use(async (ctx, next) => {
   const state = Store.getState();

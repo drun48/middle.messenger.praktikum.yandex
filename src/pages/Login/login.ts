@@ -24,4 +24,4 @@ class LoginPage extends Block {
   }
 }
 
-export default connect<{isLoading:boolean, loginError:string}>(({ isLoading, loginError }) => ({ isLoading, loginError }))(LoginPage);
+export default connect<{loginError:string}>(({ loginError }) => ({ loginError }))(LoginPage);
