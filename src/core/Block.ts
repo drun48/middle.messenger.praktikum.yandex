@@ -118,6 +118,11 @@ export class Block {
 
     this._removeEvents();
 
+    if (this._element) {
+      newElement.style.display = this._element.style.display;
+      this._element.replaceWith(newElement);
+    }
+
     this._element = newElement;
 
     this._addEvents();

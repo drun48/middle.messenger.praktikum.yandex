@@ -9,19 +9,6 @@ import { checkStatus } from './checkStatus';
 
 const authApi = new AuthApi();
 
-const login = async (data:LoginDTO) => {
-  const response = checkStatus(await authApi.login(data));
-  if (response.data) {
-    Store.set('auth', true);
-    Store.set('loginError', '');
-
-    Router.go('/messenger');
-  }
-  if (response.error) {
-    Store.set('loginError', response.error.reason);
-  }
-};
-
 const getUser = async () => {
   const response = await authApi.getUser();
   if (response.data) {
@@ -33,6 +20,19 @@ const getUser = async () => {
   if (response.error) {
     Store.set('auth', false);
     Store.set('user', null);
+  }
+};
+
+const login = async (data:LoginDTO) => {
+  const response = checkStatus(await authApi.login(data));
+  if (response.data) {
+    Store.set('auth', true);
+    Store.set('loginError', '');
+    getUser();
+    Router.go('/messenger');
+  }
+  if (response.error) {
+    Store.set('loginError', response.error.reason);
   }
 };
 
