@@ -25,6 +25,7 @@ import connect from '../../core/connect';
 import { ModalAddChat } from '../../components/modal-add-chat/modalAddChat';
 import { Chat, ModalUploadFile } from '../../components';
 import { getOldMessage, sendMessage } from '../../services/message';
+import { Message } from '../../types/Message';
 
 class PageChats extends Block {
   constructor(props: Props) {
@@ -87,8 +88,8 @@ class PageChats extends Block {
         listMessage: (newValue, oldValue) => {
           if (!Array.isArray(oldValue)) return;
           if (Array.isArray(newValue) && oldValue.length && newValue.length) {
-            const newMesseges = newValue[newValue.length - 1].messages as Array<any>;
-            const oldMessages = oldValue[oldValue.length - 1].messages as Array<any>;
+            const newMesseges = newValue[newValue.length - 1].messages as Array<Message>;
+            const oldMessages = oldValue[oldValue.length - 1].messages as Array<Message>;
             if (newMesseges[newMesseges.length - 1]?.id === oldMessages[oldMessages.length - 1]?.id) {
               setTimeout(() => {
                 (this.refs.chat as Chat).scrollToOldHeight(this.props.oldHeightScrollChat ?? 0);

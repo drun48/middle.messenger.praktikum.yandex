@@ -3,6 +3,8 @@ import MessageApi from '../api/MessageApi';
 import ResourcesAPI from '../api/ResourcesAPI';
 import constants from '../constants';
 import Store from '../core/Store';
+import { MessageDTO } from '../dto/MessageDTO';
+import { ListMessage, Message } from '../types/Message';
 import { formatDate } from '../utils/formatDate';
 import { getActiveChatId, getToken } from './chats';
 import { getUser } from './user';
@@ -21,11 +23,11 @@ type SendMessage = {
 }
 
 const getListMessage = () => {
-  const list = Store.getState().listMessage;
+  const list = Store.getState().listMessage as ListMessage;
   return Array.isArray(list) ? structuredClone(list) : [];
 };
 
-const formatMessage = (data:any, userId:number) => ({
+const formatMessage = (data:MessageDTO, userId:number):Message => ({
   type: data.file ? 'photo' : 'text',
   id: data.id,
   value: data.file ? constants.GET_PHOTO + data.file.path : data.content,
@@ -33,11 +35,11 @@ const formatMessage = (data:any, userId:number) => ({
   time: formatDate(data.time).time,
 });
 
-const formatListMessage = (data:any) => {
+const formatListMessage = (data:Array<MessageDTO>) => {
   const user = getUser();
   if (!user) return;
   const list = getListMessage();
-  const newListObj = data.reverse().reduce((res, item) => {
+  const newListObj = data.reverse().reduce((res:Record<string, Array<Message>>, item) => {
     const day = formatDate(item.time).dayString;
     if (!res[day]) {
       res[day] = [];
@@ -56,7 +58,7 @@ const formatListMessage = (data:any) => {
   Store.set('listMessage', [...newList, ...list]);
 };
 
-const pushMessage = (data:any) => {
+const pushMessage = (data:MessageDTO) => {
   const user = getUser();
   if (!user) return;
   const list = getListMessage();
@@ -90,7 +92,7 @@ const getNoReadMessage = async () => {
   getOldMessage();
 };
 
-const getMessage = (data:any) => {
+const getMessage = (data:Array<MessageDTO>|MessageDTO) => {
   if (Array.isArray(data)) {
     formatListMessage(data);
     if (data[0]?.id) {

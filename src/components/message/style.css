@@ -15,7 +15,7 @@ p.message__element {
 
 .message__time {
     position: absolute;
-    bottom: var(--padding);
+    bottom: calc(var(--padding) - 7px);
     right: var(--padding);
     font-size: 9px;
 }

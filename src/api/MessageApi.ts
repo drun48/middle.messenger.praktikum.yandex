@@ -1,15 +1,16 @@
 import constants from '../constants';
+import { MessageDTO } from '../dto/MessageDTO';
 
 export default class MessageApi {
   private socket:WebSocket|null = null;
 
   private interval:number|null = null;
 
-  private callbackResponce?:(resources:any)=>void;
+  private callbackResponce?:(resources:MessageDTO)=>void;
 
   private callbackOpen?:()=>void;
 
-  init(userId:number, chatId:number, token:string, callbackResponce?:(resources:any)=>void, callbackOpen?:()=>void) {
+  init(userId:number, chatId:number, token:string, callbackResponce?:(resources:MessageDTO)=>void, callbackOpen?:()=>void) {
     this.socket = new WebSocket(`${constants.WSS}/ws/chats/${userId}/${chatId}/${token}`);
     this.callbackResponce = callbackResponce;
     this.callbackOpen = callbackOpen;
