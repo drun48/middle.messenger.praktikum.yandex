@@ -110,6 +110,7 @@
 .container-chat__element {
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     flex: 1 0;
     height: 80%;
     border-top: 1px solid var(--primary-border);

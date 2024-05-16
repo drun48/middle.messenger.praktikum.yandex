@@ -26,8 +26,8 @@ import {
 } from '../../services/chats';
 import connect from '../../core/connect';
 import { ModalAddChat } from '../../components/modal-add-chat/modalAddChat';
-import { ModalUploadFile } from '../../components';
-import { sendMessage } from '../../services/message';
+import { Chat, ModalUploadFile } from '../../components';
+import { getOldMessage, sendMessage } from '../../services/message';
 
 class PageChats extends Block {
   constructor(props: Props) {
@@ -49,6 +49,10 @@ class PageChats extends Block {
       deleteUser: (value: string) => this.deleteUser(value),
       openModalAddChat: () => this.openModalAddChat(),
       changeChatAvatar: (file:File) => this.changeChatAvatar(file),
+      scrollTop: (oldHeight:number) => {
+        getOldMessage();
+        this.setProps({ oldHeightScrollChat: oldHeight });
+      },
       filterListChat: [],
       // listMessage: [
       //   {
@@ -121,6 +125,22 @@ class PageChats extends Block {
         listChat: () => {
           this.props.filterListChat = this.props.listChat;
         },
+        listMessage: (newValue, oldValue) => {
+          if (!Array.isArray(oldValue)) return;
+          if (Array.isArray(newValue) && oldValue.length && newValue.length) {
+            const newMesseges = newValue[newValue.length - 1].messages as Array<any>;
+            const oldMessages = oldValue[oldValue.length - 1].messages as Array<any>;
+            if (newMesseges[newMesseges.length - 1]?.id === oldMessages[oldMessages.length - 1]?.id) {
+              setTimeout(() => {
+                (this.refs.chat as Chat).scrollToOldHeight(this.props.oldHeightScrollChat ?? 0);
+              });
+              return;
+            }
+          }
+          setTimeout(() => {
+            (this.refs.chat as Chat).scrollBottomChat();
+          });
+        },
       },
     });
     getChats();
@@ -145,7 +165,6 @@ class PageChats extends Block {
     const component = this.refs.inputMessage as InputMessage;
     const message = component.getValue();
     if (!message) return;
-    console.log(message);
     sendMessage(message);
   }
 
@@ -253,7 +272,7 @@ class PageChats extends Block {
               </div>
         </div>
           <div class="container-chat__element">
-              {{{ Chat listMessage=listMessage }}}
+              {{{ Chat ref="chat" listMessage=listMessage scrollTop=scrollTop }}}
           </div>
           <div class="container-chat__input">
               <div class="container-chat__input__attacher">

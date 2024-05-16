@@ -10,6 +10,7 @@ const chatApi = new ChatApi();
 
 let offset = 0;
 let noReadCount = -1;
+let last = false;
 
 type SendMessage = {
     (message:string):void,
@@ -45,8 +46,8 @@ const formatListMessage = (data:any) => {
     day: key,
     messages: value,
   }));
-  if (newList[newList.length - 1]?.day === list[0]?.day) {
-    list[0].message = [...newList[newList.length - 1].messages, ...list[0].messages];
+  if (newList[newList.length - 1]?.day === list[0]?.day && Array.isArray(newList[newList.length - 1]?.messages)) {
+    list[0].messages = [...newList[newList.length - 1].messages, ...list[0].messages];
     newList.pop();
   }
   Store.set('listMessage', [...newList, ...list]);
@@ -69,6 +70,7 @@ const pushMessage = (data:any) => {
 };
 
 const getOldMessage = () => {
+  if (last) return;
   messageApi.getMessages(offset);
 };
 
@@ -91,6 +93,7 @@ const getMessage = (data:any) => {
     if (data[0]?.id) {
       offset = data[0].id;
     }
+    if (!data.length) last = true;
   } else {
     pushMessage(data);
   }
@@ -109,6 +112,7 @@ const openChat = () => {
   if (!token || !user || !chatID) return;
   offset = 0;
   noReadCount = -1;
+  last = false;
   Store.set('listMessage', []);
   messageApi.init(user.id, chatID, token, getMessage, getOpenConnect);
 };
