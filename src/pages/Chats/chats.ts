@@ -92,13 +92,13 @@ class PageChats extends Block {
             if (newMesseges[newMesseges.length - 1]?.id === oldMessages[oldMessages.length - 1]?.id) {
               setTimeout(() => {
                 (this.refs.chat as Chat).scrollToOldHeight(this.props.oldHeightScrollChat ?? 0);
-              });
+              }, 100);
               return;
             }
           }
           setTimeout(() => {
             (this.refs.chat as Chat)?.scrollBottomChat();
-          });
+          }, 100);
         },
       },
     });
