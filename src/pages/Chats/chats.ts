@@ -25,7 +25,8 @@ import connect from '../../core/connect';
 import { ModalAddChat } from '../../components/modal-add-chat/modalAddChat';
 import { Chat, ModalUploadFile } from '../../components';
 import { getOldMessage, sendMessage } from '../../services/message';
-import { Message } from '../../types/Message';
+import { ListMessage, Message } from '../../types/Message';
+import { ChatDTO } from '../../dto/ChatDTO';
 
 class PageChats extends Block {
   constructor(props: Props) {
@@ -92,7 +93,7 @@ class PageChats extends Block {
             const oldMessages = oldValue[oldValue.length - 1].messages as Array<Message>;
             if (newMesseges[newMesseges.length - 1]?.id === oldMessages[oldMessages.length - 1]?.id) {
               setTimeout(() => {
-                (this.refs.chat as Chat).scrollToOldHeight(this.props.oldHeightScrollChat ?? 0);
+                (this.refs.chat as Chat).scrollToOldHeight(typeof this.props.oldHeightScrollChat === 'number' ? this.props.oldHeightScrollChat : 0);
               }, 100);
               return;
             }
@@ -118,7 +119,7 @@ class PageChats extends Block {
       return;
     }
 
-    this.props.filterListChat = this.props.listChat.filter((item) => item.title.includes(target.value));
+    this.props.filterListChat = (this.props.listChat as Array<ChatDTO>).filter((item) => item.title.includes(target.value));
   }
 
   sendMessage() {
@@ -261,7 +262,7 @@ class PageChats extends Block {
   }
 }
 
-export default connect(({
+export default connect<{listChat:Array<ChatDTO>, activeChatId:number|null, activeChat:ChatDTO, listMessage:ListMessage}>(({
   listChat, activeChatId = null, activeChat, listMessage,
 }) => ({
   listChat, activeChatId, activeChat, listMessage,

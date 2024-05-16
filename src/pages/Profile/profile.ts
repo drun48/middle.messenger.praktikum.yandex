@@ -9,6 +9,7 @@ import connect from '../../core/connect.ts';
 import {
   deleteError, updatePassword, updateUser, updateAvatar,
 } from '../../services/user.ts';
+import { UserDTO } from '../../dto/UserDTO.ts';
 
 class PageProfile extends Block {
   constructor(props: Props) {
@@ -128,4 +129,4 @@ class PageProfile extends Block {
   }
 }
 
-export default connect(({ user, errorUpdateProfile }) => ({ user, errorUpdateProfile }))(PageProfile);
+export default connect<{user:UserDTO, errorUpdateProfile:string}>(({ user, errorUpdateProfile }) => ({ user, errorUpdateProfile }))(PageProfile);

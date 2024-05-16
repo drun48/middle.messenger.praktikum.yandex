@@ -27,4 +27,4 @@ class PageSign extends Block {
   }
 }
 
-export default connect(({ isLoading, signinError }) => ({ isLoading, signinError }))(PageSign);
+export default connect<{isLoading:boolean, signinError:string}>(({ isLoading, signinError }) => ({ isLoading, signinError }))(PageSign);

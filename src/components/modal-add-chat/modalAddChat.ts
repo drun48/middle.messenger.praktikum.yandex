@@ -48,4 +48,4 @@ export class ModalAddChat extends Block {
   }
 }
 
-export default connect(({ errorCreateChat }) => ({ errorCreateChat }))(ModalAddChat);
+export default connect<{errorCreateChat:string}>(({ errorCreateChat }) => ({ errorCreateChat }))(ModalAddChat);
