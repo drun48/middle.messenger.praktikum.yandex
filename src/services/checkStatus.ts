@@ -8,7 +8,7 @@ export function checkStatus<T>(response:Responce<T>):Responce<T> {
     Router.go('/');
   }
   if (response.status >= 500) {
-    // Router.go('/');
+    Router.go('/error500');
   }
   return response;
 }

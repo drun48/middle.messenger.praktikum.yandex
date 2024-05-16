@@ -61,7 +61,7 @@ class Router {
   }
 
   getRoute(pathname:string):Route {
-    return this.routes[pathname] ?? this.routes['/'];
+    return this.routes[pathname] ?? this.routes['*'];
   }
 }
 

@@ -63,4 +63,6 @@ Router.use('/', Pages.LoginPage)
   .use('/sign-up', Pages.PageSign)
   .use('/messenger', Pages.PageChats)
   .use('/settings', Pages.PageProfile)
+  .use('/error500', Pages.PageError500)
+  .use('*', Pages.PageError404)
   .start();
