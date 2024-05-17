@@ -32,13 +32,13 @@ const getListChat = () => {
   return Array.isArray(listChat) ? [...listChat] as Array<ChatDTO> : [];
 };
 
-const findActiveChatIndex:MethodNumber = (id) => {
+const findActiveChatIndex = (id:number) => {
   const listChat = getListChat();
   const chatIndex = listChat.findIndex((item) => item.id === id);
   return chatIndex;
 };
 
-const findActiveChat:MethodNumber = (id) => {
+const findActiveChat = (id:number) => {
   const listChat = getListChat();
   const chatIndex = findActiveChatIndex(id);
   return chatIndex !== -1 ? { ...listChat[chatIndex] } : null;
@@ -88,7 +88,7 @@ const getChats = async () => {
   }
 };
 
-const createChat:MethodStr = async (title) => {
+const createChat = async (title:string) => {
   try {
     const responce = checkStatus(await chatApi.create({ title }));
     if (responce.error) {
