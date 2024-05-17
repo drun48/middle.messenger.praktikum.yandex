@@ -29,17 +29,6 @@ export type Responce<T> = {
 
 type HTTPMethod = <T=unknown>(url: string, options?: Omit<Options, 'method'>) => Promise<Responce<T>>
 
-// function queryStringify(data: Record<string, unknown>) {
-//   if (typeof data !== 'object') {
-//     throw new Error('Data must be object');
-//   }
-//   const keys = Object.keys(data);
-//   return keys.reduce(
-//     (result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`,
-//     '?',
-//   );
-// }
-
 export class HTTPTransport {
   private url:string;
 

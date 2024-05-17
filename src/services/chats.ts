@@ -6,6 +6,7 @@ import UserApi from '../api/UserApi';
 import constants from '../constants';
 import { ChatDTO } from '../dto/ChatDTO';
 import { openChat } from './message';
+import { MethodFile, MethodNumber, MethodStr } from '../types/MethodService';
 
 const chatApi = new ChatApi();
 const userApi = new UserApi();
@@ -31,13 +32,13 @@ const getListChat = () => {
   return Array.isArray(listChat) ? [...listChat] as Array<ChatDTO> : [];
 };
 
-const findActiveChatIndex = (id:number) => {
+const findActiveChatIndex:MethodNumber = (id) => {
   const listChat = getListChat();
   const chatIndex = listChat.findIndex((item) => item.id === id);
   return chatIndex;
 };
 
-const findActiveChat = (id:number) => {
+const findActiveChat:MethodNumber = (id) => {
   const listChat = getListChat();
   const chatIndex = findActiveChatIndex(id);
   return chatIndex !== -1 ? { ...listChat[chatIndex] } : null;
@@ -65,7 +66,7 @@ const getTokenApi = async () => {
   }
 };
 
-const setActiveChat = async (id:number) => {
+const setActiveChat:MethodNumber = async (id) => {
   Store.set('activeChatId', id);
   Store.set('activeChat', findActiveChat(id));
   await getTokenApi();
@@ -87,7 +88,7 @@ const getChats = async () => {
   }
 };
 
-const createChat = async (title:string) => {
+const createChat:MethodStr = async (title) => {
   try {
     const responce = checkStatus(await chatApi.create({ title }));
     if (responce.error) {
@@ -123,7 +124,7 @@ const deleteChact = async () => {
   }
 };
 
-const addUserChat = async (login:string) => {
+const addUserChat:MethodStr = async (login) => {
   try {
     const id = getActiveChatId();
     if (!id) {
@@ -139,7 +140,7 @@ const addUserChat = async (login:string) => {
   }
 };
 
-const deleteUserChat = async (login:string) => {
+const deleteUserChat:MethodStr = async (login) => {
   try {
     const id = getActiveChatId();
     if (!id) {
@@ -155,7 +156,7 @@ const deleteUserChat = async (login:string) => {
   }
 };
 
-const changeChatAvatar = async (file:File) => {
+const changeChatAvatar:MethodFile = async (file) => {
   try {
     const id = getActiveChatId();
     if (!id) {
