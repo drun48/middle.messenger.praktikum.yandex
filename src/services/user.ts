@@ -24,31 +24,43 @@ const formatAvatar = (user:UserDTO) => {
 };
 
 const updateUser = async (data:UserDTO) => {
-  const response = checkStatus(await userApi.updateUser(data));
-  if (response.data) {
-    const user = formatAvatar(response.data);
-    Store.set('user', user);
-  }
-  if (response.error) {
-    Store.set('errorUpdateProfile', `Не удалось обновить профиль: ${response.error.reason}`);
+  try {
+    const response = checkStatus(await userApi.updateUser(data));
+    if (response.data) {
+      const user = formatAvatar(response.data);
+      Store.set('user', user);
+    }
+    if (response.error) {
+      Store.set('errorUpdateProfile', `Не удалось обновить профиль: ${response.error.reason}`);
+    }
+  } catch (e) {
+    Store.set('errorUpdateProfile', 'Не удалось обновить профиль');
   }
 };
 
 const updatePassword = async (data:PasswordDTO) => {
-  const response = checkStatus(await userApi.updatePassword(data));
-  if (response.error) {
-    Store.set('errorUpdateProfile', `Не удалось обновить пароль: ${response.error.reason}`);
+  try {
+    const response = checkStatus(await userApi.updatePassword(data));
+    if (response.error) {
+      Store.set('errorUpdateProfile', `Не удалось обновить пароль: ${response.error.reason}`);
+    }
+  } catch (e) {
+    Store.set('errorUpdateProfile', 'Не удалось обновить пароль');
   }
 };
 
 const updateAvatar = async (avatar:File) => {
-  const response = checkStatus(await userApi.updateAvatar({ avatar }));
-  if (response.data) {
-    const user = formatAvatar(response.data);
-    Store.set('user', user);
-  }
-  if (response.error) {
-    Store.set('errorUpdateProfile', `Не удалось обновить фото: ${response.error.reason}`);
+  try {
+    const response = checkStatus(await userApi.updateAvatar({ avatar }));
+    if (response.data) {
+      const user = formatAvatar(response.data);
+      Store.set('user', user);
+    }
+    if (response.error) {
+      Store.set('errorUpdateProfile', `Не удалось обновить фото: ${response.error.reason}`);
+    }
+  } catch (e) {
+    Store.set('errorUpdateProfile', 'Не удалось обновить фото');
   }
 };
 
