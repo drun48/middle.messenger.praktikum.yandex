@@ -24,10 +24,14 @@ export default class MessageApi {
     });
 
     this.socket.addEventListener('message', (event) => {
-      const data = JSON.parse(event.data);
-      if (data.type === 'pong') return;
-      if (this.callbackResponce) {
-        this.callbackResponce(data);
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === 'pong') return;
+        if (this.callbackResponce) {
+          this.callbackResponce(data);
+        }
+      } catch (e) {
+        console.log('Ошибка', e);
       }
     });
 

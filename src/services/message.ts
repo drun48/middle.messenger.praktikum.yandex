@@ -80,16 +80,20 @@ const getOldMessage = () => {
 };
 
 const getNoReadMessage = async () => {
-  if (noReadCount === -1) {
-    const chatID = getActiveChatId();
-    if (!chatID) return;
-    const responce = await chatApi.getNewMessageCount(chatID);
-    if (responce.data) {
-      noReadCount = responce.data.unread_count;
+  try {
+    if (noReadCount === -1) {
+      const chatID = getActiveChatId();
+      if (!chatID) return;
+      const responce = await chatApi.getNewMessageCount(chatID);
+      if (responce.data) {
+        noReadCount = responce.data.unread_count;
+      }
     }
+    if (offset >= noReadCount + 20) return;
+    getOldMessage();
+  } catch (e) {
+    console.log(e);
   }
-  if (offset >= noReadCount + 20) return;
-  getOldMessage();
 };
 
 const getMessage = (data:Array<MessageDTO>|MessageDTO) => {
