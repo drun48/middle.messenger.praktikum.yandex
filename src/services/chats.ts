@@ -61,7 +61,7 @@ const getTokenApi = async () => {
       Store.set('tokenChat', responce.data.token);
     }
   } catch (e) {
-    console.log(e);
+    Store.set('tokenChat', null);
   }
 };
 
