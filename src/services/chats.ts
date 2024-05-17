@@ -51,13 +51,17 @@ const getToken = () => {
 };
 
 const getTokenApi = async () => {
-  const id = getActiveChatId();
-  if (!id) {
-    return;
-  }
-  const responce = await chatApi.getToken(id);
-  if (responce.data) {
-    Store.set('tokenChat', responce.data.token);
+  try {
+    const id = getActiveChatId();
+    if (!id) {
+      return;
+    }
+    const responce = await chatApi.getToken(id);
+    if (responce.data) {
+      Store.set('tokenChat', responce.data.token);
+    }
+  } catch (e) {
+    console.log(e);
   }
 };
 
@@ -69,81 +73,107 @@ const setActiveChat = async (id:number) => {
 };
 
 const getChats = async () => {
-  const responce = checkStatus(await chatApi.get());
-  if (responce.data) {
-    const list = responce.data.map((item) => formatChat(item));
-    Store.set('listChat', list);
-  }
-  if (responce.error) {
+  try {
+    const responce = checkStatus(await chatApi.get());
+    if (responce.data) {
+      const list = responce.data.map((item) => formatChat(item));
+      Store.set('listChat', list);
+    }
+    if (responce.error) {
+      Store.set('listChat', []);
+    }
+  } catch (e) {
     Store.set('listChat', []);
   }
 };
 
 const createChat = async (title:string) => {
-  const responce = checkStatus(await chatApi.create({ title }));
-  if (responce.error) {
-    Store.set(ErrorsChats.errorCreateChat, `Ошибка создание чата: ${responce.error.reason}`);
+  try {
+    const responce = checkStatus(await chatApi.create({ title }));
+    if (responce.error) {
+      Store.set(ErrorsChats.errorCreateChat, `Ошибка создание чата: ${responce.error.reason}`);
+      return false;
+    }
+    getChats();
+    return true;
+  } catch (e) {
+    Store.set(ErrorsChats.errorCreateChat, 'Ошибка создание чата');
     return false;
   }
-  getChats();
-  return true;
 };
 
 const deleteChact = async () => {
-  const id = getActiveChatId();
-  if (!id) {
-    Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
+  try {
+    const id = getActiveChatId();
+    if (!id) {
+      Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
+      return false;
+    }
+    const responce = checkStatus(await chatApi.delete({ chatId: id }));
+    if (responce.error) {
+      Store.set(ErrorsChats.errorDeleteChat, `Ошибка удаление чата: ${responce.error.reason}`);
+      return false;
+    }
+    getChats();
+    Store.set('activeChatId', null);
+    return true;
+  } catch (e) {
+    Store.set(ErrorsChats.errorDeleteChat, 'Ошибка удаление чата');
     return false;
   }
-  const responce = checkStatus(await chatApi.delete({ chatId: id }));
-  if (responce.error) {
-    Store.set(ErrorsChats.errorDeleteChat, `Ошибка удаление чата: ${responce.error.reason}`);
-    return false;
-  }
-  getChats();
-  Store.set('activeChatId', null);
-  return true;
 };
 
 const addUserChat = async (login:string) => {
-  const id = getActiveChatId();
-  if (!id) {
-    Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
-    return;
-  }
-  const responceSearch = await userApi.searchUser({ login });
-  if (responceSearch.data && responceSearch.data[0]) {
-    await chatApi.addUser({ users: [responceSearch.data[0].id], chatId: id });
+  try {
+    const id = getActiveChatId();
+    if (!id) {
+      Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
+      return;
+    }
+    const responceSearch = await userApi.searchUser({ login });
+    if (responceSearch.data && responceSearch.data[0]) {
+      await chatApi.addUser({ users: [responceSearch.data[0].id], chatId: id });
+    }
+  } catch (e) {
+    console.log(e);
   }
 };
 
 const deleteUserChat = async (login:string) => {
-  const id = getActiveChatId();
-  if (!id) {
-    Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
-    return;
-  }
-  const responceSearch = await userApi.searchUser({ login });
-  if (responceSearch.data && responceSearch.data[0]) {
-    await chatApi.deleteUser({ users: [responceSearch.data[0].id], chatId: id });
+  try {
+    const id = getActiveChatId();
+    if (!id) {
+      Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
+      return;
+    }
+    const responceSearch = await userApi.searchUser({ login });
+    if (responceSearch.data && responceSearch.data[0]) {
+      await chatApi.deleteUser({ users: [responceSearch.data[0].id], chatId: id });
+    }
+  } catch (e) {
+    console.log(e);
   }
 };
 
 const changeChatAvatar = async (file:File) => {
-  const id = getActiveChatId();
-  if (!id) {
-    Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
-    return;
-  }
-  const responce = await chatApi.updateAvatar({ avatar: file, chatId: id });
-  if (responce.data) {
-    const listChat = getListChat();
-    const chatIndex = findActiveChatIndex(id);
-    if (chatIndex !== -1) {
-      listChat[chatIndex].avatar = constants.GET_PHOTO + responce.data.avatar;
-      Store.set('listChat', listChat);
-      Store.set('activeChat', { ...listChat[chatIndex] });
+  try {
+    const id = getActiveChatId();
+    if (!id) {
+      Store.set(ErrorsChats.errorDeleteChat, 'Нет активного чата');
+      return;
     }
+    const responce = await chatApi.updateAvatar({ avatar: file, chatId: id });
+    if (responce.data) {
+      const listChat = getListChat();
+      const chatIndex = findActiveChatIndex(id);
+      if (chatIndex !== -1) {
+        listChat[chatIndex].avatar = constants.GET_PHOTO + responce.data.avatar;
+        Store.set('listChat', listChat);
+        Store.set('activeChat', { ...listChat[chatIndex] });
+      }
+    }
+  } catch (e) {
+    console.log(e);
   }
 };
 
