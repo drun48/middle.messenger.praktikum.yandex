@@ -23,7 +23,19 @@ const getUser = async () => {
   }
 };
 
+const logout = async () => {
+  const response = checkStatus(await authApi.logout());
+  if (!response.error) {
+    Store.set('auth', false);
+    Router.go('/');
+  }
+};
+
 const login = async (data:LoginDTO) => {
+  const auth = Store.getState().auth as boolean;
+  if (auth) {
+    await logout();
+  }
   const response = checkStatus(await authApi.login(data));
   if (response.data) {
     Store.set('auth', true);
@@ -37,6 +49,10 @@ const login = async (data:LoginDTO) => {
 };
 
 const signup = async (data:SingupDTO) => {
+  const auth = Store.getState().auth as boolean;
+  if (auth) {
+    await logout();
+  }
   const response = await authApi.signup(data);
   if (response.data) {
     await getUser();
@@ -44,14 +60,6 @@ const signup = async (data:SingupDTO) => {
   }
   if (response.error) {
     Store.set('signinError', response.error.reason);
-  }
-};
-
-const logout = async () => {
-  const response = checkStatus(await authApi.logout());
-  if (!response.error) {
-    Store.set('auth', false);
-    Router.go('/');
   }
 };
 

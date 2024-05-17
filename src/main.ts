@@ -45,11 +45,6 @@ Router.middleware.use(async (ctx, next) => {
     await getUser();
   }
 
-  if (state.auth && (ctx.pathname === '/' || ctx.pathname === '/sign-up')) {
-    ctx.redirect('/messenger');
-    return;
-  }
-
   if (!state.auth && ctx.pathname !== '/' && ctx.pathname !== '/sign-up') {
     ctx.redirect('/');
     return;
