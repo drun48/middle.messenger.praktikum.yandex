@@ -17,6 +17,10 @@ class Router {
     return this._middleware;
   }
 
+  get getCurrentRoute() {
+    return this.currentRoute;
+  }
+
   constructor(rootQuery:string) {
     this.rootQuery = rootQuery;
   }
