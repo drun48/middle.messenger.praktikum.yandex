@@ -1,7 +1,17 @@
 {
     "env": {
-        "browser": true
+        "browser": true,
+        "mocha": true
     },
+    "overrides": [
+        {
+            "files": ["src/**/*.spec.ts"],
+            "rules": {
+                "no-unused-expressions": "off",
+                "import/no-extraneous-dependencies":"off"
+            }
+        }
+    ],
     "extends": "airbnb",
     "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint"],
