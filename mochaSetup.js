@@ -9,6 +9,7 @@ global.window = jsdom.window;
 global.document = jsdom.window.document;
 global.Node = jsdom.window.Node;
 global.HTMLElement = global.window.HTMLElement;
+global.MouseEvent = global.window.MouseEvent;
 
 (async () => {
   const Components = await import('./src/components');

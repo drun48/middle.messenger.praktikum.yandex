@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import Router from './Router';
 import * as Pages from '../pages';
 
-describe('Проверка Router', () => {
+describe('Тестирование Router', () => {
   function waitForPopState() {
     return new Promise((resolve) => {
       const handler = () => {
