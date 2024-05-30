@@ -19,7 +19,7 @@ describe('Тестирование страницы PageSign', () => {
     const secondName = page.element?.querySelector('input[name=second_name]');
     const phone = page.element?.querySelector('input[name=phone]');
     const password = page.element?.querySelector('input[name=password]');
-    expect(Boolean(false)).to.be.true;
+    expect(Boolean(email)).to.be.true;
     expect(Boolean(login)).to.be.true;
     expect(Boolean(firstName)).to.be.true;
     expect(Boolean(secondName)).to.be.true;
