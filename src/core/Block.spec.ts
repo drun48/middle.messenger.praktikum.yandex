@@ -24,7 +24,7 @@ describe('Тестирование Block', () => {
     Router.use('/', Page);
   });
 
-  it('Проверяем реактивность Block', () => {
+  it('Block должен быть реактивным', () => {
     const text = 'new value';
     const pageComponent = new PageClass({ text: 'Hello' });
 
@@ -34,7 +34,7 @@ describe('Тестирование Block', () => {
     expect(spanText).to.be.eq(text);
   });
 
-  it('Проверяем навешивание событий на элемент', () => {
+  it('Block должен добалвять событие на элемент', () => {
     const handlerStub = sinon.stub();
     const pageComponent = new PageClass({
       events: {
@@ -48,7 +48,7 @@ describe('Тестирование Block', () => {
     expect(handlerStub.calledOnce).to.be.true;
   });
 
-  it('Проверка отрисовки в dom Block через Router', async () => {
+  it('Block должен отрисовывать верстку в dom', async () => {
     await Router.go('/');
     const element = document.getElementById('test-text');
     expect(Boolean(element)).to.be.true;

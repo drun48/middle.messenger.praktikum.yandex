@@ -27,14 +27,14 @@ describe('Тестирование Router', () => {
     await Router.go('/');
   });
 
-  it('Проверяем переходы у Роута', async () => {
+  it('Route должен переходить по страницам', async () => {
     await Router.go('/');
     await Router.go('/sign-up');
     await Router.go('/error500');
     expect(Router.getCurrentRoute?.match('/error500')).to.be.true;
   });
 
-  it('Проверяем переход назад', async () => {
+  it('Route должен возвращаться назад', async () => {
     await Router.go('/sign-up');
     await Router.go('/settings');
     Router.back();
@@ -42,7 +42,7 @@ describe('Тестирование Router', () => {
     expect(Router.getCurrentRoute?.match('/sign-up')).to.be.true;
   });
 
-  it('Проверяем переход вперед', async () => {
+  it('Route должен переходить вперед', async () => {
     await Router.go('/sign-up');
     await Router.go('/settings');
     Router.back();
