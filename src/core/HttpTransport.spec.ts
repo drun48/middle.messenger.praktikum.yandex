@@ -16,6 +16,7 @@ describe('Тестирование HTTPTransport', () => {
       headerReqest[key] = value;
     });
 
+    // eslint-disable-next-line func-names
     global.XMLHttpRequest = function () {
       return {
         open,

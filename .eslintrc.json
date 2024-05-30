@@ -24,6 +24,7 @@
         "no-underscore-dangle": "off",
         "class-methods-use-this":"off",
         "max-len":"off",
-        "no-plusplus":"off"
+        "no-plusplus":"off",
+        "no-console":"off"
     }
 }

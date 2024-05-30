@@ -9,6 +9,7 @@ export function registerComponent(name: string, Component: typeof Block) {
   }
   Handlebars.registerHelper(
     name,
+    // eslint-disable-next-line func-names
     function (this: unknown, { hash, data, fn }: HelperOptions) {
       const component = new Component(hash);
 
