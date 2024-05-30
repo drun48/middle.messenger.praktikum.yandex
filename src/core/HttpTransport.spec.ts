@@ -25,7 +25,7 @@ describe('Тестирование HTTPTransport', () => {
       };
     } as any;
   });
-  
+
   beforeEach(() => {
     headerReqest = {};
   });
