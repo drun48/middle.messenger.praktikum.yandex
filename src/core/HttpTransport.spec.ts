@@ -24,16 +24,16 @@ describe('Тестирование HTTPTransport', () => {
         setRequestHeader,
       };
     } as any;
-    console.log(global.XMLHttpRequest);
   });
-
+  
   beforeEach(() => {
     headerReqest = {};
   });
   it('HTTPTransport должен открывать соединение и отправлять запрос', () => {
-    const http = new HTTPTransport('http://test');
+    const http = new HTTPTransport('');
+    console.log(new XMLHttpRequest());
     console.log(http);
-    http.GET('/test');
+    http.GET('');
     console.log(open.callCount);
     console.log(send.callCount);
     expect(open.calledOnce).to.be.true;
@@ -41,8 +41,8 @@ describe('Тестирование HTTPTransport', () => {
   });
 
   it('HTTPTransport должен объединять заголовки', () => {
-    const http = new HTTPTransport('http://test', { option1: 'options1' });
-    http.GET('/test', { headers: { option2: 'options2' } });
+    const http = new HTTPTransport('', { option1: 'options1' });
+    http.GET('', { headers: { option2: 'options2' } });
     expect(headerReqest.option1).to.be.eq('options1');
     expect(headerReqest.option2).to.be.eq('options2');
   });
