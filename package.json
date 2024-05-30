@@ -11,11 +11,7 @@
     "stylelint": "npx stylelint '**/*.css'",
     "format": "node_modules/.bin/eslint '**/*.ts' --fix",
     "test": "mocha",
-    "husky": {
-      "hooks": {
-        "pre-commit": "npm-run-all test eslint",
-      }
-    }
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",
