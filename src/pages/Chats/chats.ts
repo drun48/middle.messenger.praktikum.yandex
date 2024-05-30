@@ -19,7 +19,11 @@ import addChatIcon from '../../assets/icon-add.svg';
 import arrowCircle from '../../assets/arrow-circle.svg';
 import attacher from '../../assets/attacher.svg';
 import {
-  addUserChat, changeChatAvatar, deleteUserChat, getChats, setActiveChat,
+  addUserChat,
+  changeChatAvatar,
+  deleteUserChat,
+  getChats,
+  setActiveChat,
 } from '../../services/chats';
 import connect from '../../core/connect';
 import { ModalAddChat } from '../../components/modal-add-chat/modalAddChat';
@@ -46,11 +50,11 @@ class PageChats extends Block {
       fileMessage: () => (this.refs.modalUploadPhotoMessage as ModalUploadFile).open(),
       openModalControllerChat: (event: Event) => this.openModalControllerChat(event),
       addUser: (value: string) => this.addUser(value),
-      uploadPhotoVideoMessage: (file:File) => this.uploadPhotoVideoMessage(file),
+      uploadPhotoVideoMessage: (file: File) => this.uploadPhotoVideoMessage(file),
       deleteUser: (value: string) => this.deleteUser(value),
       openModalAddChat: () => this.openModalAddChat(),
-      changeChatAvatar: (file:File) => this.changeChatAvatar(file),
-      scrollTop: (oldHeight:number) => {
+      changeChatAvatar: (file: File) => this.changeChatAvatar(file),
+      scrollTop: (oldHeight: number) => {
         getOldMessage();
         this.setProps({ oldHeightScrollChat: oldHeight });
       },
@@ -89,11 +93,20 @@ class PageChats extends Block {
         listMessage: (newValue, oldValue) => {
           if (!Array.isArray(oldValue)) return;
           if (Array.isArray(newValue) && oldValue.length && newValue.length) {
-            const newMesseges = newValue[newValue.length - 1].messages as Array<Message>;
-            const oldMessages = oldValue[oldValue.length - 1].messages as Array<Message>;
-            if (newMesseges[newMesseges.length - 1]?.id === oldMessages[oldMessages.length - 1]?.id) {
+            const newMesseges = newValue[newValue.length - 1]
+              .messages as Array<Message>;
+            const oldMessages = oldValue[oldValue.length - 1]
+              .messages as Array<Message>;
+            if (
+              newMesseges[newMesseges.length - 1]?.id
+              === oldMessages[oldMessages.length - 1]?.id
+            ) {
               setTimeout(() => {
-                (this.refs.chat as Chat).scrollToOldHeight(typeof this.props.oldHeightScrollChat === 'number' ? this.props.oldHeightScrollChat : 0);
+                (this.refs.chat as Chat).scrollToOldHeight(
+                  typeof this.props.oldHeightScrollChat === 'number'
+                    ? this.props.oldHeightScrollChat
+                    : 0,
+                );
               }, 100);
               return;
             }
@@ -105,6 +118,11 @@ class PageChats extends Block {
       },
     });
     getChats();
+  }
+
+  show(): void {
+    getChats();
+    if (this.element instanceof HTMLElement) this.element.style.display = '';
   }
 
   componentDidMount() {
@@ -119,7 +137,9 @@ class PageChats extends Block {
       return;
     }
 
-    this.props.filterListChat = (this.props.listChat as Array<ChatDTO>).filter((item) => item.title.includes(target.value));
+    this.props.filterListChat = (this.props.listChat as Array<ChatDTO>).filter(
+      (item) => item.title.includes(target.value),
+    );
   }
 
   sendMessage() {
@@ -174,7 +194,7 @@ class PageChats extends Block {
     deleteUserChat(value);
   }
 
-  changeChatAvatar(file:File) {
+  changeChatAvatar(file: File) {
     changeChatAvatar(file);
   }
 
@@ -182,7 +202,7 @@ class PageChats extends Block {
     (this.refs.modalAddChat as ModalAddChat).open();
   }
 
-  uploadPhotoVideoMessage(file:File) {
+  uploadPhotoVideoMessage(file: File) {
     sendMessage(file);
   }
 
@@ -263,8 +283,24 @@ class PageChats extends Block {
   }
 }
 
-export default connect<{listChat:Array<ChatDTO>, activeChatId:number|null, activeChat:ChatDTO, listMessage:ListMessage, errorMessage:string}>(({
-  listChat, activeChatId = null, activeChat, listMessage, errorMessage,
-}) => ({
-  listChat, activeChatId, activeChat, listMessage, errorMessage,
-}))(PageChats);
+export default connect<{
+  listChat: Array<ChatDTO>;
+  activeChatId: number | null;
+  activeChat: ChatDTO;
+  listMessage: ListMessage;
+  errorMessage: string;
+}>(
+  ({
+    listChat,
+    activeChatId = null,
+    activeChat,
+    listMessage,
+    errorMessage,
+  }) => ({
+    listChat,
+    activeChatId,
+    activeChat,
+    listMessage,
+    errorMessage,
+  }),
+)(PageChats);

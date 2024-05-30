@@ -62,13 +62,11 @@ export class HTTPTransport {
 
     return new Promise<Responce<T>>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-
       if (!(data instanceof FormData)) {
         headers['content-type'] = 'application/json';
       } else {
         headers['content-type'] = '';
       }
-
       xhr.open(method, this.url + url);
       xhr.withCredentials = true;
       const headersMerge = merge(this.header, headers ?? {});

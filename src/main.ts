@@ -7,26 +7,6 @@ import Router from './core/Router';
 import Store from './core/Store';
 import { getUser } from './services/auth.ts';
 
-// const pages: Record<
-//   string,
-//   [string | (new (...args: Props[]) => Block), Props]
-// > = {
-//   nav: [Pages.NavPage, {}],
-//   login: [Pages.LoginPage, {}],
-//   signin: [Pages.PageSign, {}],
-//   chats: [
-//     Pages.PageChats,
-//     {
-//       attacher,
-//       arrowCircle,
-//       photoUser,
-//     },
-//   ],
-//   profile: [Pages.PageProfile, { arrowCircle, profilPhoto }],
-//   error404: [Pages.PageError, { code: '404', title: 'Не туда попали' }],
-//   error500: [Pages.PageError, { code: '500', title: 'Мы уже фиксим' }],
-// };
-
 Object.entries(Components).forEach(([name, component]) => {
   if (typeof component === 'string') Handlebars.registerPartial(name, component);
   else {

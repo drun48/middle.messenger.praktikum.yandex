@@ -9,14 +9,27 @@
     "start": "tsc && vite build && node server.js",
     "eslint": "node_modules/.bin/eslint '**/*.ts'",
     "stylelint": "npx stylelint '**/*.css'",
-    "format": "node_modules/.bin/eslint '**/*.ts' --fix"
+    "format": "node_modules/.bin/eslint '**/*.ts' --fix",
+    "test": "mocha",
+    "prepare": "husky install"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.16",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.12.12",
+    "@types/sinon": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
     "@typescript-eslint/parser": "^7.6.0",
+    "chai": "^5.1.1",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
+    "form-data": "^4.0.0",
+    "husky": "^8.0.3",
+    "jsdom": "^24.1.0",
+    "mocha": "^10.4.0",
+    "sinon": "^18.0.0",
     "stylelint": "^16.4.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
   },
