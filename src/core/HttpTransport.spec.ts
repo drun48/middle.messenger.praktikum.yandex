@@ -24,6 +24,7 @@ describe('Тестирование HTTPTransport', () => {
         setRequestHeader,
       };
     } as any;
+    console.log(global.XMLHttpRequest);
   });
 
   beforeEach(() => {
@@ -31,7 +32,10 @@ describe('Тестирование HTTPTransport', () => {
   });
   it('HTTPTransport должен открывать соединение и отправлять запрос', () => {
     const http = new HTTPTransport('http://test');
+    console.log(http);
     http.GET('/test');
+    console.log(open.callCount);
+    console.log(send.callCount);
     expect(open.calledOnce).to.be.true;
     expect(send.calledOnce).to.be.true;
   });
