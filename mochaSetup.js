@@ -16,6 +16,6 @@ global.MouseEvent = global.window.MouseEvent;
   const { registerComponent } = await import('./src/core/registerComponent');
 
   Object.entries(Components).forEach(
-    ([componentName, component]) => registerComponent(componentName, component)
+    ([componentName, component]) => registerComponent(componentName, component),
   );
 })();
