@@ -1,4 +1,8 @@
 {
+  "ts-node": {
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true,
+  },
   "compilerOptions": {
     "target": "ES2021",
     "useDefineForClassFields": true,
@@ -19,9 +23,5 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "strictNullChecks": true 
-  },
-  "ts-node": {
-    "experimentalSpecifierResolution": "node",
-    "transpileOnly": true,
   }
 }
