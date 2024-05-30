@@ -31,11 +31,7 @@ describe('Тестирование HTTPTransport', () => {
   });
   it('HTTPTransport должен открывать соединение и отправлять запрос', () => {
     const http = new HTTPTransport('');
-    console.log(new XMLHttpRequest());
-    console.log(http);
     http.GET('');
-    console.log(open.callCount);
-    console.log(send.callCount);
     expect(open.calledOnce).to.be.true;
     expect(send.calledOnce).to.be.true;
   });
