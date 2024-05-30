@@ -4,7 +4,7 @@ import * as Pages from '../pages';
 
 describe('Тестирование Router', () => {
   function waitForPopState() {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       const handler = () => {
         window.removeEventListener('popstate', handler);
         resolve();

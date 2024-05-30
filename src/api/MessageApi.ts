@@ -4,7 +4,8 @@ import { MessageDTO } from '../dto/MessageDTO';
 export default class MessageApi {
   private socket:WebSocket|null = null;
 
-  private interval:number|null = null;
+  // eslint-disable-next-line no-undef
+  private interval:number|NodeJS.Timeout|null = null;
 
   private callbackResponce?:(resources:MessageDTO)=>void;
 
