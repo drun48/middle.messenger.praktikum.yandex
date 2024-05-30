@@ -40,10 +40,12 @@ export class HTTPTransport {
   }
 
   GET:HTTPMethod = (url, options) => {
+    console.log('11111111');
     let str = url;
     if (options?.data && !(options.data instanceof FormData)) {
       str += queryStringify(options.data);
     }
+    console.log('11111111');
     return this.request(
       str,
       { ...options, method: METHODS.GET },
@@ -61,6 +63,7 @@ export class HTTPTransport {
     const { method, data, headers = {} } = options;
 
     return new Promise<Responce<T>>((resolve, reject) => {
+      console.log('11111111');
       const xhr = new XMLHttpRequest();
 
       if (!(data instanceof FormData)) {
@@ -68,7 +71,7 @@ export class HTTPTransport {
       } else {
         headers['content-type'] = '';
       }
-
+      console.log('11111111');
       xhr.open(method, this.url + url);
       xhr.withCredentials = true;
       const headersMerge = merge(this.header, headers ?? {});
