@@ -12,7 +12,7 @@ function set(object: Indexed | unknown, path: string, value: unknown): Indexed |
     if (index === arr.length - 1) {
       curent[key] = value;
     } else {
-      if (!curent[key]) curent[key] = {};
+      if (!isIndexed(curent[key])) curent[key] = {};
       curent = curent[key] as Indexed;
     }
   });
