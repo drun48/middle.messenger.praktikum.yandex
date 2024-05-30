@@ -10,8 +10,7 @@
     "eslint": "node_modules/.bin/eslint '**/*.ts'",
     "stylelint": "npx stylelint '**/*.css'",
     "format": "node_modules/.bin/eslint '**/*.ts' --fix",
-    "test": "mocha",
-    "prepare": "husky"
+    "test": "mocha"
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",
