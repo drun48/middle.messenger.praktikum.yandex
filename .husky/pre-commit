@@ -1,2 +1,6 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
+ . "$(dirname -- "$0")/_/husky.sh"
+
+npm run stylelint
+npm run eslint
+npm run test
