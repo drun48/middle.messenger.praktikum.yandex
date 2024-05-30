@@ -1,3 +1,3 @@
 import './style.css';
 
-export { PageChats } from './chats';
+export { default as PageChats } from './chats';

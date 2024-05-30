@@ -2,87 +2,63 @@ import { Block, Props } from '../../core/Block';
 import avatar from '../../assets/photoUser.png';
 import arrow from '../../assets/arrow.svg';
 import menu from '../../assets/menu.svg';
-import photo1 from '../../assets/test_photo.jpg';
-import photo2 from '../../assets/test_photo2.png';
+
+import changeAvatar from '../../assets/change_avatar.svg';
 import { InputMessage } from '../../components/input-message';
 import { ModalUser } from '../../components/modal-user';
 import { ModalList } from '../../components/modal-list';
-import { ModalDeleteChat } from '../../components/modal-delete-chat';
+import { ModalDeleteChat } from '../../components/modal-delete-chat/modalDeleteChat';
 
 import photoAttach from '../../assets/PhotoAttach.svg';
-import fileAttach from '../../assets/FileAttach.svg';
-import localAttach from '../../assets/LocalAttach.svg';
 
 import addUser from '../../assets/AddUser.svg';
 import deleteUser from '../../assets/DeleteUser.svg';
 import deleteChat from '../../assets/delete_chat.svg';
+import addChatIcon from '../../assets/icon-add.svg';
 
-export class PageChats extends Block {
+import arrowCircle from '../../assets/arrow-circle.svg';
+import attacher from '../../assets/attacher.svg';
+import {
+  addUserChat, changeChatAvatar, deleteUserChat, getChats, setActiveChat,
+} from '../../services/chats';
+import connect from '../../core/connect';
+import { ModalAddChat } from '../../components/modal-add-chat/modalAddChat';
+import { Chat, ModalUploadFile } from '../../components';
+import { getOldMessage, sendMessage } from '../../services/message';
+import { ListMessage, Message } from '../../types/Message';
+import { ChatDTO } from '../../dto/ChatDTO';
+
+class PageChats extends Block {
   constructor(props: Props) {
     super({
       ...props,
       arrow,
       search: '',
       menu,
-      activeChat: false,
-      activeChatId: null,
+      addChatIcon,
       searchChat: (event: Event) => this.searchChat(event),
       sendMessage: () => this.sendMessage(),
-      clickCard: (id: string) => {
-        this.props.activeChat = true;
-        this.props.activeChatId = id;
+      clickCard: (id: number) => {
+        setActiveChat(id);
       },
       openModalAttach: () => this.openModalAttach(),
       controllerChat: (str: string) => this.controllerChat(str),
+      fileMessage: () => (this.refs.modalUploadPhotoMessage as ModalUploadFile).open(),
       openModalControllerChat: (event: Event) => this.openModalControllerChat(event),
       addUser: (value: string) => this.addUser(value),
+      uploadPhotoVideoMessage: (file:File) => this.uploadPhotoVideoMessage(file),
       deleteUser: (value: string) => this.deleteUser(value),
-      deleteChat: () => this.deleteChat(),
+      openModalAddChat: () => this.openModalAddChat(),
+      changeChatAvatar: (file:File) => this.changeChatAvatar(file),
+      scrollTop: (oldHeight:number) => {
+        getOldMessage();
+        this.setProps({ oldHeightScrollChat: oldHeight });
+      },
       filterListChat: [],
-      listMessage: [
-        {
-          day: '19 июня',
-          messages: [
-            {
-              type: 'text',
-              value:
-                'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.',
-              myMessage: false,
-              time: '10:30',
-            },
-            {
-              type: 'text',
-              value: 'asd',
-              myMessage: true,
-              time: '10:30',
-            },
-            {
-              type: 'photo',
-              value: photo1,
-              myMessage: false,
-              time: '10:30',
-            },
-            {
-              type: 'photo',
-              value: photo2,
-              myMessage: true,
-              time: '10:31',
-            },
-          ],
-        },
-      ],
       listAttach: [
         {
-          value: 'Фото или Видео',
+          value: 'Фото',
           photo: photoAttach,
-        },
-        {
-          value: 'Файл',
-          photo: fileAttach,
-        },
-        {
-          value: 'Локация',
-          photo: localAttach,
         },
       ],
       listControllerChat: [
@@ -95,137 +71,62 @@ export class PageChats extends Block {
           photo: deleteUser,
         },
         {
+          value: 'Поменять фото',
+          photo: changeAvatar,
+        },
+        {
           value: 'Удалить чат',
           photo: deleteChat,
         },
       ],
+      arrowCircle,
+      attacher,
+      photoUser: avatar,
+      watch: {
+        listChat: () => {
+          this.props.filterListChat = this.props.listChat;
+        },
+        listMessage: (newValue, oldValue) => {
+          if (!Array.isArray(oldValue)) return;
+          if (Array.isArray(newValue) && oldValue.length && newValue.length) {
+            const newMesseges = newValue[newValue.length - 1].messages as Array<Message>;
+            const oldMessages = oldValue[oldValue.length - 1].messages as Array<Message>;
+            if (newMesseges[newMesseges.length - 1]?.id === oldMessages[oldMessages.length - 1]?.id) {
+              setTimeout(() => {
+                (this.refs.chat as Chat).scrollToOldHeight(typeof this.props.oldHeightScrollChat === 'number' ? this.props.oldHeightScrollChat : 0);
+              }, 100);
+              return;
+            }
+          }
+          setTimeout(() => {
+            (this.refs.chat as Chat)?.scrollBottomChat();
+          }, 100);
+        },
+      },
     });
+    getChats();
   }
 
-  listChat: Array<Record<string, string>> = [
-    {
-      id: '1',
-      name: 'Андрей',
-      message: 'Изображение',
-      photo: avatar,
-      time: '10:49',
-      count: '2',
-    },
-    {
-      id: '2',
-      name: 'Киноклуб',
-      meMessage: 'стикер',
-      photo: avatar,
-      time: '12:00',
-      count: '',
-    },
-    {
-      id: '3',
-      name: 'Илья',
-      message:
-        'Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей!',
-      photo: avatar,
-      time: '15:12',
-      count: '4',
-    },
-    {
-      id: '4',
-      name: 'Вадим',
-      message: 'Круто!',
-      photo: avatar,
-      time: '15:12',
-    },
-    {
-      id: '5',
-      name: 'тет-а-теты',
-      message:
-        'И Human Interface Guidelines и Material Design рекомендуют И Human Interface Guidelines и Material Design рекомендуют',
-      photo: avatar,
-      time: 'Пт',
-    },
-    {
-      id: '6',
-      name: 'Design Destroyer',
-      message:
-        'Миллионы россиян ежедневно проводят десятки часов свое Миллионы россиян ежедневно проводят десятки часов свое',
-      photo: avatar,
-      time: 'Ср',
-    },
-    {
-      id: '7',
-      name: 'Стас Рогозин',
-      message:
-        'В 2008 году художник Jon Rafman  начал собирать В 2008 году художник Jon Rafman  начал собирать',
-      photo: avatar,
-      time: 'Пн',
-    },
-    {
-      id: '8',
-      name: 'Петров',
-      message:
-        'Так увлёкся работой по курсу, что совсем забыл его анонсир Так увлёкся работой по курсу, что совсем забыл его анонсир',
-      photo: avatar,
-      time: 'Пн',
-    },
-    {
-      id: '9',
-      name: 'Настя',
-      message: 'Можно или сегодня или завтра вечером.',
-      photo: avatar,
-      time: '1 Мая 2020',
-    },
-    {
-      id: '10',
-      name: 'Design Destroyer',
-      message:
-        'Миллионы россиян ежедневно проводят десятки часов свое Миллионы россиян ежедневно проводят десятки часов свое',
-      photo: avatar,
-      time: 'Ср',
-    },
-    {
-      id: '11',
-      name: 'Стас Рогозин',
-      message:
-        'В 2008 году художник Jon Rafman  начал собирать В 2008 году художник Jon Rafman  начал собирать',
-      photo: avatar,
-      time: 'Пн',
-    },
-    {
-      id: '12',
-      name: 'Петров',
-      message:
-        'Так увлёкся работой по курсу, что совсем забыл его анонсир Так увлёкся работой по курсу, что совсем забыл его анонсир',
-      photo: avatar,
-      time: 'Пн',
-    },
-    {
-      id: '13',
-      name: 'Настя',
-      message: 'Можно или сегодня или завтра вечером.',
-      photo: avatar,
-      time: '1 Мая 2020',
-    },
-  ];
-
   componentDidMount() {
-    this.props.filterListChat = this.listChat;
+    this.props.filterListChat = this.props.listChat;
   }
 
   searchChat(event: Event) {
     const target = event.target as HTMLInputElement;
     this.props.search = target.value;
     if (!target.value) {
-      this.props.filterListChat = this.listChat;
+      this.props.filterListChat = this.props.listChat;
       return;
     }
-    this.props.filterListChat = this.listChat.filter((item) => item.name.includes(target.value));
+
+    this.props.filterListChat = (this.props.listChat as Array<ChatDTO>).filter((item) => item.title.includes(target.value));
   }
 
   sendMessage() {
     const component = this.refs.inputMessage as InputMessage;
     const message = component.getValue();
     if (!message) return;
-    console.log(message);
+    sendMessage(message);
   }
 
   openModalControllerChat(event: Event) {
@@ -256,38 +157,53 @@ export class PageChats extends Block {
       case 'Удалить пользователя':
         (this.refs.modalDelete as ModalUser).open();
         break;
+      case 'Поменять фото':
+        (this.refs.modalChangeChatAvatar as ModalUploadFile).open();
+        break;
       case 'Удалить чат':
         (this.refs.modalDeleteChat as ModalDeleteChat).open();
         break;
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   addUser(value: string) {
-    console.log(value);
+    addUserChat(value);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   deleteUser(value: string) {
-    console.log(value);
+    deleteUserChat(value);
   }
 
-  deleteChat() {
-    console.log('Удалить чат', this.props.activeChatId);
+  changeChatAvatar(file:File) {
+    changeChatAvatar(file);
+  }
+
+  openModalAddChat() {
+    (this.refs.modalAddChat as ModalAddChat).open();
+  }
+
+  uploadPhotoVideoMessage(file:File) {
+    sendMessage(file);
   }
 
   protected render() {
     return `<div class="wrapper-chat">
     {{{ ModalUser ref="modalAdd" title="Добавить пользователя" labelButton="Добавить" global=true getLogin=addUser}}}
     {{{ ModalUser ref="modalDelete" title="Удалить пользователя" labelButton='Удалить' global=true getLogin=deleteUser}}}
-    {{{ ModalDeleteChat delete=deleteChat ref="modalDeleteChat" global=true}}}
+    {{{ ModalDeleteChat ref="modalDeleteChat" global=true }}}
+    {{{ ModalAddChat ref="modalAddChat" global=true}}}
+    {{{ ModalUploadFile ref="modalChangeChatAvatar" upload=changeChatAvatar input_name="avatar" labelButton="Поменять" accept="image/gif, image/jpeg, image/png" global=true}}}
+    {{{ ModalUploadFile ref="modalUploadPhotoMessage" upload=uploadPhotoVideoMessage input_name="file" labelButton="Отправить" accept="image/jpeg, image/jpg, image/png, image/gif, image/webp" global=true}}}
     <div class="wrapper-choice">
         <div class="container-search">
             <div class="container-search__nav">
-                <a class="container-search__nav__element">
-                    <p>Профиль</p>
-                    <img src="{{arrow}}" alt="Иконка перехода"/>
-                </a>
+              {{#Button class="icon-add-chat" onClick=openModalAddChat }}
+                <img src="{{addChatIcon}}" alt="Добавить чат">
+              {{/Button}}
+              {{#RouterLink to="/settings" class="container-search__nav__element"}}
+                <p>Профиль</p>
+                <img src="{{arrow}}" alt="Перейти в профиль"/>
+              {{/RouterLink}}
             </div>
             <div class="container-search__element">
                 {{{ InputSearch ref="search" onBlur=searchChat value=search}}}
@@ -298,22 +214,22 @@ export class PageChats extends Block {
                 <div class="list-chat__delimiter"></div>
                 {{#each filterListChat}}
                   <li class="list-chat__element {{#if (isEqual id ../this.activeChatId) }}active{{/if}}">
-                      {{{ CardUser onClick=../this.clickCard id=id photo=this.photo name=this.name message=this.message time=this.time 
-                        count=this.count meMessage=this.meMessage }}}
+                      {{{ CardUser onClick=../this.clickCard id=id photo=this.avatar name=this.title message=this.message time=this.timw 
+                        count=this.unread_count meMessage=this.meMessage }}}
                   </li>
                   <div class="list-chat__delimiter"></div>
                 {{/each}}
             </ul>
         </div>
     </div>
-    {{#if (isEqual activeChat false)}}
+    {{#if (isEqual activeChatId null)}}
         <div class="empty-chat">
             <h3>Выберите чат чтобы отправить сообщение</h3>
         </div>
     {{else}}
       <div class="container-chat">
         <div class="container-chat__profile">
-              {{{ CardUser name="Вадим" photo=photoUser }}}
+              {{{ CardUser name=activeChat.title photo=activeChat.avatar }}}
               <div class="container-chat__profile__menu">
                 {{#Button onClick=openModalControllerChat}}
                   <img src="{{menu}}" alt="Иконка меню чата"/>
@@ -322,14 +238,14 @@ export class PageChats extends Block {
               </div>
         </div>
           <div class="container-chat__element">
-              {{{ Chat listMessage=listMessage }}}
+              {{{ Chat ref="chat" listMessage=listMessage scrollTop=scrollTop }}}
           </div>
           <div class="container-chat__input">
               <div class="container-chat__input__attacher">
                 {{#Button onClick=openModalAttach}}
                   <img src="{{attacher}}" alt="Иконка прикрепления файла"/>
                 {{/Button}}
-                {{{ ModalList class="modal-attach" list=listAttach ref="modalAttach" }}}
+                {{{ ModalList class="modal-attach" controller=fileMessage list=listAttach ref="modalAttach" }}}
               </div>
               <div class="container-chat__input__element">
                   {{{ InputMessage ref="inputMessage" placeholder="Сообщение" }}}
@@ -337,11 +253,18 @@ export class PageChats extends Block {
               {{#Button class="container-chat__input__button" onClick=sendMessage}}
                 <img src="{{arrowCircle}}" alt="Иконка отправки сообщения">
               {{/Button}}
-              <div class="container-chat__input__button">
-              </div>
-      </div>
+          </div>
+          {{#if errorMessage}}
+            <p class="error-text">{{errorMessage}}</p>
+          {{/if}}
       </div>
     {{/if}}
 </div>`;
   }
 }
+
+export default connect<{listChat:Array<ChatDTO>, activeChatId:number|null, activeChat:ChatDTO, listMessage:ListMessage, errorMessage:string}>(({
+  listChat, activeChatId = null, activeChat, listMessage, errorMessage,
+}) => ({
+  listChat, activeChatId, activeChat, listMessage, errorMessage,
+}))(PageChats);

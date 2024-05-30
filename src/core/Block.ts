@@ -3,7 +3,8 @@ import uuid from 'uuid-random';
 import { EventBus } from './EventBus';
 
 export type Props = {
-  [key: string]: unknown;
+  [key: string]: unknown,
+  watch?:Record<string, (newValue?:unknown, oldValue?:unknown) => void>
 };
 
 export type Refs = {
@@ -85,6 +86,7 @@ export class Block {
       }
       const oldTarget = { ...target };
       target[prop] = value;
+      this._watch(prop, value, oldTarget[prop]);
       this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
       return true;
     };
@@ -116,9 +118,20 @@ export class Block {
 
     this._removeEvents();
 
+    if (this._element) {
+      newElement.style.display = this._element.style.display;
+      this._element.replaceWith(newElement);
+    }
+
     this._element = newElement;
 
     this._addEvents();
+  }
+
+  private _watch(prop:string, newValue:unknown, oldValue:unknown) {
+    if (this.props.watch?.[prop] instanceof Function) {
+      this.props.watch[prop](newValue, oldValue);
+    }
   }
 
   //
@@ -161,7 +174,6 @@ export class Block {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   protected init() {}
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
@@ -201,7 +213,7 @@ export class Block {
   };
 
   show() {
-    if (this.element instanceof HTMLElement) this.element.style.display = 'block';
+    if (this.element instanceof HTMLElement) this.element.style.display = '';
   }
 
   hide() {

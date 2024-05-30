@@ -11,6 +11,9 @@
         "import/no-unresolved": "off",
         "import/extensions": "off",
         "default-case": "off",
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "class-methods-use-this":"off",
+        "max-len":"off",
+        "no-plusplus":"off"
     }
 }

@@ -6,12 +6,19 @@
 .card-user__profile {
     display: flex;
     gap: 10px;
-    width: 80%;
 }
 
 .card-user__profile__photo {
+    display: flex;
     width: 47px;
+}
+
+.card-user__profile__photo  img{
+    width: 100%;
     aspect-ratio: 1/1;
+    border-radius: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 .card-user__profile__text {

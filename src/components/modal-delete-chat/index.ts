@@ -1,3 +1,3 @@
 import './style.css';
 
-export { ModalDeleteChat } from './modalDeleteChat';
+export { default as ModalDeleteChat } from './modalDeleteChat';

@@ -5,6 +5,7 @@ import {
   validLogin,
   validPassword,
 } from '../../utils/validator';
+import { LoginDTO } from '../../dto/LoginDTO';
 
 export class FormLogin extends Block {
   constructor(props: Props) {
@@ -19,27 +20,27 @@ export class FormLogin extends Block {
   Login(event: Event) {
     event.preventDefault();
     let validForm = true;
-    const inputs: Record<string, InputForm> = {
+    const inputs: Record<keyof LoginDTO, InputForm> = {
       login: this.refs.login as InputForm,
       password: this.refs.password as InputForm,
     };
-    const res: Record<string, string> = {};
+    const res: Partial<LoginDTO> = {};
 
     Object.entries(inputs).forEach(([key, item]) => {
       const value = item.value();
       if (typeof value === 'string') {
-        res[key] = value;
+        res[key as keyof LoginDTO] = value;
         const valid = validEmpty(value);
         if (!valid.value) {
           validForm = false;
-          inputs[key].setError(valid.errorText);
+          inputs[key as keyof LoginDTO].setError(valid.errorText);
         }
       } else {
         validForm = false;
       }
     });
 
-    if (this.props.login instanceof Function && validForm) this.props.login(res);
+    if (this.props.login instanceof Function && validForm) this.props.login(res as LoginDTO);
   }
 
   protected render() {
@@ -57,7 +58,12 @@ export class FormLogin extends Block {
     </div>
     <footer class="form-login__footer">
     {{{Button class="primary-button" label="Авторизоваться" onClick=Login}}}
-    <a class="primary-link">Нет аккаунта?</a>
+    {{#RouterLink class="primary-link" to="/sign-up"}}
+      <p>Нет аккаунта?</p>
+    {{/RouterLink}}
+    {{#if error}}
+      <p class="error-text">{{error}}</p>
+    {{/if}}
     </footer>
   </form>
   </div>

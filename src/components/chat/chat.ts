@@ -4,7 +4,25 @@ export class Chat extends Block {
   constructor(props: Props) {
     super({
       ...props,
+      events: {
+        scroll: (event:Event) => this.scrollTopEevent(event),
+      },
     });
+  }
+
+  scrollBottomChat() {
+    this.element?.scrollTo(0, this.element?.scrollHeight);
+  }
+
+  scrollToOldHeight(value:number) {
+    this.element?.scrollTo(0, this.element.scrollHeight - value);
+  }
+
+  scrollTopEevent(event:Event) {
+    const target = event.target as Element;
+    if (target.scrollTop === 0 && this.props.scrollTop instanceof Function) {
+      this.props.scrollTop(target.scrollHeight);
+    }
   }
 
   protected render() {

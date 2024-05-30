@@ -94,3 +94,8 @@ input {
     border-bottom: 1px solid var(--primary-border);
     padding-bottom: 10px;
 }
+
+.error-text{
+    color: var(--color-error);
+    font-size: 12px;
+}

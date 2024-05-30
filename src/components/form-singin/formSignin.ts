@@ -10,6 +10,7 @@ import {
 } from '../../utils/validator';
 import { maskPhone } from '../../utils/mask';
 import { InputForm } from '../input-form';
+import { SingupDTO } from '../../dto/SingupDTO';
 
 export class FormSignin extends Block {
   constructor(props: Props) {
@@ -29,7 +30,6 @@ export class FormSignin extends Block {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   formatPhone(value: string) {
     return value.replace('(', '').replace(')', '').replaceAll(' ', '');
   }
@@ -55,7 +55,7 @@ export class FormSignin extends Block {
 
     let validForm = true;
 
-    const inputs: Record<string, InputForm> = {
+    const inputs: Record<keyof SingupDTO | 'copy_password', InputForm> = {
       email: this.refs.email as InputForm,
       login: this.refs.login as InputForm,
       first_name: this.refs.first_name as InputForm,
@@ -65,23 +65,23 @@ export class FormSignin extends Block {
       copy_password: this.refs.copy_password as InputForm,
     };
 
-    const res: Record<string, string> = {};
+    const res: Partial<SingupDTO> = {};
 
     Object.entries(inputs).forEach(([key, value]) => {
       const val = value.value();
-      if (typeof val === 'string') {
-        res[key] = val;
+      if (typeof val === 'string' && key !== 'copy_password') {
+        res[key as keyof SingupDTO] = val;
         const valid = validEmpty(val);
         if (!valid.value) {
           validForm = false;
-          inputs[key].setError(valid.errorText);
+          inputs[key as keyof SingupDTO | 'copy_password'].setError(valid.errorText);
         }
-      } else {
+      } else if (key !== 'copy_password') {
         validForm = false;
       }
     });
 
-    if (this.props.signin instanceof Function && validForm) this.props.signin(res);
+    if (this.props.signin instanceof Function && validForm) this.props.signin(res as SingupDTO);
   }
 
   protected render() {
@@ -91,21 +91,24 @@ export class FormSignin extends Block {
         <h2>Регистрация</h2>
         </div>
         <div class="form-signin__inputs">
-        {{{ InputForm ref="email" label="Почта" name="email" type="email" validate=validEmail}}}
-        {{{ InputForm ref="login" label="Логин" name="login" type="login" validate=validLogin}}}
-        {{{ InputForm ref="first_name" label="Имя" name="first_name" type="text" validate=validName}}}
-        {{{ InputForm ref="second_name" label="Фамилия" name="second_name" type="text" validate=validName}}}
-        {{{ InputForm ref="phone" label="Телефон" name="phone" type="tel" validate=validPhone  mask=maskPhone}}}
-        {{{ InputForm ref="password" label="Пароль" name="password" type="password" validate=validPassword}}}
-        {{{ InputForm ref="copy_password" label="Пароль (ещё раз)" type="password" validate=validCopyPassword}}}
+        {{{ InputForm ref="email" value=form.email label="Почта" name="email" type="email" validate=validEmail}}}
+        {{{ InputForm ref="login" value=form.login label="Логин" name="login" type="login" validate=validLogin}}}
+        {{{ InputForm ref="first_name" value=form.first_name label="Имя" name="first_name" type="text" validate=validName}}}
+        {{{ InputForm ref="second_name" value=form.second_name label="Фамилия" name="second_name" type="text" validate=validName}}}
+        {{{ InputForm ref="phone" value=form.phone label="Телефон" name="phone" type="tel" validate=validPhone  mask=maskPhone}}}
+        {{{ InputForm ref="password" value=form.password label="Пароль" name="password" type="password" validate=validPassword}}}
+        {{{ InputForm ref="copy_password" value=form.copy_password  label="Пароль (ещё раз)" type="password" validate=validCopyPassword}}}
         </div>
     </div>
     <footer class="form-signin__footer">
       {{{Button class="primary-button" label="Зарегистрироваться" onClick=Signin}}}
-      <a class="primary-link">Войти</a>
+      {{#RouterLink class="primary-link" to="/"}}
+        <p>Войти</p>
+      {{/RouterLink}}
+      {{#if error}}
+        <p class="error-text">{{error}}</p>
+      {{/if}}
     </footer>
-  </form>
-  
-  `;
+  </form>`;
   }
 }

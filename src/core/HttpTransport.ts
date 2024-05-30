@@ -1,34 +1,47 @@
-type Options = {
-  data?: Record<string, unknown>;
-  headers?: Record<string, string>;
-  timeout?: number;
-  method: string;
-};
+import constants from '../constants';
+import { ApiError } from '../types/apiError';
+import merge from '../utils/merge';
+import queryStringify from '../utils/queryStringify';
 
-type HTTPMethod = (url: string, options?: Options) => Promise<unknown>
-
-const METHODS = {
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT',
-  DELETE: 'DELETE',
-};
-
-function queryStringify(data: Record<string, unknown>) {
-  if (typeof data !== 'object') {
-    throw new Error('Data must be object');
-  }
-  const keys = Object.keys(data);
-  return keys.reduce(
-    (result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`,
-    '?',
-  );
+// eslint-disable-next-line no-shadow
+enum METHODS {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  PATCH = 'PATCH',
+  DELETE = 'DELETE'
 }
 
+type Header = Record<string, string>
+
+type Options = {
+  data?: Record<string, unknown> | FormData;
+  headers?: Header;
+  timeout?: number;
+  method: METHODS;
+};
+
+export type Responce<T> = {
+  status:number,
+  data?:T,
+  error?:ApiError
+}
+
+type HTTPMethod = <T=unknown>(url: string, options?: Omit<Options, 'method'>) => Promise<Responce<T>>
+
 export class HTTPTransport {
+  private url:string;
+
+  private header:Header;
+
+  constructor(url:string, header:Header = {}) {
+    this.url = constants.HOST + url;
+    this.header = header;
+  }
+
   GET:HTTPMethod = (url, options) => {
     let str = url;
-    if (options?.data) {
+    if (options?.data && !(options.data instanceof FormData)) {
       str += queryStringify(options.data);
     }
     return this.request(
@@ -38,30 +51,41 @@ export class HTTPTransport {
     );
   };
 
-  // eslint-disable-next-line max-len
   POST:HTTPMethod = (url, options) => this.request(url, { ...options, method: METHODS.POST }, options?.timeout);
 
-  // eslint-disable-next-line max-len
   PUT:HTTPMethod = (url, options) => this.request(url, { ...options, method: METHODS.PUT }, options?.timeout);
 
-  // eslint-disable-next-line max-len
   DELETE:HTTPMethod = (url, options) => this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
 
-  // eslint-disable-next-line class-methods-use-this
-  request = (url: string, options: Options, timeout = 5000) => {
-    const { method, data, headers } = options;
+  request = <T>(url: string, options: Options, timeout = 5000) => {
+    const { method, data, headers = {} } = options;
 
-    return new Promise((resolve, reject) => {
+    return new Promise<Responce<T>>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
-      xhr.open(method, url);
+      if (!(data instanceof FormData)) {
+        headers['content-type'] = 'application/json';
+      } else {
+        headers['content-type'] = '';
+      }
 
-      Object.entries(headers ?? {}).forEach(([key, value]) => {
-        xhr.setRequestHeader(key, value);
+      xhr.open(method, this.url + url);
+      xhr.withCredentials = true;
+      const headersMerge = merge(this.header, headers ?? {});
+      Object.entries(headersMerge).forEach(([key, value]) => {
+        if (value) xhr.setRequestHeader(key, value);
       });
 
-      xhr.onload = function () {
-        resolve(xhr);
+      xhr.onload = () => {
+        const isJson = xhr.getResponseHeader('content-type')?.includes('application/json');
+        const body = isJson ? JSON.parse(xhr.response) : xhr.response;
+        const responce:Responce<T> = { status: xhr.status };
+        if (xhr.status < 400) {
+          responce.data = body;
+        } else {
+          responce.error = body;
+        }
+        resolve(responce);
       };
 
       xhr.onabort = reject;
@@ -71,8 +95,10 @@ export class HTTPTransport {
 
       if (method === 'GET' || !data) {
         xhr.send();
-      } else {
+      } else if (!(data instanceof FormData)) {
         xhr.send(JSON.stringify(data));
+      } else {
+        xhr.send(data);
       }
     });
   };
