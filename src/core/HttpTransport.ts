@@ -67,6 +67,9 @@ export class HTTPTransport {
       const xhr = new XMLHttpRequest();
       console.log(XMLHttpRequest);
       console.log('444444444444', xhr);
+      console.log(data);
+      console.log(FormData);
+      console.log(data instanceof FormData);
       if (!(data instanceof FormData)) {
         headers['content-type'] = 'application/json';
       } else {
