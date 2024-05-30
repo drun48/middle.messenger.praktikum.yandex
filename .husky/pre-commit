@@ -1,1 +1,3 @@
-npm-run-all test eslint stylelint
+npm run stylelint
+npm run eslint
+npm run test
