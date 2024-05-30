@@ -40,5 +40,10 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "husky": {
+    "hooks":{
+      "pre-commit":"npm-run-all eslint stylelint test"
+    }
   }
 }
