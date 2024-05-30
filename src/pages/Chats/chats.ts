@@ -122,6 +122,7 @@ class PageChats extends Block {
 
   show(): void {
     getChats();
+    if (this.element instanceof HTMLElement) this.element.style.display = '';
   }
 
   componentDidMount() {
